@@ -65,4 +65,5 @@ Lokal spielen: `cd ~/hafenbillard-app && python3 -m http.server 8000` → http:/
   - Die Art bleibt für das ganze Ziehen gleich.
   - Die Regeln (Steuerung) erklären das.
 - **Tests:** Neue Browserprüfungen auf allen Geräteformen inkl. gedrehtem Hochformat: Tippen und Ziehen am Queue sowie Tippen neben dem Queue. Ein Fehler (der Modus wurde beim Loslassen vor der letzten Richtung zurückgesetzt) wurde dadurch gefunden und behoben. Ergebnisse: Chromium 424/424, WebKit 400/400, Logik 331/331. `sw.js` ist jetzt `hafenbillard-v2`.
+- **Online seit 2026-11-09** (Commit 31a32f4). Die ersten zwei Veröffentlichungen scheiterten an einer GitHub-Actions-Störung; nach deren Ende lief der neu angestoßene Pages-Build durch. Online geprüft: Handy hochkant, Finger auf dem Queue → 0° Abweichung.
 - **Nicht geprüft:** auf einem echten Handy.
