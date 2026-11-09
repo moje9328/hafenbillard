@@ -6,8 +6,8 @@ Herausfordernd), zu zweit am selben Gerät, freies Training mit Übungen.
 
 ## Stand (Runde 1, 2026-11-09)
 
-- Lokal fertig und getestet, **noch nicht online** (kein GitHub-Repo angelegt, nichts gepusht).
-- Übersichtsseite `~/spiele-seite`: Karte in `SPIELE` + 3 Bilder `bilder/hafenbillard-*.jpg`, lokal committet, nicht gepusht.
+- Online seit 2026-11-09: https://moje9328.github.io/hafenbillard/ (Repo `moje9328/hafenbillard`, Pages aus main /, `sw.js` CACHE `hafenbillard-v1`).
+- Übersichtsseite `~/spiele-seite`: Karte in `SPIELE` + 3 Bilder (Commit 4c28945), online.
 
 ## Bauen und Prüfen
 
