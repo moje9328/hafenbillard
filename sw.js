@@ -1,6 +1,6 @@
 // Offline-Helfer: Merkt sich alle Dateien des Spiels.
 // Mit Internet wird immer zuerst die neueste Version geladen, ohne Internet die gemerkte.
-const CACHE = 'hafenbillard-v1';
+const CACHE = 'hafenbillard-v2';
 const FILES = [
   './',
   './index.html',

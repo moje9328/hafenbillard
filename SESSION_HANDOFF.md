@@ -54,3 +54,15 @@ Lokal spielen: `cd ~/hafenbillard-app && python3 -m http.server 8000` → http:/
 - Gefühl der Physik und Schwierigkeit für Menschen (Test-Bot spielt mit den Planerzügen).
 - 120-Hz-Bildschirme, sehr langsame Geräte.
 - Teilen über das echte Handy-Teilen-Menü.
+
+## Runde 2 (2026-11-09): Zielen am Queue nicht mehr spiegelverkehrt
+
+- **Wunsch:** Wenn man hinter der Weißen (auf dem Queue) zielt, soll es nicht spiegelverkehrt sein.
+- **Ursache:** Jede Berührung zielte auf den Punkt unter dem Finger. Ein Finger auf dem Queue drehte den Queue deshalb auf die andere Seite.
+- **Änderung (`9-app.js`, `tischAktion`/`aufQueue`):** Beim Aufsetzen wird festgelegt, wie gezielt wird.
+  - Liegt der Finger auf dem Queue hinter der Weißen (Streifen von mindestens ±26 Bildschirmpixeln, bis 1,7 m hinter der Kugel), folgt der Queue dem Finger und der Stoß geht vom Finger weg durch die Weiße.
+  - Sonst wird wie bisher auf den Punkt gezielt.
+  - Die Art bleibt für das ganze Ziehen gleich.
+  - Die Regeln (Steuerung) erklären das.
+- **Tests:** Neue Browserprüfungen auf allen Geräteformen inkl. gedrehtem Hochformat: Tippen und Ziehen am Queue sowie Tippen neben dem Queue. Ein Fehler (der Modus wurde beim Loslassen vor der letzten Richtung zurückgesetzt) wurde dadurch gefunden und behoben. Ergebnisse: Chromium 424/424, WebKit 400/400, Logik 331/331. `sw.js` ist jetzt `hafenbillard-v2`.
+- **Nicht geprüft:** auf einem echten Handy.

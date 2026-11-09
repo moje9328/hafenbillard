@@ -202,6 +202,44 @@ async def main():
             winkel = await pg.evaluate(f'{Z}.ui.winkel')
             soll = math.atan2(ziel['y'] - w0['y'], ziel['x'] - w0['x'])
             ok(abs(math.atan2(math.sin(winkel - soll), math.cos(winkel - soll))) < 0.01, f'{name}: Tippen zielt korrekt (auch gedreht)')
+            # Finger auf den Queue hinter der Weißen: der Queue folgt dem Finger (nicht spiegelverkehrt)
+            ux, uy = math.cos(soll), math.sin(soll)
+            for hinten, seit in [(320, 0), (320, 45), (520, -60)]:
+                aktuell = await pg.evaluate(f'{Z}.ui.winkel')
+                ux, uy = math.cos(aktuell), math.sin(aktuell)
+                qx, qy = w0['x'] - ux * hinten - uy * seit, w0['y'] - uy * hinten + ux * seit
+                px, py = await bildpunkt(pg, qx, qy)
+                await tippe(pg, px, py)
+                ist = await pg.evaluate(f'{Z}.ui.winkel')
+                erwartet = math.atan2(w0['y'] - qy, w0['x'] - qx)
+                ok(abs(math.atan2(math.sin(ist - erwartet), math.cos(ist - erwartet))) < 0.012, f'{name}: Finger auf dem Queue ({hinten}/{seit} mm) – Stoß geht vom Finger weg durch die Weiße')
+            if not touch:
+                # Ziehen auf dem Queue: Queue folgt dem Finger seitlich
+                aktuell = await pg.evaluate(f'{Z}.ui.winkel')
+                ux, uy = math.cos(aktuell), math.sin(aktuell)
+                await pg.mouse.move(*(await bildpunkt(pg, w0['x'] - ux * 300, w0['y'] - uy * 300)))
+                await pg.mouse.down()
+                ziel_q = (w0['x'] - ux * 300 + uy * 120, w0['y'] - uy * 300 - ux * 120)
+                await pg.mouse.move(*(await bildpunkt(pg, *ziel_q)), steps=8)
+                ok(await pg.evaluate(f'{Z}.zielArt()') == 'queue', f'{name}: Ziehen am Queue bleibt im Queue-Modus')
+                await pg.mouse.up()
+                ist = await pg.evaluate(f'{Z}.ui.winkel')
+                erwartet = math.atan2(w0['y'] - ziel_q[1], w0['x'] - ziel_q[0])
+                ok(abs(math.atan2(math.sin(ist - erwartet), math.cos(ist - erwartet))) < 0.012, f'{name}: gezogener Queue zeigt vom Finger durch die Weiße')
+            # Weit neben dem Queue hinter der Weißen: zielt wie bisher auf den Punkt
+            aktuell = await pg.evaluate(f'{Z}.ui.winkel')
+            ux, uy = math.cos(aktuell), math.sin(aktuell)
+            qx, qy = w0['x'] - ux * 200 + uy * 350, w0['y'] - uy * 200 - ux * 350
+            if abs(qx) < 900 and abs(qy) < 450:
+                px, py = await bildpunkt(pg, qx, qy)
+                await tippe(pg, px, py)
+                ist = await pg.evaluate(f'{Z}.ui.winkel')
+                erwartet = math.atan2(qy - w0['y'], qx - w0['x'])
+                ok(abs(math.atan2(math.sin(ist - erwartet), math.cos(ist - erwartet))) < 0.03, f'{name}: Tippen neben dem Queue zielt auf den Punkt (ist {ist:.3f}, soll {erwartet:.3f}, Punkt {qx:.0f}/{qy:.0f})')
+            # zurück auf die Acht
+            px, py = await bildpunkt(pg, ziel['x'], ziel['y'])
+            await tippe(pg, px, py)
+            winkel = await pg.evaluate(f'{Z}.ui.winkel')
             v = await pg.evaluate(f'{Z}.vorschau()')
             ok(v and v['art'] == 'kugel' and v['objekt'] is not None, f'{name}: Zielhilfe zeigt den ersten Kontakt')
             # Feinzielen-Knopf: genau 0,1°

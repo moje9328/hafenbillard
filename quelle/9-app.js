@@ -517,9 +517,25 @@
       if (t) { waehleTasche(t.nr); return; }
     }
     const w = weisse();
-    const d = Math.hypot(welt.x - w.x, welt.y - w.y);
-    if (d < TISCH.R * 0.6) return;                    // zu nah an der Weißen: Richtung unklar
-    ui.winkel = Math.atan2(welt.y - w.y, welt.x - w.x);
+    const dx = welt.x - w.x, dy = welt.y - w.y;
+    // Beim Aufsetzen festlegen, wie gezielt wird (bleibt für das ganze Ziehen gleich):
+    // Finger auf dem Queue hinter der Weißen → der Queue folgt dem Finger, gestoßen wird in die Gegenrichtung.
+    // Finger woanders → die Weiße zielt auf den Punkt unter dem Finger.
+    if (phase === 'start') zielArt = aufQueue(dx, dy) ? 'queue' : 'punkt';
+    if (phase === 'abbruch') { zielArt = null; return; }
+    const art = zielArt;
+    if (phase === 'ende') zielArt = null;             // erst nach der letzten Richtung zurücksetzen
+    if (Math.hypot(dx, dy) < TISCH.R * 0.6) return;   // zu nah an der Weißen: Richtung unklar
+    ui.winkel = art === 'queue' ? Math.atan2(-dy, -dx) : Math.atan2(dy, dx);
+  }
+  let zielArt = null;
+  // Liegt der Punkt (relativ zur Weißen) auf dem sichtbaren Queue bzw. in einem fingerbreiten Streifen darum?
+  function aufQueue(dx, dy) {
+    const ux = Math.cos(ui.winkel), uy = Math.sin(ui.winkel);
+    const hinten = -(dx * ux + dy * uy);              // Abstand hinter der Weißen entlang des Queues
+    const quer = Math.abs(dx * uy - dy * ux);         // seitlicher Abstand zur Queue-Linie
+    const breite = Math.max(70, 26 / Ansicht.s);      // mindestens ~26 Bildschirmpixel zu jeder Seite
+    return hinten > TISCH.R * 0.6 && hinten < 1700 && quer < breite;
   }
   function waehleTasche(nr) {
     if (!menschZielt() || !mussAnsagen()) return;
@@ -806,6 +822,7 @@
     zustand: () => zustand, pausiert: () => pausiert, spiel: () => spiel, ui, Ansicht, TISCH,
     tempo: TEMPO,
     vorschau: () => vorschau(),
+    zielArt: () => zielArt,
     saat(s) { rnd = zufall(s); },
     // Vorschlag des Computers für die Person am Zug (für den Test-Bot, der dann über die echte Bedienung spielt)
     vorschlag(stufe = 'herausfordernd') {
