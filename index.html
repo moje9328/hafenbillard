@@ -1,0 +1,3854 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hafenbillard – Pixelhafen</title>
+<meta name="description" content="Hafenbillard: gemütliches 8-Ball-Poolbillard in der Hafenkneipe. Gegen den Computer, zu zweit am selben Gerät oder im freien Training. Kostenlos, ohne Anmeldung, ohne Werbung.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#10243A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hafenbillard">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<style>
+
+  /* Schrift "Press Start 2P", Copyright 2012 The Press Start 2P Project Authors,
+     SIL Open Font License 1.1 (https://openfontlicense.org). Sie steckt direkt in dieser
+     Datei, damit das Spiel auch offline richtig aussieht. */
+  @font-face {
+    font-family: 'Press Start 2P';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(data:font/woff2;base64,d09GMgABAAAAABJgAA0AAAAASFgAABILAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhYcgzwGYACEbBEICvB00n4Lg0QAATYCJAOGdAQgBYRKB4ReG7k2IxE1HRM1iOA/JWg2xvD6obMqmE5SN4m6JErQGe1cnR7tTm21roiCRXGDph2W57zlE2hWfkyCDRZhurA4QpJZeJ7fH3Xufd9jvYGwAJrkBDcnoU4JS7aJ6zQ4wEsveVcau6YSMNkW5dRZkKLO7kl2gJ99Pu1cgBXilsXzxNXe312wJuAISuQ69LpAmygPOJGMosbv9O8fKPBxUDdsnCIs31VPLCJq8pmJK+q+O4R4UVF6lcpGGsmA+ctVGunAV3/7FmaFSTNZmPJ92eQtKF2y1Rr6/y1N6Yx01bXAVlgCUKk8KMZpgFl/5u/37Gi0sVYrvVtZ7nK74tp2Vme/ldxrAoNKh86llIYaDKq0FUKDyIWF4gAe22ycgtZjjJuJs/Vp39+v74B3YB+yQ62hxBJjrLUTa+Sy99Pd99cEAbEAQLyFMgwBkam6oK3xU+ciNfPcvhE6mZDmqLkWqDD0n1OuQAhC9KYOn4NBoU/niabLNmzGoo/+xw1ug9G9ztasWoJO56Zl61ETp6VJm7R+cvD8ZkwUIyroOEAERD5UKipJnfOhLrSmENhSWc6QqDOfQyh0tj+jiuXZ/8PnSYaaAyFm4rtroNK5XussnBuyoeJ5zoC6dKczmSccloW4oypBxUAoF5sxFQLcirAInR1MZjcgX4k1EysGSJ2M5k6neut6/27mwJd9UgEBelYHgCn+hjJAKlssT6Nb+z7hmPbscWyAorp5AYB5SJwFuA5AnyFHrMaflApHNJ7x+9UCg5cKiFNPUZr/iKRY64ru6S29YxCbarNtvi2yZbbLjsVGDlfh+VP9sQ79ByCOJUFJRyTFKnpWsDWbaXOvr/N7If+vgBkAhrjBYK4NDee34PsV+L4WIZYBuvuPvincl783AAKgATDVFSAXRr6c3JrN/3HGVa0aLTpwRps+/SqsqTWkSYca7bZt2tLsNLxYcRIkYXPIYUecwAHDhRsvUeIkSJIiTYEiJcpU9ajU66pOd6nRo8+QMQuWrFhz5MSZKzceAgQJFiJMuBix4sRL0uWybrvmNJi3bMGKK86547xUI/YMu+CeS3YUKXbTvrOq3FIozagypcq1IHN5Ir5QjHhpmDBjwe6oY45jwEMQH37CBKwTIk+GLDkqxITSok6DDk3adBkwZ8KUGQe27Ngz4s6HJy9+vG3wFS1CpCgJAiUS4W/QgElTJiDk/98A4AcAuQPyAZJ2ACkvAB6oAIABACppDAYfuDIBBwdtvWyhIRj9eiPiRtE2zhO4kUR6xplwhByIGdHEfl2lnhqraTbpW3ibCwPlFbCkAFDqFEs+ouId4rDYFIx3Rgp1JviWVtp0gLoZoOHhudAa3lXMO58l1rNuCTB3bALXXGnb/nuVbib5zIAjGHU0I+vqIX3dp0pfZIhBAJldd9NXY27Td77KTu2odNh1bNd/MmxWU60SgwDYrbYVsG5SAHPc3OnXRDqZZx5AN4/b+QP23IQU1ololz89jHe+3vpcMkt0lwM/573pXzp9PbXfizZscl0ELXO3a1UbZW84hcdS+ygg252g2kqvjynC9Zz5uT51374IQGxoIViy+r1aO2cyM1kuabuu5YAzwR0QDOVNMNfejiJ58vbRAC0ACLPuM673tXdTiQJqCKUJCSkIhFMSVoRCcGriaPVLaSFOCpqoMooEDSlcYkRUz4XwkApimZR+FhfXwZA7MYXyScHaPDaFYc9ss7gM5ZYs1QwfQMYZkEJYRVaGwLrE3ZDOqopH0WKhrKYyn5jgFnBKR8aVHwy1EDwOxPWwMKq6LAwr4eYDjbhnmEePgsSAzHtLsGN2LkSLRIgzniTDyUNzR6G8Ek9CE6wMyORehlJUVkKLRUvDhjbMGHMpCvC6v2xgNRXAwggUCRJ7PYSgTV5RpEvG1kdpwglup8CaTjp0/tZdr1688A6jRiAAYkX2jYaGI2yEUED4agQ4JpDdlCU2KgqlAuYHCKlez0mlj0QvcpGO1NK3dCvyfsXpVCbst9GllNVsQ/m0ecUNbEvtYUVwoaaijNyRgJRbfvMoDLqOhDUhD6bAXNSUZNyJX5IekmQF0UTzLC7AZFlcCQmxLmpK1rQZ1SDkaC+d0IVasLlKGNSTvKgXcxoCTsoYtZLGBXO0cUdZAhJxAg+O4C9r2GC83qogpN6xJx2xIGwwFrEk9VR+tHKBggk6U1LmwfkF1dp8yUJX3ga9eH9YtsMWX5wQqUZ21yGWFNq9ajBoEVsoSz36d5cSzFLbAJZ5HBsmU2S1hKJbU3Wc79U6Nu0xgKAelp0Z4jqLRPumclG2eKPlL+r190iKNpW7y5sA7cqgGMvWIEl+SE0N0tmH8mlGSxpVQE9Urd3YqVrA4oAp+2BKXB2A9K0eTRqj3WAoGXskoL132wA2/MvgLLOL0yqYLSBZEKCPLV8PkjVdB1SZ2IaBQd0U2Dakfm5sFl48kBeNEFPjhuqccG1xKdLMwtZahGBvKKj6sjd4NlQ2UZAigsnBtsxkmBAUrlaQNUGBWoRSctWWPDeHg9iWFt953iW8s41nKaqZgHL5RcUdtBmY0DFS28bLdxTjSGv0Ny4ptkZdtFbyxfXlBPJDC4Ka2InUcWZ417DMcPZAbTE6gjA8DIy0MWAeNVYPa4tlrhwoNDFkIcAYzAytW7JuIRhZsd7KzTSi50qCGnCvLdArficHWmmiCSHD/ERsIt1qdKQoYJHWYU6i20IBgh6JxJBmjvp7VLIwpFuZVnPEYIUCAskhO76ejxt9JGFxxlGRPKmMLhhBMW5gFMreRedqpVDNopuVpA5k2WxxghipqIfCBeIQRbeLoJs/OepnCw3rhRJpLwo3B29Qq6EQM9waX0tDbZe40xbbQ8/Qa5GCtQc+yGI3ByXFWSYyj81HTC3W1zqV4c3rHdDDtnUb32qt2mopLZvM3ZEnvGTljav/AAf3pR20pETliLUD5zAcEqZRuQ9zKv2DmWBzQez4zdVKH+VrRaAdiE1/2ETrXlpfGErt8QoFgzpPFunNUSa4VWFHgoo0idkyGesoICEQZhHswBR91la3rV3gEjWmUsVVpknJ6pmHX/KmF43M4y/mWPbQU4884NT8oSZ5LwGogx9eW6Gg7lmG/eALtL62Cp9ZUfqamgDfQ7nZ8bGexsAjpAPQHi/0A1pEaFHLboEV7d7dlF4Wbk7rt4KwRSduRJ4z0D893esysc4j7AYVAWuIKyXUddVmqQXZGi4jTAKLOSCwevool+taG4JeINVM5C9/6RKRoAwBZkHGFI/KetWPFCwGXCty3kllWldUY5t/MES0hG3Ha/tc6iFbK775b3PmP/6oxozEvPtWJK7CZJoPNvFwsXLq6RSsjK/OMOpSWGfdXTUUFhBOgAJILasEIC5mwLtlTPxoSoULOiJOa+8v6Dv5BrFchoD8fhVln2F87NH/B/mdN+WJ4DnP9UwOEZPJK3/7wNukPDMoq25+jO5DwuuANDPcW1YujJBA9wCSgw/8hen1aZwisQxxavv9nRFeeQ92LxUGPVGqmTPyNfIsbV5bpsOY5Zn7Cg7jmCvvKM055v3uQzHXQLfeJrTPa109NFJ030JNeFlVetcMGlNOVKhvhUzlCtCsKDcCRJFpo5FhHNpN3SVrrjbYoI4HLifJ0rYu4Qb3LM/gr95bjW2mvJxLSMwkrwkCVPbopYjpdwP9xOkFMwa5FkCOe25XVib8XSGvVIU5K1FfIlZ6K1l9nWjBqt8PSMTirPC+1WzipXQWgAeIBGev81ZJnSRzIe9URfVr8idW4VjoLi+ZiXaEr/9mAzAS/Epx1d5AgoU39Q0OqJTKc64NLg31Kbw++PLxlBz11UYvg93MTzlOTfCrms73QWn0HAWZlactcaDAjplYhAX1YEZdo8rBS/IHZ4oHSETVB+rHBwqhStc6AMQk5XmS6yhCfQXDgrAKDHX7EMzXxdeuOGcWDvl+QyTWUV8wt7se4jmo3csmwcjmsUUkxaa+ZH57WZEEC3kbDqgAReeRoFq6CoesJJ6pB6YvQVcBI0VeS3R9p8NLwpdzcbpV3PvfOwhKDol+mGS4O9MwFVeFDXm0AYvD7dgFnYOG3jRV9XiF4FecuOnM8CRU2vpkopbhKx7KfarCpzaTBFlfv/kfJxMN61HC6Xr3REx7WKz1hnFoxwCTW0XLpk0fPXYC1ErjyY/nY9l+Uvt5rkq6dNytY3UsitNePuss4/wnPo8xLKo75akhjLhUPAjjblOpnjfObJI5bvxrdCKY6sI/XycSypfTlSJWcI2PPdg3Xn7OwgjEJh4Y1AejzXCCNtAGaV4nk8eI9z9dXXZARXv7WVklkuvtdphJvRTe0U/xAawWvJyG+RLhGZ0ZFQvz4wgiRfMWkEFuhqeQSccJ5XPBW6YYaQv3qURhivQHhS7J91v2gf+6vPLp79wn47pD1rAckkBiNknOOtbOcYZNonH8SE14tzCdXq2skwcM4mu+UmA+hdubYq/yYFyppJZRX+l5LYV9teDdwZwji+o8AlhWkZsGcQ4YCKMIcGUs6tn8b3Vqj7pi7T67hgd/hShh7hbiYPL0FbuZrb3NaOSleDv2iNecJ0otEvBme7gEwrPYXLSXB37EQEt6DzeEeMkZzjZDR/roZl7PmFX4Hq4fu+9foRncGLo0G1y/iKBLOV/JVrvYj7o1K4r7I4mcsGHwlcXdB0BecrCv2L0r70MMFtGq82yPHwR3CGswxYG/cFaU3rrO4wfB8PP/weaL4HI+jpG83mzQTuLUxB9R14tT8IYJdK/XpC9//2S8K8KHqVj0ESnA+bUYGqY6X3E26L0SM9pa7svsLqooBnhBXsNCjeUndRMo6jx4+7VE0+hjASzwqLDJtGNnUQ4fMWQdebCuCD1XNWMCOuVaNxUhM+4zhH7IfZyPv0hisvibkEXok2mXsfeoI7UvSpznoaMuFDb06f8mAKK2w6lIRDx+F2Gcqyno9hWf5vWbX0x4JiajeI+I/7O6FU68x7ya9w7jfpykm+RvKierpLT/0+5NErUBjlaKu4vcpfux/sh5u+RCfDvt6mtKBeg497nU+xiWEy5rM8Pc99z+Oz7DlPj1MF8j3UgBCcwwsdV3p6jz34Vzb4NQN0uU0xWnpZabXKxZU0dAgauXK2RlmbNGfke9MM7qZ/jC2LKtrTNm6XcnkalivUfIprI24lDRtCxMz0vEURAh4IJlZM7rf4weA+qG0a0cn/xAGWxegACD3pvs54un8q/L9AHwuoH993c8rOp/+yvqRXiCTxEKYPDmtAJAZ43UB2QlyP7rXi+xmH7AtffY69Cf+A8Ul8e/Ac4U/SEfNxVPdx9g09ixNkUj8M3RGN/e1Y5rjgNArt1er3NCr+F9oyeSUJB4dwZSwUCXe63ZRo78IlVqTKX+RRDwgwIaJUi1qQV+rcBKOFKFwMdQQVNErndTVLzvU4zhuqY4asRNcWVzmeKpIKPibRWwWgxNiKBEfN1o3qIEqorR4WKiVUhU4aXy761rTo8Ji1T54pNEsxbDU5QYUiyIsuLLX6yQnbITHUXVV7gwGGliJJzIPom1GuuvB4tG/9Yo0+bIii5lKTbYe/4NtYWLkJiHir+AsHxToANjUzDfXhMhasNwQXx57zs0xUIH5BEi+xbgLZyPRBqSssN9lYID0FcMQSIw8QKjZUZ0dDZVnHb6wOjtgKPTjKdQaQfO1Ruu9aCDodm85ujr8QNIgTJKnLTPyyhvYyrw4uOD30sCfB045TRBQoSJOOOsc84TJUY8uIwpP3/tCy7yd1mlcROkvX0/4bnkKbjiqgDX3rrYUcVrqnQEvk+hgrwzVAfdVDfU94qBiPy9k0iGjBgzcV2MOPFi32komwf/hoZK8C8nUbIUSTqlmmTtHRu27BSy5yBNhkzp73G8PxdvLHG1YVOrNsxYsL4rIt+z+O8NQTzx6fWFr3yD1gjb8rGjdw/ebURJuHQhiORjosWNBzUaqMV6ZgpDyNwxZM26XTNmzZm3EwrHrSIl4oS6UBPvJwswnDhU89QTGoLESTzFKE7LU6xIiWzuXtAMvSQKI6XuuaGMtlvuuln9r0HXdUyWb9ruhCy7+LEb1zRIjFb0m6WapAeP0slL4P+AdTi6pEmqsbXJbM/BtTy3bt20a8fmEN5Rqw//PeH1K/5x23Oq8rId2wcRFUqN1gYA) format('woff2');
+  }
+
+  /* Pixelhafen-Farben: Marineblau, Türkis, Sonnengelb, Korallorange, Creme */
+  :root {
+    color-scheme: dark;
+    --bg: #10243A;
+    --surface: #16314F;
+    --surface-2: #1F4066;
+    --line: #2F5A85;
+    --text: #FFF4DC;
+    --muted: #B5CBE0;
+    --gelb: #FFD35A;
+    --gelb-kante: #C9962A;
+    --koralle: #FF805B;
+    --tuerkis: #24D6CD;
+    --violett: #B58CFF;
+    --auf-gelb: #10243A;
+    --retro: 'Press Start 2P', 'Courier New', monospace;
+    --body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { height: 100%; background: var(--bg); }
+  body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    color: var(--text);
+    background: var(--bg);
+    font: 16px/1.5 var(--body);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible { outline: 3px solid var(--gelb); outline-offset: 3px; border-radius: 6px; }
+  [hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  #app {
+    position: fixed;
+    inset: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background: var(--bg);
+  }
+  #buehne {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Nur hier: kein Scrollen, kein Zoomen beim Ziehen */
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  canvas#bild { display: block; width: 100%; height: 100%; cursor: pointer; }
+  canvas#bild:focus-visible { outline: none; }
+
+  /* ---------- Fenster ---------- */
+  #fenster {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    overflow-y: auto;
+    background: rgba(8, 20, 34, 0.55);
+    touch-action: manipulation;
+  }
+  .tafel {
+    width: min(400px, 100%);
+    margin: auto;
+    padding: 22px;
+    background: var(--surface);
+    border: 3px solid var(--bg);
+    border-radius: 14px;
+    box-shadow: 0 0 0 3px var(--gelb), 0 18px 44px rgba(0, 0, 0, 0.55);
+  }
+  .tafel.breit { width: min(760px, 100%); }
+  .marke { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; color: var(--muted); font: 9px/1.5 var(--retro); }
+  .marke svg { width: 20px; height: 20px; flex: none; color: var(--gelb); }
+  #startKrabbe { display: block; width: 176px; height: 144px; margin: 6px auto 0; }
+  h1, h2, h3 { margin: 0; font-weight: 400; }
+  h1 { font: 400 clamp(19px, 6.4vw, 26px)/1.35 var(--retro); color: var(--gelb); text-shadow: 3px 3px 0 var(--koralle), 5px 5px 0 var(--bg); text-align: center; }
+  h2 { font: 400 clamp(14px, 4.4vw, 17px)/1.5 var(--retro); }
+  h3 { font: 400 11px/1.5 var(--retro); }
+  .unterzeile { margin: 10px 0 0; font-size: 17px; font-weight: 600; text-align: center; }
+  .duell { margin: 14px 0 0; padding: 10px 12px; background: var(--surface-2); border-left: 4px solid var(--gelb); border-radius: 8px; line-height: 1.4; }
+  .duell[hidden] { display: none; }
+  .spruch { margin: 10px 0 0; color: var(--tuerkis); font-size: 16px; font-style: italic; }
+  .knoepfe { display: grid; gap: 10px; margin-top: 18px; }
+  .knoepfe.zwei { grid-template-columns: 1fr 1fr; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 10px 16px;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 4px 0 var(--bg);
+    font: 600 16px/1.3 var(--body);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .btn:hover { filter: brightness(1.1); }
+  .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--bg); }
+  .btn.main {
+    min-height: 56px;
+    color: var(--auf-gelb);
+    background: var(--gelb);
+    border-color: var(--bg);
+    box-shadow: 0 4px 0 var(--gelb-kante), 0 4px 0 2px var(--bg);
+    font: 400 15px/1.3 var(--retro);
+  }
+  .btn.main:active { box-shadow: 0 2px 0 var(--gelb-kante); }
+  .btn.klein { min-height: 44px; font-size: 15px; }
+  .zeile { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+  .zurueck { margin-bottom: 12px; }
+
+  /* Levelauswahl */
+  .gebiet { margin-top: 16px; padding: 12px; border-radius: 12px; background: var(--surface-2); border-left: 6px solid var(--g, var(--tuerkis)); }
+  .gebiet h3 { color: var(--g, var(--tuerkis)); }
+  .gebiet p { margin: 4px 0 10px; color: var(--muted); font-size: 14px; }
+  .karten { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 8px; }
+  @media (max-width: 560px) { .karten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .karte {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    padding: 6px;
+    color: var(--text);
+    text-align: left;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    font: 600 13px/1.25 var(--body);
+    touch-action: manipulation;
+  }
+  .karte:hover:not(:disabled) { border-color: var(--gelb); }
+  .karte canvas { width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; display: block; }
+  .karte .nr { font: 10px/1.4 var(--retro); color: var(--gelb); }
+  .karte .sterne { color: var(--gelb); font-size: 15px; letter-spacing: 2px; }
+  .karte .sterne i { color: rgba(255, 244, 220, 0.25); font-style: normal; }
+  .karte:disabled { cursor: not-allowed; }
+  .karte:disabled .sterne, .karte:disabled .nr { opacity: 0.6; }
+  .schloss { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 30px; height: 30px; background: rgba(16, 36, 58, 0.9); border: 2px solid var(--text); border-radius: 8px; }
+  .schloss svg { width: 14px; height: 14px; }
+
+  /* Krabbenwahl */
+  .krabbenliste { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 14px; }
+  .krabbenkarte {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    padding: 10px 8px;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    cursor: pointer;
+    font: 600 14px/1.3 var(--body);
+    touch-action: manipulation;
+  }
+  .krabbenkarte canvas { width: 88px; height: 72px; }
+  .krabbenkarte small { color: var(--muted); font-weight: 400; font-size: 13px; text-align: center; }
+  .krabbenkarte[aria-pressed="true"] { border-color: var(--gelb); box-shadow: 0 0 0 2px var(--gelb); }
+  .hinweistext { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
+
+  /* Ergebnis */
+  .sternreihe { display: flex; justify-content: center; gap: 10px; margin: 14px 0 4px; font-size: 44px; line-height: 1; }
+  .sternreihe span { color: rgba(255, 244, 220, 0.18); transform: scale(0.6); transition: transform 0.25s cubic-bezier(.3, 1.6, .5, 1), color 0.2s; }
+  .sternreihe span.an { color: var(--gelb); transform: scale(1); text-shadow: 2px 2px 0 var(--koralle); }
+  .zahlen { display: grid; gap: 8px; margin: 14px 0 0; padding: 0; }
+  .zahlen div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .zahlen dt { color: var(--muted); }
+  .zahlen dd { margin: 0; font: 13px/1.4 var(--retro); }
+  .zahlen .gross dd { color: var(--gelb); font-size: 18px; }
+  .hervor { margin: 12px 0 0; padding: 8px 10px; color: var(--auf-gelb); background: var(--gelb); border-radius: 8px; font: 11px/1.6 var(--retro); text-align: center; }
+  #erfolgKrabbe, #nachtKrabbe, #endlosKrabbe { display: block; width: 110px; height: 90px; margin: 4px auto 0; }
+
+  @media (orientation: landscape) and (max-height: 560px) {
+    .tafel { width: min(640px, 100%); padding: 14px 18px; }
+    .marke { display: none; }
+    #startKrabbe { width: 110px; height: 90px; }
+    .knoepfe { grid-template-columns: 1fr 1fr; margin-top: 12px; }
+    #erfolgKrabbe, #nachtKrabbe, #endlosKrabbe { width: 80px; height: 66px; }
+    .sternreihe { font-size: 34px; margin-top: 6px; }
+    .rund { width: 40px; height: 40px; }
+  }
+  @media (max-width: 420px) {
+    .rund { width: 40px; height: 40px; }
+    .tafel { padding: 18px 16px; }
+  }
+  /* ---------- Nur Querformat auf Handy und Tablet ---------- */
+  #drehen { display: none; }
+  @media (orientation: portrait) and (pointer: coarse) {
+    #drehen {
+      position: fixed; inset: 0; z-index: 50;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+      padding: 24px max(16px, env(safe-area-inset-right)) 24px max(16px, env(safe-area-inset-left));
+      background: var(--bg); color: var(--text); text-align: center; touch-action: none;
+    }
+    #drehen p { margin: 0; font: 400 15px/1.6 var(--retro); color: var(--gelb); }
+    #drehen small { font-size: 15px; color: var(--muted); }
+    #drehen svg { animation: drehen 2.4s ease-in-out infinite; }
+    @keyframes drehen { 0%, 25% { transform: rotate(0); } 55%, 100% { transform: rotate(-90deg); } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn:active { transform: none; }
+    .sternreihe span { transition: none; }
+    #drehen svg { animation: none; }
+  }
+
+  /* ---------- Spielfläche: Kopf, Tisch, Bedienung ---------- */
+  #spiel {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: "kopf" "buehne" "steuer";
+    width: 100%; height: 100%;
+    background: #120d0a;
+  }
+  #kopf {
+    grid-area: kopf;
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 8px;
+    background: var(--bg);
+    border-bottom: 2px solid var(--line);
+  }
+  .spieler {
+    flex: 1 1 0; min-width: 0;
+    display: grid; gap: 3px;
+    padding: 5px 8px 6px;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    transition: border-color .2s, box-shadow .2s, opacity .2s;
+    opacity: 0.72;
+  }
+  .spieler.aktiv { opacity: 1; border-color: var(--gelb); box-shadow: 0 0 0 2px rgba(255, 211, 90, 0.35); }
+  .spieler .name { display: flex; align-items: center; gap: 6px; min-width: 0; font: 600 14px/1.2 var(--body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .spieler .name b { font: 400 9px/1 var(--retro); color: var(--auf-gelb); background: var(--gelb); padding: 3px 5px; border-radius: 5px; flex: none; }
+  .spieler:not(.aktiv) .name b { visibility: hidden; }
+  .spieler .gruppe { display: flex; align-items: center; gap: 6px; min-height: 16px; color: var(--muted); font: 600 12px/1.2 var(--body); white-space: nowrap; overflow: hidden; }
+  .spieler .gruppe canvas { height: 14px; width: auto; flex: none; }
+  #kopfKrabbe { width: 52px; height: 43px; flex: none; }
+  .kopfknoepfe { display: flex; gap: 6px; flex: none; }
+  .rund {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; padding: 0;
+    color: var(--text); cursor: pointer;
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    font: 700 18px/1 var(--body);
+    touch-action: manipulation;
+  }
+  .rund:hover { filter: brightness(1.12); }
+  .rund svg { width: 18px; height: 18px; }
+  .rund[aria-pressed="false"] .welle { display: none; }
+  .rund[aria-pressed="true"] .aus { display: none; }
+
+  #trainingLeiste { display: none; }
+  :root[data-modus="training"] #trainingLeiste {
+    display: flex; flex: 1 1 auto; min-width: 0; gap: 6px; align-items: center; flex-wrap: wrap;
+  }
+  :root[data-modus="training"] .spieler, :root[data-modus="training"] #kopfKrabbe { display: none; }
+  #trainingLeiste .btn { min-height: 44px; padding: 6px 10px; font-size: 14px; }
+  #trainingLeiste select { min-height: 44px; padding: 6px 8px; color: var(--text); background: var(--surface-2); border: 2px solid var(--line); border-radius: 12px; font: 600 14px/1.2 var(--body); }
+  #trainingKrabbe { width: 52px; height: 43px; flex: none; }
+
+  #buehne { grid-area: buehne; min-height: 0; }
+  #meldung {
+    position: absolute; left: 50%; top: 10px; z-index: 2;
+    transform: translateX(-50%);
+    width: max-content; max-width: calc(100% - 20px);
+    margin: 0; padding: 8px 14px;
+    color: var(--text); background: rgba(16, 36, 58, 0.92);
+    border: 2px solid var(--tuerkis); border-radius: 12px;
+    font: 600 15px/1.35 var(--body); text-align: center;
+    pointer-events: none;
+    opacity: 0; transition: opacity .25s;
+  }
+  #meldung.zeigen { opacity: 1; }
+  #meldung.foul { border-color: var(--koralle); }
+  #meldung.gut { border-color: var(--gelb); }
+
+  #steuerung {
+    grid-area: steuer;
+    display: grid; gap: 6px;
+    padding: 6px 8px 8px;
+    background: var(--bg);
+    border-top: 2px solid var(--line);
+  }
+  #status { margin: 0; min-height: 22px; text-align: center; font: 600 15px/1.35 var(--body); color: var(--text); }
+  #status b { color: var(--gelb); font-weight: 700; }
+  .bedienung { display: flex; align-items: center; gap: 8px; }
+  .feinzielen { display: flex; gap: 6px; flex: none; }
+  .feinzielen .rund { width: 48px; height: 48px; }
+  #staerke { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; touch-action: none; cursor: pointer; }
+  #staerke .spur { position: relative; height: 44px; }
+  #staerke .spur::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 14px; margin-top: -7px; border-radius: 7px; background: linear-gradient(90deg, var(--tuerkis), var(--gelb) 60%, var(--koralle)); opacity: 0.35; }
+  #staerke .fuell { position: absolute; left: 0; top: 50%; height: 14px; margin-top: -7px; border-radius: 7px; background: linear-gradient(90deg, var(--tuerkis), var(--gelb) 60%, var(--koralle)); background-size: var(--spurbreite, 300px) 100%; }
+  #staerke .griff { position: absolute; top: 50%; width: 26px; height: 34px; margin: -17px 0 0 -13px; border-radius: 9px; background: var(--text); border: 3px solid var(--bg); box-shadow: 0 0 0 2px var(--gelb); }
+  #staerke:focus-visible { outline: 3px solid var(--gelb); outline-offset: 2px; border-radius: 8px; }
+  #staerkeText { min-width: 52px; text-align: right; font: 12px/1 var(--retro); color: var(--gelb); }
+  #stossKnopf { flex: none; min-width: 112px; min-height: 52px; }
+  #stossKnopf:disabled, .rund:disabled { opacity: 0.45; cursor: not-allowed; filter: grayscale(0.6); }
+  #staerke[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+  :root[data-zustand="rollen"] #status { color: var(--muted); }
+
+  /* Flache Handys quer: Bedienung als Spalte rechts, damit der Tisch groß bleibt */
+  @media (orientation: landscape) and (max-height: 520px) {
+    #spiel { grid-template-columns: minmax(0, 1fr) 168px; grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "kopf kopf" "buehne steuer"; }
+    #kopf { padding: 3px 8px; }
+    .spieler { padding: 2px 8px 3px; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; }
+    .spieler .name { font-size: 13px; }
+    #kopfKrabbe { width: 40px; height: 33px; }
+    .rund { width: 44px; height: 44px; }
+    #steuerung { border-top: 0; border-left: 2px solid var(--line); align-content: center; padding: 6px 8px; }
+    #status { font-size: 13px; }
+    .bedienung { flex-direction: column; align-items: stretch; gap: 6px; }
+    .feinzielen { justify-content: center; }
+    #staerke { grid-template-columns: 1fr; }
+    #staerkeText { text-align: center; }
+    #stossKnopf { min-width: 0; }
+  }
+  /* Hochformat und schmale Fenster: Regler bekommt eine eigene, volle Zeile */
+  @media (max-width: 640px) and (orientation: portrait) {
+    .bedienung { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "fein stoss" "regler regler"; gap: 6px 8px; }
+    .feinzielen { grid-area: fein; }
+    #stossKnopf { grid-area: stoss; width: 100%; }
+    #staerke { grid-area: regler; }
+  }
+  @media (max-width: 420px) {
+    .spieler .name b { display: none; }
+    .spieler.aktiv { border-width: 3px; background: var(--surface-2); }
+    #kopf { gap: 5px; padding: 5px 6px; }
+    .kopfknoepfe { gap: 4px; }
+    .rund { width: 44px; height: 44px; }
+    .spieler { padding: 4px 6px 5px; }
+    .spieler .name { font-size: 13px; }
+    .spieler .gruppe { font-size: 11px; }
+    .spieler .gruppe canvas { height: 11px; }
+    #kopfKrabbe { width: 38px; height: 31px; }
+    .feinzielen .rund { width: 44px; height: 44px; }
+    #stossKnopf { min-width: 96px; font-size: 13px; }
+    #staerkeText { min-width: 40px; font-size: 10px; }
+    #status { font-size: 14px; }
+  }
+  @media (max-width: 360px) {
+    #kopfKrabbe { display: none; }
+  }
+
+  /* ---------- Fenster ---------- */
+  .wahl { display: grid; gap: 8px; margin-top: 14px; }
+  .wahl.drei { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .wahl.zwei { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wahl .btn { min-height: 52px; padding: 8px 6px; font-size: 15px; }
+  .wahl .btn[aria-pressed="true"] { color: var(--auf-gelb); background: var(--gelb); border-color: var(--bg); box-shadow: 0 4px 0 var(--gelb-kante); }
+  .wahltitel { margin: 16px 0 0; color: var(--muted); font: 10px/1.5 var(--retro); }
+  #startKrabbe { width: 132px; height: 108px; }
+  .regeln { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .regeln li { padding: 10px 12px; background: var(--surface-2); border-radius: 10px; line-height: 1.45; font-size: 15px; }
+  .regeln h3 { margin: 0 0 4px; color: var(--gelb); }
+  .regeln ul { margin: 4px 0 0; padding-left: 20px; }
+  .regeln p { margin: 4px 0 0; }
+  #fRegeln .hinweistext { font-size: 13px; }
+  .tafel.breit { width: min(720px, 100%); }
+  .ergebnisgrund { margin: 10px 0 0; padding: 10px 12px; background: var(--surface-2); border-left: 4px solid var(--gelb); border-radius: 8px; line-height: 1.4; }
+  #ergebnisKrabbe { display: block; width: 120px; height: 98px; margin: 6px auto 0; }
+  #uebergabeKrabbe { display: block; width: 96px; height: 78px; margin: 6px auto 0; }
+  .uebergabeName { margin: 8px 0 0; text-align: center; font: 400 16px/1.6 var(--retro); color: var(--gelb); }
+  .zahlenklein { margin: 10px 0 0; color: var(--muted); text-align: center; font-size: 14px; }
+  @media (orientation: landscape) and (max-height: 520px) {
+    #startKrabbe { width: 84px; height: 69px; }
+    .wahl .btn { min-height: 44px; font-size: 14px; }
+    .wahltitel { margin-top: 8px; }
+    #ergebnisKrabbe, #uebergabeKrabbe { width: 72px; height: 59px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spieler, #meldung { transition: none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 11 11"><path fill="currentColor" d="M5 0h1v2H5zM3 2h5v1H3zM5 3h1v5H5zM1 6h1v1H1zM9 6h1v1H9zM1 7h2v1H1zM8 7h2v1H8zM2 8h3v1H2zM6 8h3v1H6zM3 9h5v1H3z"/></symbol>
+</svg>
+<div id="app">
+  <div id="spiel">
+    <header id="kopf">
+      <div class="spieler" id="sp0" aria-live="polite">
+        <div class="name"><span class="nm">Du</span><b>AM ZUG</b></div>
+        <div class="gruppe"><span class="gtext">Tisch offen</span><canvas width="10" height="28" aria-hidden="true"></canvas></div>
+      </div>
+      <canvas id="kopfKrabbe" width="104" height="86" aria-hidden="true"></canvas>
+      <div class="spieler" id="sp1" aria-live="polite">
+        <div class="name"><span class="nm">Computer</span><b>AM ZUG</b></div>
+        <div class="gruppe"><span class="gtext">Tisch offen</span><canvas width="10" height="28" aria-hidden="true"></canvas></div>
+      </div>
+      <div id="trainingLeiste">
+        <canvas id="trainingKrabbe" width="104" height="86" aria-hidden="true"></canvas>
+        <button class="btn klein" id="neuAufbauKnopf" type="button">Neu aufbauen</button>
+        <label class="sr" for="uebungWahl">Übung wählen</label>
+        <select id="uebungWahl">
+          <option value="frei">Freies Spiel</option>
+          <option value="gerade">Übung: Gerader Stoß</option>
+          <option value="schnitt">Übung: Schnitt</option>
+          <option value="bande">Übung: Bandenstoß</option>
+        </select>
+        <button class="btn klein" id="hilfeKnopf" type="button" aria-pressed="true">Erweiterte Zielhilfe: an</button>
+      </div>
+      <div class="kopfknoepfe">
+        <button class="rund" id="regelnKnopfSpiel" type="button" aria-label="Regeln anzeigen">?</button>
+        <button class="rund js-ton" id="tonKnopf" type="button" aria-label="Ton an oder aus (M)" aria-pressed="true">
+          <svg viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 6h3v4H2zM5 5h1v6H5zM6 4h1v8H6zM7 3h1v10H7z"/><path class="welle" d="M10 6h1v4h-1zM12 4h1v8h-1z"/><path class="aus" d="M10 5h1v1h-1zM11 6h1v1h-1zM12 7h1v2h-1zM13 9h1v1h-1zM14 10h1v1h-1zM14 5h1v1h-1zM13 6h1v1h-1zM11 9h1v1h-1zM10 10h1v1h-1z"/></svg>
+        </button>
+        <button class="rund" id="pauseKnopf" type="button" aria-label="Pause (P)">
+          <svg viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z"/></svg>
+        </button>
+      </div>
+    </header>
+    <main id="buehne">
+      <canvas id="bild" tabindex="0" role="img" aria-label="Billardtisch von oben. Tippen oder Ziehen auf dem Tisch richtet den Queue aus. Pfeiltasten links und rechts drehen fein, oben und unten ändern die Stärke, Leertaste stößt."></canvas>
+      <p id="meldung" role="status" aria-live="polite"></p>
+    </main>
+    <footer id="steuerung">
+      <p id="status" aria-live="polite"></p>
+      <div class="bedienung">
+        <div class="feinzielen">
+          <button class="rund" id="linksKnopf" type="button" aria-label="Queue fein gegen den Uhrzeigersinn drehen (Pfeil links)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9a5 5 0 1 0 2-4.5"/><path d="M5 1.5v3.5h3.5"/></svg>
+          </button>
+          <button class="rund" id="rechtsKnopf" type="button" aria-label="Queue fein im Uhrzeigersinn drehen (Pfeil rechts)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 9a5 5 0 1 1-2-4.5"/><path d="M11 1.5v3.5h-3.5"/></svg>
+          </button>
+        </div>
+        <div id="staerke" role="slider" tabindex="0" aria-label="Stoßstärke (Pfeil hoch und runter)" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" aria-valuetext="40 Prozent">
+          <div class="spur"><i class="fuell"></i><b class="griff"></b></div>
+          <span id="staerkeText">40 %</span>
+        </div>
+        <button class="btn main" id="stossKnopf" type="button">Stoßen</button>
+      </div>
+    </footer>
+  </div>
+</div>
+<p id="ansage" class="sr" aria-live="assertive"></p>
+<div id="fenster">
+  <div class="tafel" role="dialog" aria-modal="true" aria-labelledby="fStartTitel">
+    <section id="fStart">
+      <p class="marke"><svg aria-hidden="true"><use href="#logo"/></svg>PIXELHAFEN</p>
+      <h1 data-titel>HAFEN-<br>BILLARD</h1>
+      <canvas id="startKrabbe" width="264" height="216" aria-hidden="true"></canvas>
+      <p class="unterzeile">8-Ball in der Hafenkneipe</p>
+      <p class="duell" id="startDuell" hidden></p>
+      <p class="wahltitel" id="modusTitel">SPIELART</p>
+      <div class="wahl drei" role="group" aria-labelledby="modusTitel">
+        <button class="btn js-modus" type="button" data-modus="computer" aria-pressed="true">Gegen Computer</button>
+        <button class="btn js-modus" type="button" data-modus="zweier" aria-pressed="false">Zu zweit</button>
+        <button class="btn js-modus" type="button" data-modus="training" aria-pressed="false">Training</button>
+      </div>
+      <div id="stufenWahl">
+        <p class="wahltitel" id="stufeTitel">COMPUTERSTÄRKE</p>
+        <div class="wahl zwei" role="group" aria-labelledby="stufeTitel">
+          <button class="btn js-stufe" type="button" data-stufe="entspannt" aria-pressed="true">Entspannt</button>
+          <button class="btn js-stufe" type="button" data-stufe="herausfordernd" aria-pressed="false">Herausfordernd</button>
+        </div>
+      </div>
+      <div class="knoepfe">
+        <button class="btn main" id="spielenKnopf" type="button">Spielen</button>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="regelnKnopf" type="button">Regeln</button>
+          <button class="btn klein js-ton" type="button" aria-pressed="true">Ton: an</button>
+        </div>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="freundeKnopf" type="button">Freunde herausfordern</button>
+          <a class="btn klein" href="https://moje9328.github.io/spiele/">Zur Pixelhafen-Seite</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="fRegeln" hidden>
+      <div class="zeile zurueck">
+        <h2 data-titel>Hausregeln</h2>
+        <button class="btn klein" id="regelnZurueck" type="button">Zurück</button>
+      </div>
+      <p class="hinweistext">Das sind die Hafenbillard-Hausregeln für 8-Ball. Sie sind an übliche Kneipenregeln angelehnt, aber keine offiziellen Turnierregeln.</p>
+      <ul class="regeln">
+        <li><h3>Ziel</h3><p>Eine Person spielt die <b>vollen</b> Kugeln 1–7, die andere die <b>halben</b> 9–15. Wer zuerst alle eigenen Kugeln und danach die schwarze Acht versenkt, gewinnt.</p></li>
+        <li><h3>Anstoß</h3><ul>
+          <li>Die Weiße wird im Kopffeld (links der gestrichelten Linie) platziert.</li>
+          <li>Gültig, wenn eine Kugel fällt oder mindestens vier verschiedene Kugeln eine Bande berühren.</li>
+          <li>Ungültig: Die andere Person darf neu aufbauen und selbst anstoßen – oder den Tisch so übernehmen.</li>
+          <li>Fällt die Acht beim Anstoß, wird sie wieder eingesetzt. Das ist weder Sieg noch Niederlage.</li>
+          <li>Fällt die Weiße beim Anstoß, bekommt die andere Person Ball in Hand.</li>
+          <li>Nach dem Anstoß ist der Tisch noch offen.</li></ul></li>
+        <li><h3>Gruppen</h3><ul>
+          <li>Die erste nach dem Anstoß regulär versenkte Kugel bestimmt deine Gruppe. Fallen beide Sorten, zählt die zuerst gefallene.</li>
+          <li>Bei einem Foul wird keine Gruppe vergeben.</li>
+          <li>Bei offenem Tisch musst du zuerst eine volle oder halbe Kugel treffen, nicht die Acht.</li></ul></li>
+        <li><h3>Gültiger Stoß</h3><ul>
+          <li>Zuerst eine Kugel der eigenen Gruppe treffen (sind alle weg: die Acht).</li>
+          <li>Danach muss eine Kugel fallen oder irgendeine Kugel eine Bande berühren.</li>
+          <li>Wer regulär mindestens eine eigene Kugel versenkt, bleibt am Zug. Sonst ist die andere Person dran.</li>
+          <li>Versenkte Kugeln bleiben in den Taschen.</li></ul></li>
+        <li><h3>Fouls</h3><ul>
+          <li>Die Weiße fällt in eine Tasche.</li>
+          <li>Keine Kugel getroffen.</li>
+          <li>Zuerst die falsche Kugel getroffen.</li>
+          <li>Nach dem Treffer fällt keine Kugel und keine Kugel erreicht eine Bande.</li></ul>
+          <p>Nach einem Foul endet der Zug, auch wenn eigene Kugeln gefallen sind. Die andere Person bekommt <b>Ball in Hand</b>: Sie legt die Weiße irgendwo auf den Tisch – nicht auf eine Kugel und nicht in eine Tasche – und bestätigt die Stelle.</p></li>
+        <li><h3>Die Acht</h3><ul>
+          <li>Erst spielbar, wenn alle eigenen Kugeln versenkt sind.</li>
+          <li>Vor dem Stoß tippst du die Tasche an, in die sie fallen soll (oder Tasten 1–6).</li>
+          <li>Fällt sie dort ohne Foul: <b>Sieg</b>.</li>
+          <li>Fällt sie zu früh, in eine andere Tasche oder zusammen mit einem Foul: <b>Niederlage</b>. Nur beim Anstoß gilt die Sonderregel oben.</li></ul></li>
+        <li><h3>Training</h3><p>Keine Gruppen, keine Niederlage. Alle Kugeln sind frei. Fällt die Weiße, legst du sie neu hin.</p></li>
+        <li><h3>Steuerung</h3><ul>
+          <li>Tippen oder Ziehen auf dem Tisch richtet den Queue aus (der Finger muss nicht auf der Weißen liegen).</li>
+          <li>Die Drehknöpfe oder die Pfeiltasten ← → drehen fein (mit Umschalt gröber).</li>
+          <li>Stärke mit dem Regler oder ↑ ↓ einstellen, dann „Stoßen“ oder Leertaste.</li>
+          <li>P oder Esc: Pause. M: Ton.</li></ul></li>
+      </ul>
+    </section>
+
+    <section id="fPause" hidden>
+      <h2 data-titel>Pause</h2>
+      <p class="hinweistext">Die Kugeln warten, bis du weiterspielst.</p>
+      <div class="knoepfe">
+        <button class="btn main" id="weiterKnopf" type="button">Weiter</button>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="pauseRegelnKnopf" type="button">Regeln</button>
+          <button class="btn klein js-ton" type="button" aria-pressed="true">Ton: an</button>
+        </div>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="neustartKnopf" type="button">Neu starten</button>
+          <button class="btn klein" id="menueKnopf" type="button">Zum Menü</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="fUebergabe" hidden>
+      <h2 data-titel id="uebergabeTitel">Wechsel</h2>
+      <canvas id="uebergabeKrabbe" width="192" height="156" aria-hidden="true"></canvas>
+      <p class="ergebnisgrund" id="uebergabeGrund"></p>
+      <p class="uebergabeName" id="uebergabeName">Spieler 2 ist dran</p>
+      <p class="hinweistext" style="text-align:center">Gib das Gerät weiter.</p>
+      <div class="knoepfe"><button class="btn main" id="uebergabeKnopf" type="button">Bereit</button></div>
+    </section>
+
+    <section id="fAnstossWahl" hidden>
+      <h2 data-titel>Ungültiger Anstoß</h2>
+      <p class="ergebnisgrund" id="anstossGrund"></p>
+      <p class="hinweistext" id="anstossFrage"></p>
+      <div class="knoepfe">
+        <button class="btn main" id="neuAnstossKnopf" type="button">Neu aufbauen und selbst anstoßen</button>
+        <button class="btn klein" id="uebernehmenKnopf" type="button">Tisch so übernehmen</button>
+      </div>
+    </section>
+
+    <section id="fErgebnis" hidden>
+      <h2 data-titel id="ergebnisTitel">Gewonnen!</h2>
+      <canvas id="ergebnisKrabbe" width="240" height="196" aria-hidden="true"></canvas>
+      <p class="ergebnisgrund" id="ergebnisGrund"></p>
+      <p class="zahlenklein" id="ergebnisZahlen"></p>
+      <div class="knoepfe">
+        <button class="btn main" id="revancheKnopf" type="button">Revanche</button>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="ergebnisMenueKnopf" type="button">Zum Menü</button>
+          <button class="btn klein" id="ergebnisFreunde" type="button">Freunde herausfordern</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+// ===================================================================
+// 1 · EINSTELLUNGEN UND TISCHGEOMETRIE
+// Alle Maße an EINER Stelle, in Millimetern (Weltkoordinaten).
+// Ursprung = Tischmitte, x nach rechts (lange Seite), y nach unten.
+// Diese Geometrie ist auf allen Geräten gleich; nur die Darstellung
+// wird skaliert oder um 90° gedreht.
+// Vorbild: 7-Fuß-Kneipentisch (Spielfläche 1980 × 990 mm, Kugel 57,2 mm).
+// ===================================================================
+
+const TISCH = (() => {
+  const L = 1980, B = 990;                  // Spielfläche bis zu den Bandennasen
+  const R = 28.6;                           // Kugelradius
+  const ECK_MUND = 118;                     // Öffnung der Ecktaschen zwischen den Bandennasen
+  const MITTE_MUND = 128;                   // Öffnung der Mitteltaschen
+  const ECK_BACKE = 48, MITTE_BACKE = 34;   // Länge der Taschenbacken (schräge Bandenstücke)
+  const ECK_WINKEL = 38 * Math.PI / 180;    // Backe gegen die Bande gemessen (142° Schnittwinkel)
+  const MITTE_WINKEL = 77 * Math.PI / 180;  // Mitteltasche: 103° Schnittwinkel
+
+  const a = ECK_MUND / Math.SQRT2;          // wo die Bandennase an der Ecke endet
+  const m = MITTE_MUND / 2;
+
+  const sub = (p, q) => ({ x: p.x - q.x, y: p.y - q.y });
+  const norm = v => { const l = Math.hypot(v.x, v.y); return { x: v.x / l, y: v.y / l }; };
+
+  // Bandenstücke als Strecken. n = Normale zur Spielfläche hin (Kugeln stoßen nur von dieser Seite).
+  const banden = [];
+  function strecke(p, q, innen) {
+    // innen: ein Punkt auf der Spielseite, damit die Normale richtig herum zeigt
+    const d = norm(sub(q, p));
+    let n = { x: -d.y, y: d.x };
+    if ((innen.x - p.x) * n.x + (innen.y - p.y) * n.y < 0) n = { x: -n.x, y: -n.y };
+    banden.push({ p, q, d, n, len: Math.hypot(q.x - p.x, q.y - p.y) });
+  }
+
+  const X = L / 2, Y = B / 2;
+  const taschen = [];
+  // Ecktaschen: Reihenfolge oben links, oben rechts, unten rechts, unten links
+  const ecken = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+  for (const [sx, sy] of ecken) {
+    const ecke = { x: sx * X, y: sy * Y };
+    const A = { x: sx * (X - a), y: sy * Y };       // Ende der langen Bande
+    const Bp = { x: sx * X, y: sy * (Y - a) };      // Ende der kurzen Bande
+    // Backen: von der Nase aus nach außen, unter ECK_WINKEL zur Bande geneigt
+    const A2 = { x: A.x + sx * Math.cos(ECK_WINKEL) * ECK_BACKE, y: A.y + sy * Math.sin(ECK_WINKEL) * ECK_BACKE };
+    const B2 = { x: Bp.x + sx * Math.sin(ECK_WINKEL) * ECK_BACKE, y: Bp.y + sy * Math.cos(ECK_WINKEL) * ECK_BACKE };
+    const achse = norm({ x: sx, y: sy });
+    const mitte = { x: (A.x + Bp.x) / 2, y: (A.y + Bp.y) / 2 };
+    strecke(A, A2, { x: mitte.x + achse.x, y: mitte.y + achse.y });
+    strecke(Bp, B2, { x: mitte.x + achse.x, y: mitte.y + achse.y });
+    const kehle = { x: (A2.x + B2.x) / 2, y: (A2.y + B2.y) / 2 };
+    taschen.push({
+      art: 'ecke', mund: [A, Bp], kehlePunkte: [A2, B2], kehle, achse,
+      kehleBreite: Math.hypot(A2.x - B2.x, A2.y - B2.y),
+      ecke,
+    });
+  }
+  // Mitteltaschen: oben, unten
+  for (const sy of [-1, 1]) {
+    const A = { x: -m, y: sy * Y }, Bp = { x: m, y: sy * Y };
+    const A2 = { x: A.x + Math.cos(MITTE_WINKEL) * MITTE_BACKE, y: A.y + sy * Math.sin(MITTE_WINKEL) * MITTE_BACKE };
+    const B2 = { x: Bp.x - Math.cos(MITTE_WINKEL) * MITTE_BACKE, y: Bp.y + sy * Math.sin(MITTE_WINKEL) * MITTE_BACKE };
+    const achse = { x: 0, y: sy };
+    strecke(A, A2, { x: 0, y: sy * Y });
+    strecke(Bp, B2, { x: 0, y: sy * Y });
+    const kehle = { x: 0, y: (A2.y + B2.y) / 2 };
+    taschen.push({
+      art: 'mitte', mund: [A, Bp], kehlePunkte: [A2, B2], kehle, achse,
+      kehleBreite: Math.hypot(A2.x - B2.x, A2.y - B2.y),
+    });
+  }
+  // Reihenfolge der Taschen für Anzeige und Tasten 1–6: oben links, oben Mitte, oben rechts, unten rechts, unten Mitte, unten links
+  const REIHE = [0, 4, 1, 2, 5, 3];
+  const sortiert = REIHE.map(i => taschen[i]);
+  sortiert.forEach((t, i) => { t.nr = i; });
+  const NAMEN = ['oben links', 'oben Mitte', 'oben rechts', 'unten rechts', 'unten Mitte', 'unten links'];
+  sortiert.forEach((t, i) => { t.name = NAMEN[i]; });
+  // Sichtbares Loch: Vorderkante an der Kehle (dort fällt die Kugel wirklich)
+  for (const t of sortiert) {
+    const r = t.kehleBreite / 2 + 8;
+    t.zeichen = { x: t.kehle.x + t.achse.x * r * 0.82, y: t.kehle.y + t.achse.y * r * 0.82, r };
+  }
+
+  // Lange Banden (oben und unten, je zwei Stücke) und kurze Banden (links, rechts)
+  for (const sy of [-1, 1]) {
+    strecke({ x: -X + a, y: sy * Y }, { x: -m, y: sy * Y }, { x: 0, y: 0 });
+    strecke({ x: m, y: sy * Y }, { x: X - a, y: sy * Y }, { x: 0, y: 0 });
+  }
+  for (const sx of [-1, 1]) strecke({ x: sx * X, y: -Y + a }, { x: sx * X, y: Y - a }, { x: 0, y: 0 });
+
+  // Ecken der Bandenstücke (Nasen und Backenenden) als runde Stoßpunkte.
+  // Doppelte Punkte (Bande endet dort, wo die Backe beginnt) nur einmal.
+  const punkte = [];
+  for (const s of banden) for (const p of [s.p, s.q]) {
+    if (!punkte.some(o => Math.hypot(o.x - p.x, o.y - p.y) < 0.01)) punkte.push(p);
+  }
+
+  const kopfX = -L / 4;   // Kopflinie: hinter ihr (links) liegt das Kopffeld
+  const fussX = L / 4;    // Fußpunkt: Spitze des Dreiecks
+  return {
+    L, B, R, X, Y, ECK_MUND, MITTE_MUND,
+    banden, punkte, taschen: sortiert,
+    kopfX, fussX,
+    RAHMEN: 118,          // Holzrahmen außen um die Banden (nur Darstellung)
+    BANDE: 34,            // sichtbare Gummibande (nur Darstellung)
+  };
+})();
+
+// Physik-Konstanten (alle in mm und Sekunden)
+const PHYSIK = {
+  DT: 1 / 240,              // fester Simulationsschritt
+  E_KUGEL: 0.95,            // Stoßzahl Kugel–Kugel
+  E_BANDE: 0.76,            // Stoßzahl senkrecht zur Bande
+  BANDE_GLEIT: 0.975,       // Anteil der Geschwindigkeit entlang der Bande, der erhalten bleibt
+  ROLL_KONST: 140,          // Rollreibung (mm/s²)
+  ROLL_LINEAR: 0.32,        // geschwindigkeitsabhängige Bremsung (1/s): schnelle Kugeln verlieren mehr
+  V_STOPP: 6,               // darunter ist eine Kugel in Ruhe (mm/s)
+  V_MIN: 180,               // schwächster Stoß (mm/s)
+  V_MAX: 7500,              // stärkster Stoß (mm/s)
+  MAX_EREIGNISSE: 400,      // Sicherheitsgrenze für Kontakte pro Schritt
+  FALL_DAUER: 0.32,         // Einrollanimation in die Tasche (s)
+  MAX_STOSSDAUER: 40,       // Sicherheitsgrenze (s), danach werden Restbewegungen gestoppt
+};
+
+// Stoßstärke 0..1 (Regler) → Startgeschwindigkeit der Weißen.
+// Leicht gekrümmt, damit sanfte Stöße fein dosierbar bleiben.
+function staerkeZuTempo(s) {
+  const k = Math.max(0, Math.min(1, s));
+  return PHYSIK.V_MIN + (PHYSIK.V_MAX - PHYSIK.V_MIN) * Math.pow(k, 1.7);
+}
+function tempoZuStaerke(v) {
+  const k = (Math.max(PHYSIK.V_MIN, Math.min(PHYSIK.V_MAX, v)) - PHYSIK.V_MIN) / (PHYSIK.V_MAX - PHYSIK.V_MIN);
+  return Math.pow(k, 1 / 1.7);
+}
+
+// Kugeln: 0 = Weiße, 1–7 volle, 8 = Acht, 9–15 halbe
+const KUGEL_FARBEN = {
+  1: '#F2C230', 2: '#2D63C8', 3: '#D8402F', 4: '#6E3FA8', 5: '#F07D2A', 6: '#2E8B4E', 7: '#8E2A28', 8: '#16161A',
+  9: '#F2C230', 10: '#2D63C8', 11: '#D8402F', 12: '#6E3FA8', 13: '#F07D2A', 14: '#2E8B4E', 15: '#8E2A28',
+};
+const gruppeVon = nr => nr === 0 ? 'weiss' : nr === 8 ? 'acht' : nr < 8 ? 'voll' : 'halb';
+const VOLLE = [1, 2, 3, 4, 5, 6, 7], HALBE = [9, 10, 11, 12, 13, 14, 15];
+
+// Kleiner reproduzierbarer Zufall (für Aufbau, Computer und Tests)
+function zufall(saat) {
+  let s = (saat >>> 0) || 1;
+  return () => { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; };
+}
+
+// ===================================================================
+// 2 · PHYSIK
+// Reine Kugelphysik ohne Darstellung (läuft auch in Node für Tests).
+//
+// Verfahren: fester Schritt PHYSIK.DT. Innerhalb eines Schritts bewegen
+// sich die Kugeln geradlinig. Der früheste Kontakt (Kugel–Kugel,
+// Kugel–Bande, Kugel–Bandenecke) wird exakt berechnet, alle Kugeln
+// laufen bis dorthin, der Stoß wird aufgelöst, dann geht es weiter.
+// Dadurch gibt es kein Durchtunneln, auch bei sehr starken Stößen, und
+// keine Positionskorrektur, die Kugeln künstlich beschleunigen könnte.
+// Reibung wird am Ende jedes Schritts angewendet.
+//
+// Gleichzeitige Kontakte (z. B. beim Anstoß ins Dreieck) werden der
+// Reihe nach zum selben Zeitpunkt aufgelöst; ein Stoß wirkt nur, wenn
+// sich die Kugeln aufeinander zu bewegen. Ruhende, sich berührende
+// Kugeln erzeugen daher keine Ereignisse und zittern nicht.
+// ===================================================================
+
+const EPS_ZEIT = 1e-9;
+const EPS_ANNAEHERUNG = 1e-7;   // mm/s: darunter gilt „bewegt sich nicht aufeinander zu“
+
+// Zeit bis zum Kontakt zweier Kugeln (Abstand 2R) bei konstanter Relativbewegung, sonst Infinity
+function zeitKugelKugel(ax, ay, avx, avy, bx, by, bvx, bvy, R2) {
+  const dx = bx - ax, dy = by - ay;
+  const wx = bvx - avx, wy = bvy - avy;
+  const b = dx * wx + dy * wy;              // halbe lineare Komponente
+  if (b >= -EPS_ANNAEHERUNG) return Infinity; // entfernen sich oder stehen relativ still
+  const a = wx * wx + wy * wy;
+  const c = dx * dx + dy * dy - R2 * R2;
+  if (c <= 0) return 0;                     // berühren/überlappen schon und nähern sich: sofort
+  const disk = b * b - a * c;
+  if (disk < 0) return Infinity;
+  return (-b - Math.sqrt(disk)) / a;
+}
+
+// Zeit, bis eine Kugel (Mittelpunkt p, Geschwindigkeit v) eine Bandenstrecke berührt
+function zeitKugelStrecke(px, py, vx, vy, s, R) {
+  const vn = vx * s.n.x + vy * s.n.y;
+  if (vn >= -EPS_ANNAEHERUNG) return Infinity;   // bewegt sich nicht auf die Bande zu
+  const abst = (px - s.p.x) * s.n.x + (py - s.p.y) * s.n.y - R;
+  if (abst < -R) return Infinity;                // liegt hinter der Bande (gehört nicht hierher)
+  const t = abst <= 0 ? 0 : abst / -vn;
+  // Berührpunkt muss auf der Strecke liegen (sonst übernehmen die Eckpunkte)
+  const cx = px + vx * t - s.n.x * R, cy = py + vy * t - s.n.y * R;
+  const u = (cx - s.p.x) * s.d.x + (cy - s.p.y) * s.d.y;
+  if (u < 0 || u > s.len) return Infinity;
+  return t;
+}
+
+// Zeit bis zum Kontakt mit einem festen Punkt (Bandennase, Backenende)
+function zeitKugelPunkt(px, py, vx, vy, q, R) {
+  return zeitKugelKugel(px, py, vx, vy, q.x, q.y, 0, 0, R);
+}
+
+// Prüft, ob eine Kugel durch die Kehle einer Tasche gerollt ist
+function taschenTreffer(x, y, R) {
+  for (const t of TISCH.taschen) {
+    const ax = x - t.kehle.x, ay = y - t.kehle.y;
+    const tief = ax * t.achse.x + ay * t.achse.y;
+    if (tief <= 0) continue;
+    const seit = Math.abs(ax * -t.achse.y + ay * t.achse.x);
+    if (seit < t.kehleBreite / 2 + R) return t;
+  }
+  return null;
+}
+
+// ---------- Kugeln und Welt ----------
+function neueKugel(nr, x, y) {
+  return { nr, x, y, vx: 0, vy: 0, aufTisch: true, fall: null };
+}
+
+const Physik = {
+  // Ein Stoß: Weiße bekommt Geschwindigkeit in Richtung winkel
+  stoss(kugeln, winkel, tempo) {
+    const w = kugeln.find(k => k.nr === 0 && k.aufTisch);
+    if (!w) return false;
+    w.vx = Math.cos(winkel) * tempo;
+    w.vy = Math.sin(winkel) * tempo;
+    return true;
+  },
+
+  inBewegung(kugeln) {
+    for (const k of kugeln) if (k.aufTisch && (k.vx !== 0 || k.vy !== 0)) return true;
+    return false;
+  },
+
+  energie(kugeln) {
+    let e = 0;
+    for (const k of kugeln) if (k.aufTisch) e += 0.5 * (k.vx * k.vx + k.vy * k.vy);
+    return e;
+  },
+
+  // Ein fester Schritt. ereignis(e) wird für jeden Kontakt aufgerufen:
+  //   { typ: 'kugel', a, b, staerke }   { typ: 'bande', kugel, staerke }   { typ: 'tasche', kugel, tasche }
+  schritt(kugeln, ereignis, dt = PHYSIK.DT) {
+    const R = TISCH.R, R2 = 2 * R;
+    const aktiv = kugeln.filter(k => k.aufTisch);
+    let rest = dt, zaehler = 0;
+
+    while (rest > EPS_ZEIT) {
+      // frühesten Kontakt suchen
+      let tMin = rest, art = null, i1 = -1, i2 = -1, ziel = null;
+      for (let i = 0; i < aktiv.length; i++) {
+        const a = aktiv[i];
+        const bewegt = a.vx !== 0 || a.vy !== 0;
+        const va = bewegt ? Math.hypot(a.vx, a.vy) : 0;
+        for (let j = i + 1; j < aktiv.length; j++) {
+          const b = aktiv[j];
+          if (!bewegt && b.vx === 0 && b.vy === 0) continue;
+          // Schnelltest: können sich die beiden in der Restzeit überhaupt erreichen?
+          const reichweite = (va + Math.abs(b.vx) + Math.abs(b.vy)) * tMin + R2 + 0.5;
+          const ddx = b.x - a.x, ddy = b.y - a.y;
+          if (ddx > reichweite || -ddx > reichweite || ddy > reichweite || -ddy > reichweite) continue;
+          const t = zeitKugelKugel(a.x, a.y, a.vx, a.vy, b.x, b.y, b.vx, b.vy, R2);
+          if (t < tMin) { tMin = t; art = 'kugel'; i1 = i; i2 = j; }
+        }
+        if (!bewegt) continue;
+        // Schnelltest: weit weg von allen Banden und Taschen? Dann keine Bandenprüfung nötig.
+        const spiel = va * tMin + 1;
+        if (Math.abs(a.x) < TISCH.X - R - spiel && Math.abs(a.y) < TISCH.Y - R - spiel) continue;
+        for (const s of TISCH.banden) {
+          const t = zeitKugelStrecke(a.x, a.y, a.vx, a.vy, s, R);
+          if (t < tMin) { tMin = t; art = 'strecke'; i1 = i; ziel = s; }
+        }
+        for (const q of TISCH.punkte) {
+          const t = zeitKugelPunkt(a.x, a.y, a.vx, a.vy, q, R);
+          if (t < tMin) { tMin = t; art = 'punkt'; i1 = i; ziel = q; }
+        }
+      }
+
+      // alle bis zum Kontakt (oder Schrittende) bewegen
+      if (tMin > 0) {
+        for (const k of aktiv) { k.x += k.vx * tMin; k.y += k.vy * tMin; }
+        rest -= tMin;
+      }
+      if (!art) break;
+
+      if (++zaehler > PHYSIK.MAX_EREIGNISSE) {
+        // Notbremse gegen Endlosschleifen: Rest des Schritts ohne weitere Kontakte
+        for (const k of aktiv) { k.x += k.vx * rest; k.y += k.vy * rest; }
+        rest = 0;
+        break;
+      }
+
+      if (art === 'kugel') {
+        const a = aktiv[i1], b = aktiv[i2];
+        let nx = b.x - a.x, ny = b.y - a.y;
+        const l = Math.hypot(nx, ny) || 1;
+        nx /= l; ny /= l;
+        const vn = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;   // > 0: nähern sich
+        if (vn > 0) {
+          const j = (1 + PHYSIK.E_KUGEL) / 2 * vn;         // gleiche Massen
+          a.vx -= j * nx; a.vy -= j * ny;
+          b.vx += j * nx; b.vy += j * ny;
+          if (ereignis) ereignis({ typ: 'kugel', a: a.nr, b: b.nr, staerke: vn });
+        }
+      } else {
+        const k = aktiv[i1];
+        let nx, ny;
+        if (art === 'strecke') { nx = ziel.n.x; ny = ziel.n.y; }
+        else { nx = k.x - ziel.x; ny = k.y - ziel.y; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l; }
+        const vn = k.vx * nx + k.vy * ny;                    // < 0: auf die Bande zu
+        if (vn < 0) {
+          const tx = k.vx - vn * nx, ty = k.vy - vn * ny;
+          k.vx = tx * PHYSIK.BANDE_GLEIT - vn * PHYSIK.E_BANDE * nx;
+          k.vy = ty * PHYSIK.BANDE_GLEIT - vn * PHYSIK.E_BANDE * ny;
+          if (ereignis) ereignis({ typ: 'bande', kugel: k.nr, staerke: -vn });
+        }
+      }
+    }
+
+    // Taschen: Kugel ist durch die Kehle gerollt → fällt
+    for (const k of aktiv) {
+      const t = taschenTreffer(k.x, k.y, R);
+      if (t) {
+        k.aufTisch = false;
+        k.fall = { tasche: t.nr, zeit: 0, x: k.x, y: k.y, vx: k.vx, vy: k.vy };
+        k.vx = 0; k.vy = 0;
+        if (ereignis) ereignis({ typ: 'tasche', kugel: k.nr, tasche: t.nr });
+      }
+    }
+
+    // Reibung: gleichmäßiges Ausrollen, kleine Restgeschwindigkeit → 0
+    for (const k of aktiv) {
+      if (!k.aufTisch || (k.vx === 0 && k.vy === 0)) continue;
+      const v = Math.hypot(k.vx, k.vy);
+      const neu = v - (PHYSIK.ROLL_KONST + PHYSIK.ROLL_LINEAR * v) * dt;
+      if (neu < PHYSIK.V_STOPP) { k.vx = 0; k.vy = 0; }
+      else { k.vx *= neu / v; k.vy *= neu / v; }
+    }
+  },
+
+  // Fallanimation weiterführen (nur Darstellung, nicht Teil der aktiven Physik)
+  fallSchritt(kugeln, dt) {
+    for (const k of kugeln) if (k.fall && k.fall.zeit < PHYSIK.FALL_DAUER) k.fall.zeit = Math.min(PHYSIK.FALL_DAUER, k.fall.zeit + dt);
+  },
+
+  // Ganzen Stoß ohne Darstellung durchrechnen (Tests und Computer). Gibt die Ereignisliste zurück.
+  simuliere(kugeln, maxSek = PHYSIK.MAX_STOSSDAUER) {
+    const ereignisse = [];
+    const n = Math.ceil(maxSek / PHYSIK.DT);
+    let i = 0;
+    for (; i < n && Physik.inBewegung(kugeln); i++) Physik.schritt(kugeln, e => ereignisse.push(e));
+    if (i >= n) Physik.anhalten(kugeln);
+    return ereignisse;
+  },
+
+  anhalten(kugeln) { for (const k of kugeln) { k.vx = 0; k.vy = 0; } },
+
+  kopie(kugeln) { return kugeln.map(k => ({ nr: k.nr, x: k.x, y: k.y, vx: k.vx, vy: k.vy, aufTisch: k.aufTisch, fall: null })); },
+};
+
+// ---------- Strahl für Zielvorschau und Computer ----------
+// Wirft eine Kugel (Radius R) von (x, y) in Richtung (dx, dy) und findet den ersten Kontakt
+// mit genau denselben Funktionen wie die Physik. Kugeln mit nr in ohne werden ignoriert.
+// Rückgabe: { art: 'kugel'|'bande'|'tasche'|null, t (mm), x, y (Mittelpunkt beim Kontakt), kugel, nx, ny }
+function wirfStrahl(kugeln, x, y, dx, dy, ohne = [], maxWeg = 6000) {
+  const R = TISCH.R;
+  let best = { art: null, t: maxWeg, x: x + dx * maxWeg, y: y + dy * maxWeg };
+  for (const k of kugeln) {
+    if (!k.aufTisch || ohne.includes(k.nr)) continue;
+    const t = zeitKugelKugel(x, y, dx, dy, k.x, k.y, 0, 0, 2 * R);
+    if (t < best.t) {
+      const cx = x + dx * t, cy = y + dy * t;
+      const l = Math.hypot(k.x - cx, k.y - cy) || 1;
+      best = { art: 'kugel', t, x: cx, y: cy, kugel: k.nr, nx: (k.x - cx) / l, ny: (k.y - cy) / l };
+    }
+  }
+  for (const s of TISCH.banden) {
+    const t = zeitKugelStrecke(x, y, dx, dy, s, R);
+    if (t < best.t) best = { art: 'bande', t, x: x + dx * t, y: y + dy * t, nx: s.n.x, ny: s.n.y };
+  }
+  for (const q of TISCH.punkte) {
+    const t = zeitKugelPunkt(x, y, dx, dy, q, R);
+    if (t < best.t) {
+      const cx = x + dx * t, cy = y + dy * t, l = Math.hypot(cx - q.x, cy - q.y) || 1;
+      best = { art: 'bande', t, x: cx, y: cy, nx: (cx - q.x) / l, ny: (cy - q.y) / l };
+    }
+  }
+  // Tasche: Strahl überquert die Kehle, bevor er etwas anderes trifft
+  for (const ta of TISCH.taschen) {
+    const vn = dx * ta.achse.x + dy * ta.achse.y;
+    if (vn <= 0) continue;
+    const tief = (x - ta.kehle.x) * ta.achse.x + (y - ta.kehle.y) * ta.achse.y;
+    const t = -tief / vn;
+    if (t <= 0 || t >= best.t) continue;
+    const cx = x + dx * t, cy = y + dy * t;
+    const seit = Math.abs((cx - ta.kehle.x) * -ta.achse.y + (cy - ta.kehle.y) * ta.achse.x);
+    if (seit < ta.kehleBreite / 2 + R) best = { art: 'tasche', t, x: cx, y: cy, tasche: ta.nr };
+  }
+  return best;
+}
+
+// ---------- Platzieren ----------
+// Ist (x, y) eine gültige Position für eine Kugel? Ganz auf dem Tuch, nicht in einer
+// Tasche, nicht auf einer anderen Kugel. nurKopffeld: links der Kopflinie.
+function platzGueltig(kugeln, x, y, { ohne = 0, nurKopffeld = false } = {}) {
+  const R = TISCH.R;
+  if (!isFinite(x) || !isFinite(y)) return false;
+  if (Math.abs(x) > TISCH.X - R || Math.abs(y) > TISCH.Y - R) return false;
+  if (nurKopffeld && x > TISCH.kopfX) return false;
+  // Vor jeder Taschenöffnung (Mundlinie) muss die ganze Kugel auf dem Tuch liegen
+  for (const t of TISCH.taschen) {
+    if (t.art !== 'ecke') continue;
+    const [A] = t.mund;
+    const d = (x - A.x) * t.achse.x + (y - A.y) * t.achse.y;   // > 0: hinter der Mundlinie
+    if (d > -R) return false;
+  }
+  for (const k of kugeln) {
+    if (!k.aufTisch || k.nr === ohne) continue;
+    if (Math.hypot(k.x - x, k.y - y) < 2 * R + 0.01) return false;
+  }
+  return true;
+}
+
+// Nächste gültige Position zu einem Wunschpunkt (Spirale nach außen)
+function naechsterFreierPlatz(kugeln, x, y, opt = {}) {
+  if (platzGueltig(kugeln, x, y, opt)) return { x, y };
+  for (let r = 4; r < 1400; r += 4) {
+    const n = Math.max(8, Math.round(r / 3));
+    for (let i = 0; i < n; i++) {
+      const w = i / n * Math.PI * 2;
+      const px = x + Math.cos(w) * r, py = y + Math.sin(w) * r;
+      if (platzGueltig(kugeln, px, py, opt)) return { x: px, y: py };
+    }
+  }
+  return null;
+}
+
+// ===================================================================
+// 3 · AUFBAU
+// Dreieck für 8-Ball, Wiedereinsetzen der Acht, Übungsaufbauten.
+// ===================================================================
+
+const LUECKE = 0.2;   // mm Abstand zwischen Kugeln im Dreieck: berühren sich fast, überlappen nie
+
+// Positionen des Dreiecks: Spitze auf dem Fußpunkt, Reihen nach rechts (zur Fußbande)
+function dreieckPlaetze() {
+  const D = 2 * TISCH.R + LUECKE;
+  const plaetze = [];
+  for (let reihe = 0; reihe < 5; reihe++) {
+    for (let j = 0; j <= reihe; j++) {
+      plaetze.push({ reihe, j, x: TISCH.fussX + reihe * D * Math.sqrt(3) / 2, y: (j - reihe / 2) * D });
+    }
+  }
+  return plaetze;
+}
+
+// Faire Belegung: Acht in der Mitte (Reihe 3, mittlere Kugel), hinten links/rechts je
+// eine volle und eine halbe (Seite zufällig), alle anderen gemischt.
+function baueDreieck(rnd = Math.random) {
+  const plaetze = dreieckPlaetze();
+  const idx = (reihe, j) => plaetze.findIndex(p => p.reihe === reihe && p.j === j);
+  const belegt = new Array(15).fill(0);
+  const mischen = arr => { for (let i = arr.length - 1; i > 0; i--) { const k = Math.floor(rnd() * (i + 1)); [arr[i], arr[k]] = [arr[k], arr[i]]; } return arr; };
+  const volle = mischen(VOLLE.slice()), halbe = mischen(HALBE.slice());
+  belegt[idx(2, 1)] = 8;
+  const vollLinks = rnd() < 0.5;
+  belegt[idx(4, 0)] = vollLinks ? volle.pop() : halbe.pop();
+  belegt[idx(4, 4)] = vollLinks ? halbe.pop() : volle.pop();
+  const rest = mischen(volle.concat(halbe));
+  for (let i = 0; i < 15; i++) if (!belegt[i]) belegt[i] = rest.pop();
+  const kugeln = [neueKugel(0, TISCH.kopfX - 60, 0)];
+  // Kleine Lage-Toleranz wie bei einem echten Dreieck (±0,07 mm je Achse). Weil der Spalt 0,2 mm beträgt
+  // und 2 · 0,07 · √2 < 0,2 ist, können sich Kugeln dabei nie überlappen. Sie verteilt die Energie beim Anstoß natürlicher.
+  plaetze.forEach((p, i) => kugeln.push(neueKugel(belegt[i], p.x + (rnd() - 0.5) * 0.14, p.y + (rnd() - 0.5) * 0.14)));
+  return kugeln;
+}
+
+// Acht wieder einsetzen: Fußpunkt, sonst auf der Längsachse Richtung Fußbande, sonst Richtung Kopf
+function setzeAchtEin(kugeln) {
+  const acht = kugeln.find(k => k.nr === 8);
+  if (!acht) return null;
+  acht.aufTisch = false;
+  const versuche = [];
+  for (let x = TISCH.fussX; x <= TISCH.X - TISCH.R; x += 2) versuche.push(x);
+  for (let x = TISCH.fussX; x >= -TISCH.X + TISCH.R; x -= 2) versuche.push(x);
+  for (const x of versuche) {
+    if (platzGueltig(kugeln, x, 0, { ohne: 8 })) {
+      Object.assign(acht, { x, y: 0, vx: 0, vy: 0, aufTisch: true, fall: null });
+      return acht;
+    }
+  }
+  const p = naechsterFreierPlatz(kugeln, TISCH.fussX, 0, { ohne: 8 });
+  Object.assign(acht, { x: p.x, y: p.y, vx: 0, vy: 0, aufTisch: true, fall: null });
+  return acht;
+}
+
+// Übungsaufbauten für das Training
+const UEBUNGEN = {
+  gerade: {
+    name: 'Gerader Stoß',
+    text: 'Weiße, Kugel und Tasche liegen auf einer Linie. Stoß mittig und gefühlvoll.',
+    baue: () => {
+      // Weiße, Kugel und obere rechte Ecktasche auf einer Linie
+      const t = TISCH.taschen[2];
+      const ziel = { x: (t.mund[0].x + t.mund[1].x) / 2, y: (t.mund[0].y + t.mund[1].y) / 2 };
+      const start = { x: 0, y: 160 };
+      const dx = ziel.x - start.x, dy = ziel.y - start.y, l = Math.hypot(dx, dy);
+      return [neueKugel(0, start.x, start.y), neueKugel(3, start.x + dx / l * 420, start.y + dy / l * 420)];
+    },
+  },
+  schnitt: {
+    name: 'Schnitt',
+    text: 'Die Kugel liegt schräg zur Tasche. Triff sie dünn auf der richtigen Seite.',
+    baue: () => [neueKugel(0, -250, 200), neueKugel(11, 560, -260)],
+  },
+  bande: {
+    name: 'Bandenstoß',
+    text: 'Der direkte Weg ist versperrt. Spiel die Weiße über die Bande an die Kugel.',
+    baue: () => [neueKugel(0, -500, 280), neueKugel(8, 0, 120), neueKugel(5, 500, 280), neueKugel(2, 120, 250)],
+  },
+};
+
+// ===================================================================
+// 3 · REGELN (8-Ball, Hafenbillard-Hausregeln)
+// Während eines Stoßes wird nur protokolliert (Stossprotokoll). Erst wenn
+// alle Kugeln ruhen, wertet werteStossAus() den ganzen Stoß auf einmal aus.
+// Keine Zugwechsel mitten in einzelnen Kollisionen.
+// ===================================================================
+
+// Sammelt alle Ereignisse eines Stoßes
+class Stossprotokoll {
+  constructor() {
+    this.ersterKontakt = null;     // Nummer der zuerst getroffenen Objektkugel
+    this.bandeNachKontakt = false; // irgendeine Kugel hat nach dem ersten Kontakt eine Bande berührt
+    this.bandenKugeln = new Set(); // Objektkugeln mit Bandenkontakt (für den Anstoß)
+    this.versenkt = [];            // [{ nr, tasche }] in Reihenfolge
+    this.kontakte = 0;
+  }
+  ereignis(e) {
+    if (e.typ === 'kugel') {
+      this.kontakte++;
+      if (this.ersterKontakt === null) {
+        if (e.a === 0) this.ersterKontakt = e.b;
+        else if (e.b === 0) this.ersterKontakt = e.a;
+      }
+    } else if (e.typ === 'bande') {
+      if (this.ersterKontakt !== null) this.bandeNachKontakt = true;
+      if (e.kugel !== 0) this.bandenKugeln.add(e.kugel);
+    } else if (e.typ === 'tasche') {
+      this.versenkt.push({ nr: e.kugel, tasche: e.tasche });
+    }
+  }
+}
+
+const FOUL_TEXTE = {
+  nichts: 'Foul: keine Kugel getroffen.',
+  falsch: 'Foul: zuerst die falsche Kugel getroffen.',
+  weisse: 'Foul: die Weiße ist in eine Tasche gefallen.',
+  bande: 'Foul: nach dem Treffer ist keine Kugel gefallen und keine an eine Bande gerollt.',
+};
+const GRUPPEN_NAME = { voll: 'Volle', halb: 'Halbe' };
+const gruppenKugeln = g => g === 'voll' ? VOLLE : g === 'halb' ? HALBE : [];
+
+// Welche Kugeln darf die Person am Zug zuerst treffen?
+// aufTisch: Set der Kugelnummern auf dem Tisch beim Stoßbeginn
+function erlaubteZiele(gruppe, aufTisch, anstoss = false) {
+  if (anstoss) return [...aufTisch].filter(n => n !== 0);
+  if (!gruppe) return [...aufTisch].filter(n => n !== 0 && n !== 8);
+  const eigene = gruppenKugeln(gruppe).filter(n => aufTisch.has(n));
+  return eigene.length ? eigene : [8];
+}
+const spieltAufAcht = (gruppe, aufTisch) => !!gruppe && gruppenKugeln(gruppe).every(n => !aufTisch.has(n));
+
+// zustand: { amZug, gruppen: [g0, g1], anstoss, angesagt (Taschennummer oder null), aufTisch: Set }
+// Ergebnis: siehe unten (ein flaches Objekt, damit Tests es leicht prüfen können)
+function werteStossAus(zustand, p) {
+  const ich = zustand.amZug, du = 1 - ich;
+  const meine = zustand.gruppen[ich];
+  const versenktNr = p.versenkt.map(v => v.nr);
+  const weisseWeg = versenktNr.includes(0);
+  const achtWeg = versenktNr.includes(8);
+  const objektVersenkt = p.versenkt.filter(v => v.nr !== 0);
+  const erg = {
+    foul: null, foulText: '', weiter: false, naechster: du, gruppen: zustand.gruppen.slice(),
+    ende: null, ballInHand: false, achtEinsetzen: false, neuAufbauWahl: false, anstossLegal: null,
+    gruppeNeu: null, meldung: '',
+  };
+
+  // ---------- Anstoß ----------
+  if (zustand.anstoss) {
+    const legal = objektVersenkt.length > 0 || p.bandenKugeln.size >= 4;
+    erg.anstossLegal = legal;
+    erg.achtEinsetzen = achtWeg;
+    if (!legal) {
+      erg.neuAufbauWahl = true;
+      erg.foul = 'anstoss';
+      erg.foulText = 'Ungültiger Anstoß: keine Kugel gefallen und weniger als vier Kugeln an der Bande.';
+      erg.ballInHand = weisseWeg;   // falls der Tisch übernommen wird
+      erg.meldung = erg.foulText;
+      return erg;
+    }
+    if (weisseWeg) {
+      erg.foul = 'weisse';
+      erg.foulText = FOUL_TEXTE.weisse;
+      erg.ballInHand = true;
+      erg.meldung = 'Anstoß gültig, aber ' + FOUL_TEXTE.weisse.replace('Foul: ', '') + ' Ball in Hand für die andere Seite.';
+      return erg;
+    }
+    const sonstige = objektVersenkt.filter(v => v.nr !== 8);
+    if (sonstige.length) { erg.weiter = true; erg.naechster = ich; }
+    erg.meldung = achtWeg ? 'Die Acht ist beim Anstoß gefallen und wird wieder eingesetzt.' : (erg.weiter ? 'Guter Anstoß! Der Tisch ist noch offen.' : 'Anstoß gültig. Der Tisch ist noch offen.');
+    return erg;
+  }
+
+  // ---------- normaler Stoß ----------
+  const ziele = erlaubteZiele(meine, zustand.aufTisch);
+  const aufAcht = spieltAufAcht(meine, zustand.aufTisch);
+  let foul = null;
+  if (p.ersterKontakt === null) foul = 'nichts';
+  else if (!ziele.includes(p.ersterKontakt)) foul = 'falsch';
+  else if (weisseWeg) foul = 'weisse';
+  else if (objektVersenkt.length === 0 && !p.bandeNachKontakt) foul = 'bande';
+  if (!foul && weisseWeg) foul = 'weisse';
+  if (foul) {
+    erg.foul = foul;
+    erg.foulText = FOUL_TEXTE[foul];
+    if (foul === 'falsch') {
+      const erlaubt = !meine ? 'eine volle oder halbe Kugel (nicht die Acht)' : aufAcht ? 'die Acht' : 'eine Kugel der ' + GRUPPEN_NAME[meine];
+      erg.foulText += ` Erlaubt war ${erlaubt}.`;
+    }
+  }
+
+  // Acht gefallen: Sieg oder Niederlage
+  if (achtWeg) {
+    const tasche = p.versenkt.find(v => v.nr === 8).tasche;
+    if (!aufAcht) erg.ende = { sieger: du, grund: 'Die Acht ist zu früh gefallen.' };
+    else if (foul) erg.ende = { sieger: du, grund: 'Die Acht ist zusammen mit einem Foul gefallen. ' + erg.foulText.replace('Foul: ', '') };
+    else if (zustand.angesagt !== tasche) erg.ende = { sieger: du, grund: 'Die Acht ist in die falsche Tasche gefallen.' };
+    else erg.ende = { sieger: ich, grund: 'Die Acht ist sauber in die angesagte Tasche gefallen.' };
+    erg.weiter = false;
+    erg.naechster = du;
+    erg.meldung = erg.ende.grund;
+    return erg;
+  }
+
+  if (foul) {
+    erg.ballInHand = true;
+    erg.meldung = erg.foulText + ' Ball in Hand für die andere Seite.';
+    return erg;
+  }
+
+  // Gruppenzuweisung bei offenem Tisch: erste versenkte volle oder halbe Kugel
+  let gruppe = meine;
+  if (!meine) {
+    const erste = objektVersenkt.find(v => v.nr !== 8);
+    if (erste) {
+      gruppe = gruppeVon(erste.nr);
+      erg.gruppen[ich] = gruppe;
+      erg.gruppen[du] = gruppe === 'voll' ? 'halb' : 'voll';
+      erg.gruppeNeu = gruppe;
+    }
+  }
+  const eigeneGefallen = gruppe ? objektVersenkt.some(v => gruppeVon(v.nr) === gruppe) : false;
+  if (eigeneGefallen) {
+    erg.weiter = true;
+    erg.naechster = ich;
+    erg.meldung = erg.gruppeNeu ? `Gruppe vergeben: ${GRUPPEN_NAME[gruppe]}.` : 'Getroffen! Weiter geht’s.';
+  } else {
+    erg.meldung = objektVersenkt.length ? 'Nur fremde Kugeln gefallen. Wechsel.' : 'Keine eigene Kugel gefallen. Wechsel.';
+  }
+  return erg;
+}
+
+// Training: keine Gruppen, keine Niederlage. Die Weiße wird nach dem Versenken neu gesetzt.
+function werteTrainingAus(p) {
+  const weisseWeg = p.versenkt.some(v => v.nr === 0);
+  const gefallen = p.versenkt.filter(v => v.nr !== 0).length;
+  return { weiter: true, ballInHand: weisseWeg, gefallen, meldung: weisseWeg ? 'Die Weiße ist gefallen. Leg sie wieder auf den Tisch.' : gefallen ? 'Schön versenkt!' : '' };
+}
+
+// ===================================================================
+// 3 · COMPUTERGEGNER
+// Fair: Er sieht nur den Tisch, wählt Ziel, Tasche, Winkel und Stärke
+// und stößt dann über dieselbe Physik wie ein Mensch. Zum Planen rechnet
+// er Kandidaten auf einer KOPIE des Tisches durch (wie ein Mensch, der
+// sich den Stoß vorstellt). Danach kommt eine Ungenauigkeit je Stufe
+// dazu. Keine Bahnkorrektur, kein Verschieben, kein garantierter Treffer.
+//
+// Die Planung läuft als Generator in kleinen Zeitscheiben, damit die
+// Oberfläche nie einfriert, und hat feste Obergrenzen.
+// ===================================================================
+
+const COMPUTER_STUFEN = {
+  entspannt: {
+    name: 'Entspannt',
+    kandidaten: 6,           // wie viele Lochchancen genauer durchgerechnet werden
+    staerken: 2,
+    robust: 0,               // Zusatzsimulationen mit leicht verfehltem Winkel
+    stellung: false,         // denkt nicht an die nächste Position der Weißen
+    winkelFehler: 1.15,      // Grad (Standardabweichung)
+    staerkeFehler: 0.09,
+    auswahlStreuung: 0.35,   // wählt nicht immer den besten Stoß
+    sicherheit: false,       // spielt selten bewusst auf Sicherheit
+    maxSimulationen: 26,
+  },
+  herausfordernd: {
+    name: 'Herausfordernd',
+    kandidaten: 14,
+    staerken: 3,
+    robust: 2,
+    stellung: true,
+    winkelFehler: 0.22,
+    staerkeFehler: 0.035,
+    auswahlStreuung: 0,
+    sicherheit: true,
+    maxSimulationen: 90,
+  },
+};
+
+const Computer = (() => {
+  const R = TISCH.R;
+  const grad = Math.PI / 180;
+
+  function gauss(rnd) {
+    let u = 0, v = 0;
+    while (u === 0) u = rnd();
+    while (v === 0) v = rnd();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
+  // Geschwindigkeit, mit der eine Kugel ungefähr s mm weit rollt
+  function tempoFuerWeg(s) {
+    let lo = 0, hi = PHYSIK.V_MAX * 1.2;
+    for (let i = 0; i < 30; i++) {
+      const m = (lo + hi) / 2;
+      if (rollWeg(m) < s) lo = m; else hi = m;
+    }
+    return hi;
+  }
+  function rollWeg(v) {
+    const c = PHYSIK.ROLL_KONST, k = PHYSIK.ROLL_LINEAR;
+    return v / k - c / (k * k) * Math.log(1 + k * v / c);
+  }
+
+  // Zielpunkt in der Tasche: etwas hinter der Kehlenmitte
+  const taschenZiel = t => ({ x: t.kehle.x + t.achse.x * 6, y: t.kehle.y + t.achse.y * 6 });
+
+  // Direkte Lochchance prüfen: Weiße bei w, Objektkugel b, Tasche t
+  function lochChance(kugeln, w, b, t) {
+    const z = taschenZiel(t);
+    let dx = z.x - b.x, dy = z.y - b.y;
+    const dObj = Math.hypot(dx, dy);
+    dx /= dObj; dy /= dObj;
+    // Weg der Objektkugel frei? (dieselbe Geometrie wie die Physik)
+    const bahn = wirfStrahl(kugeln, b.x, b.y, dx, dy, [b.nr, 0]);
+    if (bahn.art !== 'tasche' || bahn.tasche !== t.nr) return null;
+    const gx = b.x - dx * 2 * R, gy = b.y - dy * 2 * R;
+    let ux = gx - w.x, uy = gy - w.y;
+    const dWeiss = Math.hypot(ux, uy);
+    if (dWeiss < 1) return null;
+    ux /= dWeiss; uy /= dWeiss;
+    const schnitt = Math.acos(Math.max(-1, Math.min(1, ux * dx + uy * dy)));
+    if (schnitt > 80 * grad) return null;
+    const weg = wirfStrahl(kugeln, w.x, w.y, ux, uy, [0]);
+    if (weg.art !== 'kugel' || weg.kugel !== b.nr || Math.hypot(weg.x - gx, weg.y - gy) > 1.5) return null;
+    // grobe Schwierigkeit: dünne Schnitte und lange Wege sind schwerer, Mitteltaschen mögen keine steilen Winkel
+    const einlauf = Math.acos(Math.max(-1, Math.min(1, dx * t.achse.x + dy * t.achse.y)));
+    const einlaufStrafe = t.art === 'mitte' ? Math.max(0, einlauf - 25 * grad) * 2 : Math.max(0, einlauf - 30 * grad);
+    const guete = Math.cos(schnitt) * 1.2 - (dWeiss + dObj) / 4000 - einlaufStrafe - schnitt * 0.25;
+    return { kugel: b.nr, tasche: t.nr, winkel: Math.atan2(uy, ux), schnitt, dWeiss, dObj, guete };
+  }
+
+  // Stärke so wählen, dass die Objektkugel die Tasche sicher erreicht
+  function staerkeVorschlaege(c, anzahl) {
+    const vObj = tempoFuerWeg(c.dObj + 150);
+    const anteil = Math.max(0.12, Math.cos(c.schnitt) * (1 + PHYSIK.E_KUGEL) / 2);
+    const vKontakt = vObj / anteil;
+    // Weiße muss mit vKontakt ankommen: rollt dWeiss weit → Startgeschwindigkeit grob
+    const v0 = tempoFuerWeg(rollWeg(vKontakt) + c.dWeiss);
+    const basis = tempoZuStaerke(v0);
+    const faktoren = anzahl >= 3 ? [1, 1.25, 1.6] : anzahl === 2 ? [1.1, 1.5] : [1.25];
+    return faktoren.map(f => Math.min(1, Math.max(0.04, basis * f)));
+  }
+
+  function alleKugelnAufTisch(kugeln) { return new Set(kugeln.filter(k => k.aufTisch).map(k => k.nr)); }
+
+  // Einen Stoß auf einer Kopie durchrechnen und mit den echten Regeln bewerten
+  function probiere(lage, kugeln, winkel, staerke, tasche) {
+    const kopie = Physik.kopie(kugeln);
+    Physik.stoss(kopie, winkel, staerkeZuTempo(staerke));
+    const prot = new Stossprotokoll();
+    const ereignisse = Physik.simuliere(kopie, 14);
+    for (const e of ereignisse) prot.ereignis(e);
+    if (lage.modus === 'training') {
+      const tr = werteTrainingAus(prot);
+      return { kopie, prot, erg: { foul: tr.ballInHand ? 'weisse' : null, weiter: tr.gefallen > 0, ende: null } };
+    }
+    const erg = werteStossAus({ amZug: 0, gruppen: [lage.gruppe, lage.gruppe ? (lage.gruppe === 'voll' ? 'halb' : 'voll') : null], anstoss: false, angesagt: tasche, aufTisch: alleKugelnAufTisch(kugeln) }, prot);
+    return { kopie, prot, erg };
+  }
+
+  // Wie viele direkte Chancen hätte eine Seite von dieser Lage aus? (für Stellungsspiel und Sicherheit)
+  function chancenZahl(kugeln, gruppe) {
+    const w = kugeln.find(k => k.nr === 0 && k.aufTisch);
+    if (!w) return { n: 3, beste: 1 };   // Weiße weg: Gegner hätte Ball in Hand
+    const aufTisch = alleKugelnAufTisch(kugeln);
+    const ziele = erlaubteZiele(gruppe, aufTisch);
+    let n = 0, beste = -9;
+    for (const nr of ziele) {
+      const b = kugeln.find(k => k.nr === nr);
+      for (const t of TISCH.taschen) {
+        const c = lochChance(kugeln, w, b, t);
+        if (c) { n++; beste = Math.max(beste, c.guete); }
+      }
+    }
+    return { n, beste };
+  }
+
+  const andere = g => g === 'voll' ? 'halb' : g === 'halb' ? 'voll' : null;
+
+  // ---------- Planer ----------
+  // lage: { kugeln, gruppe, anstoss, ballInHand: null|'tisch'|'kopffeld', modus }
+  function* planeSchritte(lage, stufe, rnd, ergebnis) {
+    const S = COMPUTER_STUFEN[stufe] || COMPUTER_STUFEN.entspannt;
+    const kugeln = Physik.kopie(lage.kugeln);
+    const aufTisch = alleKugelnAufTisch(kugeln);
+    let sims = 0;
+
+    // Anstoß: Weiße ins Kopffeld, voll auf die Spitze
+    if (lage.anstoss) {
+      const y = (rnd() * 2 - 1) * 160;
+      const w0 = kugeln.find(k => k.nr === 0);
+      // Weiße schon abgelegt? Dann von dort, sonst einen Platz im Kopffeld wählen
+      const pos = !lage.ballInHand && w0 && w0.aufTisch ? { x: w0.x, y: w0.y } : naechsterFreierPlatz(kugeln, TISCH.kopfX - 30, y, { ohne: 0, nurKopffeld: true });
+      const spitze = kugeln.filter(k => k.aufTisch && k.nr !== 0).sort((a, b) => a.x - b.x)[0];
+      const winkel = Math.atan2(spitze.y - pos.y, spitze.x - pos.x);
+      Object.assign(ergebnis, { art: 'anstoss', weiss: lage.ballInHand ? pos : null, winkel, staerke: stufe === 'herausfordernd' ? 1 : 0.9, tasche: null });
+      return;
+    }
+
+    const ziele = lage.modus === 'training' ? [...aufTisch].filter(n => n !== 0) : erlaubteZiele(lage.gruppe, aufTisch);
+    const aufAcht = lage.modus !== 'training' && ziele.length === 1 && ziele[0] === 8;
+    const weissPositionen = [];
+    const weiss = kugeln.find(k => k.nr === 0);
+    let chancen = [];
+
+    if (lage.ballInHand) {
+      // Für jedes Paar aus Kugel und Tasche ein paar Plätze hinter dem Geisterball prüfen
+      const nurKopffeld = lage.ballInHand === 'kopffeld';
+      for (const nr of ziele) {
+        const b = kugeln.find(k => k.nr === nr);
+        if (!b || !b.aufTisch) continue;
+        for (const t of TISCH.taschen) {
+          const z = taschenZiel(t);
+          let dx = z.x - b.x, dy = z.y - b.y; const l = Math.hypot(dx, dy); dx /= l; dy /= l;
+          let beste = null;
+          for (const abst of [170, 340]) for (const dreh of [0, -20, 20]) {
+            const w = dreh * grad;
+            const ex = dx * Math.cos(w) - dy * Math.sin(w), ey = dx * Math.sin(w) + dy * Math.cos(w);
+            const pos = { x: b.x - dx * 2 * R - ex * abst, y: b.y - dy * 2 * R - ey * abst };
+            if (!platzGueltig(kugeln, pos.x, pos.y, { ohne: 0, nurKopffeld })) continue;
+            const c = lochChance(kugeln, pos, b, t);
+            if (c && (!beste || c.guete > beste.guete)) { c.weiss = pos; beste = c; }
+          }
+          if (beste) chancen.push(beste);
+        }
+        yield;
+      }
+      const notPlatz = naechsterFreierPlatz(kugeln, TISCH.kopfX - 100, 0, { ohne: 0, nurKopffeld });
+      weissPositionen.push(chancen.length ? chancen.slice().sort((a, b) => b.guete - a.guete)[0].weiss : notPlatz);
+    } else {
+      weissPositionen.push({ x: weiss.x, y: weiss.y });
+      for (const nr of ziele) {
+        const b = kugeln.find(k => k.nr === nr);
+        if (!b || !b.aufTisch) continue;
+        for (const t of TISCH.taschen) {
+          const c = lochChance(kugeln, weissPositionen[0], b, t);
+          if (c) { c.weiss = weissPositionen[0]; chancen.push(c); }
+        }
+      }
+    }
+    yield;
+
+    chancen.sort((a, b) => b.guete - a.guete);
+    // bei Ball in Hand: pro Ziel/Tasche nur den besten Platz behalten
+    const gesehen = new Set();
+    chancen = chancen.filter(c => { const s = c.kugel + '-' + c.tasche; if (gesehen.has(s)) return false; gesehen.add(s); return true; });
+    chancen = chancen.slice(0, S.kandidaten);
+    yield;
+
+    // Kandidaten mit der echten Physik durchrechnen
+    const bewertet = [];
+    for (const c of chancen) {
+      for (const st of staerkeVorschlaege(c, S.staerken)) {
+        if (sims >= S.maxSimulationen) break;
+        const welt = Physik.kopie(kugeln);
+        const w0 = welt.find(k => k.nr === 0);
+        w0.x = c.weiss.x; w0.y = c.weiss.y; w0.aufTisch = true;
+        const r = probiere(lage, welt, c.winkel, st, aufAcht ? c.tasche : null);
+        sims++;
+        const versenktZiel = r.prot.versenkt.some(v => v.nr === c.kugel);
+        let wert = -1;
+        if (!r.erg.foul && (r.erg.weiter || (r.erg.ende && r.erg.ende.sieger === 0)) && versenktZiel) {
+          wert = 1 + c.guete * 0.3;
+          if (r.erg.ende && r.erg.ende.sieger === 0) wert += 5;
+          else if (S.stellung) {
+            const g = r.erg.gruppen ? r.erg.gruppen[0] : lage.gruppe;
+            const nach = chancenZahl(r.kopie, lage.modus === 'training' ? null : g);
+            wert += Math.min(3, nach.n) * 0.25 + Math.max(0, nach.beste) * 0.3;
+          }
+          // Robustheit: kleine Winkelfehler durchprobieren
+          let treffer = 1, versuche = 1;
+          for (let i = 0; i < S.robust && sims < S.maxSimulationen; i++) {
+            const welt2 = Physik.kopie(kugeln);
+            const w2 = welt2.find(k => k.nr === 0); w2.x = c.weiss.x; w2.y = c.weiss.y; w2.aufTisch = true;
+            const abw = (i % 2 ? 1 : -1) * S.winkelFehler * 1.2 * grad;
+            const r2 = probiere(lage, welt2, c.winkel + abw, st, aufAcht ? c.tasche : null);
+            sims++; versuche++;
+            if (!r2.erg.foul && r2.prot.versenkt.some(v => v.nr === c.kugel) && !(r2.erg.ende && r2.erg.ende.sieger !== 0)) treffer++;
+          }
+          wert *= treffer / versuche;
+        } else if (r.erg.ende && r.erg.ende.sieger !== 0) wert = -10;
+        else if (r.erg.foul) wert = -2;
+        else wert = -0.5;
+        bewertet.push({ ...c, staerke: st, wert, art: 'loch' });
+        yield;
+      }
+    }
+
+    // Sicherheit oder Notlösung, wenn keine gute Lochchance
+    const besteLoch = bewertet.reduce((m, b) => b.wert > m ? b.wert : m, -Infinity);
+    if (besteLoch < 0.6 && sims < S.maxSimulationen + 30) {
+      const wp = weissPositionen[0];
+      const versuche = [];
+      for (const nr of ziele) {
+        const b = kugeln.find(k => k.nr === nr);
+        if (!b || !b.aufTisch) continue;
+        const basis = Math.atan2(b.y - wp.y, b.x - wp.x);
+        const dist = Math.hypot(b.x - wp.x, b.y - wp.y);
+        const breite = Math.asin(Math.min(1, 1.6 * R / Math.max(dist, 2 * R + 1)));
+        for (const off of [0, -0.6, 0.6]) versuche.push({ kugel: nr, winkel: basis + off * breite, dist });
+        // über eine Bande (Spiegelung an den vier Bandenlinien)
+        for (const [mx, my] of [[0, -1], [0, 1], [-1, 0], [1, 0]]) {
+          const sx = mx ? mx * (TISCH.X - R) : null, sy = my ? my * (TISCH.Y - R) : null;
+          const zx = sx !== null ? 2 * sx - b.x : b.x, zy = sy !== null ? 2 * sy - b.y : b.y;
+          versuche.push({ kugel: nr, winkel: Math.atan2(zy - wp.y, zx - wp.x), dist: Math.hypot(zx - wp.x, zy - wp.y), bande: true });
+        }
+      }
+      // direkte, freie Treffer zuerst
+      for (const v of versuche) {
+        const s = wirfStrahl(kugeln, wp.x, wp.y, Math.cos(v.winkel), Math.sin(v.winkel), [0]);
+        v.frei = s.art === 'kugel' && s.kugel === v.kugel;
+      }
+      versuche.sort((a, b) => (b.frei - a.frei) || (a.dist - b.dist));
+      const grenze = S.sicherheit ? 16 : 8;
+      for (const v of versuche.slice(0, grenze)) {
+        for (const anteil of [0.45, 0.75]) {
+          const st = Math.min(1, tempoZuStaerke(tempoFuerWeg(v.dist + 500 + anteil * 900)));
+          const welt = Physik.kopie(kugeln);
+          const w0 = welt.find(k => k.nr === 0); w0.x = wp.x; w0.y = wp.y; w0.aufTisch = true;
+          const r = probiere(lage, welt, v.winkel, st, null);
+          sims++;
+          let wert;
+          if (r.erg.ende) wert = r.erg.ende.sieger === 0 ? 4 : -10;
+          else if (r.erg.foul) wert = -2;
+          else if (r.erg.weiter) wert = 0.9;
+          else {
+            wert = 0.2;
+            if (S.sicherheit && lage.modus !== 'training') {
+              const gegnerGruppe = r.erg.gruppen ? r.erg.gruppen[1] : andere(lage.gruppe);
+              const gegner = chancenZahl(r.kopie, gegnerGruppe);
+              wert += 0.5 - Math.min(4, gegner.n) * 0.12 - Math.max(0, gegner.beste) * 0.2;
+            }
+          }
+          bewertet.push({ kugel: v.kugel, tasche: null, winkel: v.winkel, staerke: st, wert, art: 'sicher', weiss: wp });
+          yield;
+        }
+      }
+    }
+
+    if (!bewertet.length) {
+      // gar nichts gefunden: auf die nächste erlaubte Kugel
+      const wp = weissPositionen[0];
+      const b = ziele.map(nr => kugeln.find(k => k.nr === nr)).filter(Boolean)[0];
+      bewertet.push({ kugel: b.nr, tasche: null, winkel: Math.atan2(b.y - wp.y, b.x - wp.x), staerke: 0.5, wert: -3, art: 'sicher', weiss: wp });
+    }
+
+    bewertet.sort((a, b) => b.wert - a.wert);
+    let wahl = bewertet[0];
+    if (S.auswahlStreuung > 0 && bewertet.length > 1 && rnd() < S.auswahlStreuung) {
+      const gute = bewertet.filter(b => b.wert > -1).slice(0, 3);
+      if (gute.length) wahl = gute[Math.floor(rnd() * gute.length)];
+    }
+    // Für die Acht muss eine Tasche angesagt werden
+    let tasche = wahl.tasche;
+    if (aufAcht && tasche === null) {
+      // Sicherheitsstoß auf die Acht: die Tasche ansagen, die ihr am nächsten liegt
+      const acht = kugeln.find(k => k.nr === 8);
+      tasche = TISCH.taschen.reduce((m, t) => Math.hypot(t.kehle.x - acht.x, t.kehle.y - acht.y) < Math.hypot(m.kehle.x - acht.x, m.kehle.y - acht.y) ? t : m).nr;
+    }
+    Object.assign(ergebnis, {
+      art: wahl.art, weiss: lage.ballInHand ? wahl.weiss : null, winkel: wahl.winkel, staerke: wahl.staerke,
+      tasche: aufAcht ? tasche : null, kugel: wahl.kugel, wert: wahl.wert, simulationen: sims,
+    });
+  }
+
+  return {
+    // Erstellt einen Planer. arbeite(ms) rechnet höchstens ms Millisekunden und gibt true zurück, wenn fertig.
+    planer(lage, stufe, rnd = Math.random) {
+      const ergebnis = {};
+      const gen = planeSchritte(lage, stufe, rnd, ergebnis);
+      let fertig = false;
+      return {
+        ergebnis,
+        get fertig() { return fertig; },
+        arbeite(ms = 6) {
+          if (fertig) return true;
+          const ende = (typeof performance !== 'undefined' ? performance.now() : Date.now()) + ms;
+          while (!fertig) {
+            if (gen.next().done) fertig = true;
+            if ((typeof performance !== 'undefined' ? performance.now() : Date.now()) > ende) break;
+          }
+          return fertig;
+        },
+      };
+    },
+    // Menschliche Ungenauigkeit auf den geplanten Stoß
+    ungenau(plan, stufe, rnd = Math.random) {
+      const S = COMPUTER_STUFEN[stufe] || COMPUTER_STUFEN.entspannt;
+      return {
+        ...plan,
+        winkel: plan.winkel + gauss(rnd) * S.winkelFehler * grad,
+        staerke: Math.min(1, Math.max(0.02, plan.staerke * (1 + gauss(rnd) * S.staerkeFehler))),
+      };
+    },
+    lochChance, tempoFuerWeg, rollWeg,
+  };
+})();
+
+// ===================================================================
+// 4 · KRABBE
+// Die Hauptfigur ist Kalle aus „Krabbenalarm“ (~/krabbenalarm-app/index.html,
+// Funktion malKrabbe und FIGUREN.kalle). Zeichenhelfer und malKrabbe sind von
+// dort wörtlich übernommen. Neu sind nur Zusatz-Optionen für die Varianten
+// (Augen, Brauen, Scheren, Mund) und Flug-Mimik. Ohne diese Optionen zeichnet
+// der Code Kalle exakt wie im Original (geprüft per Pixelvergleich).
+//
+// Alle Varianten sind rein kosmetisch: Der Physikkörper ist immer
+// KRABBE_PHYSIK aus 1-einstellungen.js, egal welche Krabbe gewählt ist.
+// ===================================================================
+
+const begrenzt = (wert, min, max) => Math.max(min, Math.min(max, wert));
+
+// --- Zeichenhelfer, unverändert aus Krabbenalarm ---
+function oval(c, x, y, rx, ry, farbe, rand, dicke = 0.8) {
+  c.beginPath();
+  c.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+  if (farbe) { c.fillStyle = farbe; c.fill(); }
+  if (rand) { c.strokeStyle = rand; c.lineWidth = dicke; c.stroke(); }
+}
+
+function eckig(c, x, y, b, h, r, farbe, rand, dicke = 0.8) {
+  c.beginPath();
+  c.moveTo(x + r, y);
+  c.arcTo(x + b, y, x + b, y + h, r);
+  c.arcTo(x + b, y + h, x, y + h, r);
+  c.arcTo(x, y + h, x, y, r);
+  c.arcTo(x, y, x + b, y, r);
+  c.closePath();
+  if (farbe) { c.fillStyle = farbe; c.fill(); }
+  if (rand) { c.strokeStyle = rand; c.lineWidth = dicke; c.stroke(); }
+}
+
+function strich(c, farbe, dicke, ...punkte) {
+  c.beginPath();
+  c.moveTo(punkte[0], punkte[1]);
+  for (let i = 2; i < punkte.length; i += 2) c.lineTo(punkte[i], punkte[i + 1]);
+  c.strokeStyle = farbe;
+  c.lineWidth = dicke;
+  c.lineCap = 'round';
+  c.lineJoin = 'round';
+  c.stroke();
+}
+
+function bogen(c, farbe, dicke, x0, y0, sx, sy, x1, y1) {
+  c.beginPath();
+  c.moveTo(x0, y0);
+  c.quadraticCurveTo(sx, sy, x1, y1);
+  c.strokeStyle = farbe;
+  c.lineWidth = dicke;
+  c.lineCap = 'round';
+  c.stroke();
+}
+
+function flaeche(c, farbe, rand, ...punkte) {
+  c.beginPath();
+  c.moveTo(punkte[0], punkte[1]);
+  for (let i = 2; i < punkte.length; i += 2) c.lineTo(punkte[i], punkte[i + 1]);
+  c.closePath();
+  if (farbe) { c.fillStyle = farbe; c.fill(); }
+  if (rand) { c.strokeStyle = rand; c.lineWidth = 0.8; c.lineJoin = 'round'; c.stroke(); }
+}
+
+function balken(c, farbe, ...liste) {
+  c.fillStyle = farbe;
+  for (const [x, y, b, h] of liste) c.fillRect(x, y, b, h);
+}
+
+// --- Die fünf Krabben. farbe = [Hauptfarbe, dunkel, hell] wie in Krabbenalarm ---
+// Kalle hat exakt die Farben aus Krabbenalarm (FIGUREN.kalle).
+const KRABBEN = {
+  kalle: { name: 'Kalle', text: 'Das Original aus Krabbenalarm.', farbe: ['#e8503a', '#a82c24', '#ff9478'] },
+  tilda: { name: 'Tilda', text: 'Türkis, mit frechem Blick.', farbe: ['#1fb5ab', '#0f6e6a', '#86ece2'], augen: 'frech', mund: 'grinsen' },
+  koko: { name: 'Koko', text: 'Koralle, mit runden Kuschelscheren.', farbe: ['#ff7a52', '#c2462a', '#ffbfa0'], scheren: 'rund' },
+  viola: { name: 'Viola', text: 'Violett, mit Brauen und Mandelaugen.', farbe: ['#9a5ee0', '#5a3298', '#d4b6ff'], augen: 'oval', brauen: true },
+  goldi: { name: 'Goldi', text: 'Goldgelb, eine Schere mit Zacken.', farbe: ['#efb02a', '#a26b14', '#ffe28a'], scheren: 'zacken' },
+};
+const KRABBEN_REIHE = ['kalle', 'tilda', 'koko', 'viola', 'goldi'];
+
+// Zeichnet die Krabbe im Bereich 44 x 36, die Füße stehen unten in der Mitte
+// Zusätzliche Optionen (alle freiwillig):
+//   klammer: 0..1  – Scheren greifen nach den Katapult-Seilen
+//   mund: 'entschlossen' | 'verdutzt' (neben lachen, oh, jubel, tot aus dem Original)
+//   schielen: true – die Pupillen schauen verdutzt in verschiedene Richtungen
+function malKrabbe(c, o) {
+  const fig = KRABBEN[o.figur] || KRABBEN.kalle;
+  const [haupt, dunkel, hell] = fig.farbe;
+  const mx = 22;
+  const lauf = o.lauf || 0;
+  const rand = '#3a1418';
+
+  // Beine
+  for (const seite of [-1, 1]) {
+    for (let i = 0; i < 3; i++) {
+      const heben = Math.max(0, Math.sin(lauf * Math.PI * 2 + i * 2.1 + (seite > 0 ? 1.5 : 0))) * 2;
+      const hx = mx + seite * (6.5 + i * 1.7), hy = 28 + i * 0.3;
+      const kx = mx + seite * (12 + i * 2.6), ky = 25.5 + i * 1.3 - heben;
+      const fx = mx + seite * (13.5 + i * 3.1), fy = 35 - heben;
+      bogen(c, rand, 2, hx, hy, kx, ky - 1, fx, fy);
+      bogen(c, dunkel, 1.1, hx, hy, kx, ky - 1, fx, fy);
+    }
+  }
+
+  // Scheren
+  const auf = o.schereAuf ? 0.85 : 0.42;
+  for (const seite of [-1, 1]) {
+    let hoch = Math.sin((o.wedel || 0) * 5 + (seite > 0 ? 1.4 : 0)) * (o.tanzt ? 2.4 : 0.6) - (o.schereHoch ? 3 : 0);
+    let cx = mx + seite * 16, cy = 14.5 + hoch;
+    if (o.klammer) { cx += seite * 3 * o.klammer; cy -= 7 * o.klammer; }
+    // Scherengröße je Variante (Koko rund und groß, Goldi rechts größer mit Zacken)
+    let gross = 4.7, offen = auf;
+    if (fig.scheren === 'rund') { gross = 5.9; offen = auf * 0.62; }
+    if (fig.scheren === 'zacken' && seite > 0) gross = 5.6;
+    bogen(c, rand, 3.4, mx + seite * 9, 25.5, mx + seite * 16.5, 26, cx, cy + 3);
+    bogen(c, haupt, 2, mx + seite * 9, 25.5, mx + seite * 16.5, 26, cx, cy + 3);
+    c.save();
+    c.translate(cx, cy);
+    c.rotate(seite * 0.22);
+    c.beginPath();
+    c.arc(0, 0, gross, -Math.PI / 2 + offen, -Math.PI / 2 - offen + Math.PI * 2);
+    c.lineTo(0, 0.6);
+    c.closePath();
+    c.fillStyle = haupt;
+    c.fill();
+    c.strokeStyle = rand;
+    c.lineWidth = 0.9;
+    c.lineJoin = 'round';
+    c.stroke();
+    if (fig.scheren === 'zacken' && seite > 0) {
+      // kleine Zacken an der Innenkante der großen Schere
+      for (let z = 0; z < 3; z++) {
+        const w = -Math.PI / 2 + offen + 0.25 + z * 0.32;
+        const ax = Math.cos(w) * gross * 0.92, ay = Math.sin(w) * gross * 0.92;
+        flaeche(c, hell, rand, ax, ay, ax * 0.72 + 0.6, ay * 0.72, Math.cos(w + 0.18) * gross * 0.92, Math.sin(w + 0.18) * gross * 0.92);
+      }
+      oval(c, 2.2, 2.4, 0.8, 0.8, dunkel);
+    }
+    oval(c, -1.5, 1.3, fig.scheren === 'rund' ? 2 : 1.4, fig.scheren === 'rund' ? 1.4 : 1, hell);
+    c.restore();
+  }
+
+  // Augenstiele hinter dem Körper
+  const blick = begrenzt(o.blick || 0, -1, 1);
+  const blickY = o.blickHoch ? -0.9 : 0.2;
+  for (const seite of [-1, 1]) {
+    const ex = mx + seite * 5.2;
+    strich(c, rand, 2.6, mx + seite * 4, 22, ex, 13);
+    strich(c, haupt, 1.4, mx + seite * 4, 22, ex, 13);
+  }
+
+  // Körper
+  const verl = c.createLinearGradient(0, 18, 0, 32);
+  verl.addColorStop(0, hell);
+  verl.addColorStop(0.32, haupt);
+  verl.addColorStop(1, dunkel);
+  oval(c, mx, 25, 11.4, 6.9, verl, rand, 0.95);
+  oval(c, mx - 4, 21.2, 4.2, 1.2, 'rgba(255, 255, 255, 0.55)');
+  oval(c, mx + 6.5, 23, 0.9, 0.7, dunkel);
+  oval(c, mx + 4.5, 21.2, 0.7, 0.5, dunkel);
+  oval(c, mx - 7.4, 25, 1.7, 1, 'rgba(255, 150, 150, 0.6)');
+  oval(c, mx + 7.4, 25, 1.7, 1, 'rgba(255, 150, 150, 0.6)');
+
+  // Augen
+  const mund = o.mund || fig.mund || 'lachen';
+  for (const seite of [-1, 1]) {
+    const ex = mx + seite * 5.2, ey = 10.8;
+    if (fig.augen === 'oval') oval(c, ex, ey - 0.3, 2.9, 4.2, '#ffffff', '#1a1820', 0.8);
+    else oval(c, ex, ey, 3.7, 3.7, '#ffffff', '#1a1820', 0.8);
+    if (o.mund === 'tot') {
+      strich(c, '#1a1820', 0.8, ex - 1.5, ey - 1.5, ex + 1.5, ey + 1.5);
+      strich(c, '#1a1820', 0.8, ex + 1.5, ey - 1.5, ex - 1.5, ey + 1.5);
+    } else {
+      let bx = blick * 1.3, by = blickY;
+      if (o.schielen) { bx = seite * -1.1; by = seite * 0.9; }
+      const pg = fig.augen === 'oval' ? 1.5 : 1.7;
+      oval(c, ex + bx, ey + by, pg, fig.augen === 'oval' ? 2 : pg, '#1a1820');
+      oval(c, ex + bx - 0.5, ey + by - 0.6, 0.55, 0.55, '#ffffff');
+    }
+    // Tildas freche Lider: oben halb zu, links etwas tiefer
+    if (fig.augen === 'frech' && o.mund !== 'tot' && mund !== 'oh' && mund !== 'verdutzt') {
+      const tief = seite < 0 ? 1.2 : 0.4;
+      c.save();
+      c.beginPath();
+      c.ellipse(ex, ey, 3.7, 3.7, 0, 0, Math.PI * 2);
+      c.clip();
+      c.beginPath();
+      c.moveTo(ex - 4, ey - 4.5);
+      c.lineTo(ex + 4, ey - 4.5);
+      c.lineTo(ex + 4, ey - 0.2 + tief - seite * 0.5);
+      c.lineTo(ex - 4, ey - 0.2 + tief + seite * 0.5);
+      c.closePath();
+      c.fillStyle = haupt;
+      c.fill();
+      c.restore();
+      strich(c, '#1a1820', 0.8, ex - 3.4, ey - 0.2 + tief + seite * 0.45, ex + 3.4, ey - 0.2 + tief - seite * 0.45);
+    }
+  }
+
+  // Augenbrauen: Viola immer, alle anderen nur, wenn sie entschlossen schauen
+  if (fig.brauen || mund === 'entschlossen') {
+    const dick = fig.brauen ? 1.5 : 0.95;
+    for (const seite of [-1, 1]) {
+      const ex = mx + seite * 5.2, ey = fig.augen === 'oval' ? 4.8 : 6.1;
+      let innen = 0, aussen = 0;
+      if (mund === 'entschlossen') { innen = 1.5; aussen = -0.6; }
+      else if (mund === 'oh' || mund === 'verdutzt' || mund === 'jubel') { innen = -1; aussen = -0.4; }
+      else if (fig.brauen) { innen = 0.3; aussen = -0.6; }
+      strich(c, '#1a1820', dick, ex - seite * 2.6, ey + innen, ex + seite * 2.4, ey + aussen);
+    }
+  }
+
+  // Mund
+  if (mund === 'lachen') {
+    c.beginPath();
+    c.arc(mx, 24.3, 3.3, 0.25, Math.PI - 0.25);
+    c.strokeStyle = '#1a1820';
+    c.lineWidth = 0.8;
+    c.lineCap = 'round';
+    c.stroke();
+  } else if (mund === 'oh' || mund === 'tot') {
+    oval(c, mx, 26.4, 1.9, 2.1, '#1a1820');
+    oval(c, mx, 27.3, 1.1, 1, '#ff8a8a');
+  } else if (mund === 'jubel') {
+    c.beginPath();
+    c.arc(mx, 24.8, 3.8, 0, Math.PI);
+    c.closePath();
+    c.fillStyle = '#1a1820';
+    c.fill();
+    oval(c, mx, 27.4, 1.9, 1, '#ff8a8a');
+  } else if (mund === 'grinsen') {
+    // schiefes, freches Grinsen
+    bogen(c, '#1a1820', 0.85, mx - 3.4, 25.2, mx + 0.5, 28.2, mx + 3.8, 24.2);
+    strich(c, '#1a1820', 0.7, mx + 3.3, 23.6, mx + 4.2, 24.6);
+  } else if (mund === 'entschlossen') {
+    // zusammengebissen: gerader Strich mit Zähnchen
+    eckig(c, mx - 3, 25.2, 6, 2, 0.8, '#ffffff', '#1a1820', 0.75);
+    strich(c, '#1a1820', 0.5, mx, 25.4, mx, 27);
+  } else if (mund === 'verdutzt') {
+    oval(c, mx + 0.6, 26.3, 1.2, 1, '#1a1820');
+  }
+}
+
+// Zeichnet die Krabbe scharf in eine eigene Leinwand (Menüs, Anzeige)
+function krabbeInLeinwand(leinwand, o) {
+  const c = leinwand.getContext('2d');
+  c.setTransform(1, 0, 0, 1, 0, 0);
+  c.clearRect(0, 0, leinwand.width, leinwand.height);
+  const e = Math.min(leinwand.width / 44, leinwand.height / 36);
+  c.setTransform(e, 0, 0, e, (leinwand.width - 44 * e) / 2, (leinwand.height - 36 * e) / 2);
+  malKrabbe(c, o);
+  c.setTransform(1, 0, 0, 1, 0, 0);
+}
+
+// ===================================================================
+// 5 · SPEICHER
+// Einstellungen und Siege lokal unter pixelhafen.hafenbillard (Version 1).
+// Ohne localStorage (privates Fenster, gesperrt) läuft alles weiter,
+// es wird dann nur nichts gemerkt.
+// ===================================================================
+
+const Speicher = (() => {
+  const SCHLUESSEL = 'pixelhafen.hafenbillard';
+  const STANDARD = () => ({ v: 1, ton: true, stufe: 'entspannt', modus: 'computer', hilfe: true, siege: { entspannt: 0, herausfordernd: 0 }, partien: 0 });
+  let daten = STANDARD();
+
+  function lager() { try { return window.localStorage || null; } catch (e) { return null; } }
+  function lade() {
+    try {
+      const roh = lager() && lager().getItem(SCHLUESSEL);
+      if (!roh) return;
+      const d = JSON.parse(roh);
+      if (!d || d.v !== 1) return;
+      const s = STANDARD();
+      daten = {
+        v: 1,
+        ton: typeof d.ton === 'boolean' ? d.ton : s.ton,
+        stufe: COMPUTER_STUFEN[d.stufe] ? d.stufe : s.stufe,
+        modus: ['computer', 'zweier', 'training'].includes(d.modus) ? d.modus : s.modus,
+        hilfe: typeof d.hilfe === 'boolean' ? d.hilfe : s.hilfe,
+        siege: {
+          entspannt: Math.max(0, Math.floor(Number(d.siege && d.siege.entspannt) || 0)),
+          herausfordernd: Math.max(0, Math.floor(Number(d.siege && d.siege.herausfordernd) || 0)),
+        },
+        partien: Math.max(0, Math.floor(Number(d.partien) || 0)),
+      };
+    } catch (e) { daten = STANDARD(); }
+  }
+  function sichere() {
+    try { const l = lager(); if (l) l.setItem(SCHLUESSEL, JSON.stringify(daten)); } catch (e) { /* voll oder gesperrt: egal */ }
+  }
+  lade();
+
+  return {
+    get ton() { return daten.ton; }, set ton(w) { daten.ton = !!w; sichere(); },
+    get stufe() { return daten.stufe; }, set stufe(w) { if (COMPUTER_STUFEN[w]) { daten.stufe = w; sichere(); } },
+    get modus() { return daten.modus; }, set modus(w) { daten.modus = w; sichere(); },
+    get hilfe() { return daten.hilfe; }, set hilfe(w) { daten.hilfe = !!w; sichere(); },
+    siege: stufe => daten.siege[stufe] || 0,
+    sieg(stufe) { daten.siege[stufe] = (daten.siege[stufe] || 0) + 1; sichere(); },
+    partie() { daten.partien++; sichere(); },
+    neuLaden: lade,
+  };
+})();
+
+// ===================================================================
+// 6 · TON
+// Eigene kurze Geräusche mit Web Audio, keine Dateien. Startet erst nach
+// einer Nutzeraktion und ist abschaltbar. Grundgerüst (Kontext, iPhone-
+// Stummschalter, Hüllkurven) aus Sonnenrutsch übernommen. Höchstens
+// MAX_STIMMEN Geräusche gleichzeitig; leise Berührungen bleiben stumm.
+// ===================================================================
+
+const Ton = (() => {
+  let ctx = null, haupt = null, stummAudio = null;
+  let an = true;
+
+  // iPhone: Web-Audio ist bei aktivem Stumm-Schalter sonst stumm. „playback“ stellt die Audio-Sitzung wie bei
+  // einem Musikplayer ein (Safari ab 16.4). Ältere iOS-Versionen: ein unhörbarer Dauerton über ein Audio-Element.
+  function sitzung() {
+    try {
+      if (navigator.audioSession) { navigator.audioSession.type = 'playback'; return; }
+      const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (!ios) return;
+      if (!stummAudio) {
+        // 0,25 s Stille als WAV (8 kHz, 8 Bit)
+        const n = 2000, b = new Uint8Array(44 + n);
+        const w = (o, t) => { for (let i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); };
+        const d = new DataView(b.buffer);
+        w(0, 'RIFF'); d.setUint32(4, 36 + n, true); w(8, 'WAVEfmt '); d.setUint32(16, 16, true); d.setUint16(20, 1, true); d.setUint16(22, 1, true);
+        d.setUint32(24, 8000, true); d.setUint32(28, 8000, true); d.setUint16(32, 1, true); d.setUint16(34, 8, true); w(36, 'data'); d.setUint32(40, n, true);
+        b.fill(128, 44);
+        let bin = ''; for (let i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+        stummAudio = new Audio('data:audio/wav;base64,' + btoa(bin));
+        stummAudio.loop = true; stummAudio.volume = 0.01;
+        stummAudio.setAttribute('playsinline', '');
+      }
+      stummAudio.play().catch(() => {});
+    } catch (e) { /* egal */ }
+  }
+
+  function wecke() {
+    if (!an) return;
+    try {
+      if (!ctx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        ctx = new AC();
+        const komp = ctx.createDynamicsCompressor();
+        komp.threshold.value = -16; komp.knee.value = 10; komp.ratio.value = 6;
+        haupt = ctx.createGain();
+        haupt.gain.value = 0.8;   // Handy-Lautsprecher sind leise: etwas mehr Grundlautstärke (der Kompressor fängt Spitzen ab)
+        haupt.connect(komp).connect(ctx.destination);
+      }
+      // Auch „interrupted“ (iOS nach Anruf/Appwechsel) wieder aufwecken, nicht nur „suspended“
+      if (ctx.state !== 'running') ctx.resume().catch(() => {});
+      sitzung();
+    } catch (e) { ctx = null; }
+  }
+  const bereit = () => an && ctx && ctx.state === 'running';
+
+  function huelle(g, t, laut, dauer, anstieg = 0.005) {
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, laut), t + anstieg);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dauer);
+  }
+  function ton(f1, f2, dauer, { typ = 'square', laut = 0.3, start = 0, anstieg } = {}) {
+    const t = ctx.currentTime + start;
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.type = typ;
+    osc.frequency.setValueAtTime(f1, t);
+    if (f2 !== f1) osc.frequency.exponentialRampToValueAtTime(Math.max(20, f2), t + dauer);
+    huelle(g, t, laut, dauer, anstieg);
+    osc.connect(g).connect(haupt);
+    osc.start(t); osc.stop(t + dauer + 0.03);
+  }
+
+  const v = () => 1 + (Math.random() * 2 - 1) * 0.05;
+
+  // Begrenzung gleichzeitiger Geräusche
+  const MAX_STIMMEN = 7;
+  let stimmenEnde = [];
+  function frei(dauer) {
+    const t = ctx.currentTime;
+    stimmenEnde = stimmenEnde.filter(e => e > t);
+    if (stimmenEnde.length >= MAX_STIMMEN) return false;
+    stimmenEnde.push(t + dauer);
+    return true;
+  }
+  // Kurzer, gefilterter Klick (Holz/Phenolharz) – ohne Rauschen, aus zwei Sinus-Anteilen
+  function klack(f, laut, dauer, start = 0) {
+    ton(f * v(), f * 0.82, dauer, { typ: 'sine', laut, start, anstieg: 0.002 });
+    ton(f * 2.7 * v(), f * 2.2, dauer * 0.5, { typ: 'triangle', laut: laut * 0.35, start, anstieg: 0.001 });
+  }
+  let letzteKugel = 0;
+
+  return {
+    wecke,
+    istAn: () => an,
+    status: () => ({ kontext: ctx ? ctx.state : 'keiner', an, stimmen: stimmenEnde.length }),   // für Tests
+    setze(wert) {
+      an = !!wert;
+      // Beim Laden (noch keine Berührung) wird kein Audiokontext erzeugt: Ton startet erst nach Nutzeraktion
+      if (an) { if (ctx || !navigator.userActivation || navigator.userActivation.hasBeenActive) wecke(); }
+      else { if (ctx && ctx.state === 'running') ctx.suspend().catch(() => {}); if (stummAudio) stummAudio.pause(); }
+    },
+    // Queue trifft die Weiße
+    queue(staerke) {
+      if (!bereit() || !frei(0.12)) return;
+      const s = Math.max(0.05, Math.min(1, staerke));
+      klack(900 + s * 500, 0.08 + s * 0.22, 0.07);
+      ton(140, 90, 0.08, { typ: 'sine', laut: 0.05 + s * 0.12 });
+    },
+    // Kugel trifft Kugel: Lautstärke nach Aufprallgeschwindigkeit (mm/s)
+    kugel(tempo) {
+      if (!bereit() || tempo < 40) return;           // ruhende/zarte Berührungen bleiben stumm
+      const t = ctx.currentTime;
+      if (t - letzteKugel < 0.018) return;           // nicht zehn Klicks im selben Augenblick
+      if (!frei(0.08)) return;
+      letzteKugel = t;
+      const s = Math.min(1, tempo / 4500);
+      klack(1900 + s * 900, 0.03 + Math.pow(s, 0.7) * 0.3, 0.05 + s * 0.03);
+    },
+    // Bande: gedämpfter, tiefer Klang
+    bande(tempo) {
+      if (!bereit() || tempo < 80 || !frei(0.12)) return;
+      const s = Math.min(1, tempo / 4000);
+      ton(120 * v(), 70, 0.11, { typ: 'sine', laut: 0.04 + s * 0.22 });
+      ton(260 * v(), 180, 0.05, { typ: 'triangle', laut: 0.02 + s * 0.05 });
+    },
+    // Tasche: Plumps und kurzes Nachrollen
+    tasche() {
+      if (!bereit() || !frei(0.5)) return;
+      ton(180, 90, 0.14, { typ: 'sine', laut: 0.28 });
+      ton(520, 300, 0.06, { typ: 'triangle', laut: 0.06, start: 0.02 });
+      [0.12, 0.2, 0.27, 0.33].forEach((st, i) => ton(240 - i * 25, 200 - i * 25, 0.05, { typ: 'sine', laut: 0.08 - i * 0.015, start: st }));
+    },
+    klick() { if (bereit() && frei(0.05)) ton(660, 660, 0.04, { typ: 'square', laut: 0.04 }); },
+    // Ablegen der Weißen
+    ablegen() { if (bereit() && frei(0.1)) ton(330, 240, 0.08, { typ: 'sine', laut: 0.12 }); },
+    // Foul: freundlich-verdutztes „Hm-hm“
+    foul() {
+      if (!bereit()) return;
+      ton(392, 370, 0.16, { typ: 'triangle', laut: 0.13 });
+      ton(311, 294, 0.24, { typ: 'triangle', laut: 0.13, start: 0.17 });
+    },
+    // Wechsel: kleines Signal
+    wechsel() { if (bereit()) { ton(587, 587, 0.08, { typ: 'triangle', laut: 0.08 }); ton(784, 784, 0.1, { typ: 'triangle', laut: 0.08, start: 0.08 }); } },
+    // Kleine Siegesfanfare in Dur
+    sieg() {
+      if (!bereit()) return;
+      const noten = [[523, 0], [659, 0.1], [784, 0.2], [1047, 0.32], [880, 0.46], [1047, 0.56], [1319, 0.68]];
+      noten.forEach(([f, st], i) => {
+        const lang = i === noten.length - 1 ? 0.5 : 0.11;
+        ton(f, f, lang, { typ: 'triangle', laut: 0.22, start: st });
+        ton(f / 2, f / 2, lang, { typ: 'square', laut: 0.03, start: st });
+      });
+    },
+    niederlage() {
+      if (!bereit()) return;
+      ton(392, 370, 0.3, { typ: 'triangle', laut: 0.18 });
+      ton(330, 247, 0.6, { typ: 'triangle', laut: 0.18, start: 0.3 });
+    },
+  };
+})();
+
+// ===================================================================
+// 7 · GRAFIK
+// Ansicht: rechnet Welt (mm) ↔ Bildschirm (CSS-Pixel). Im Hochformat
+// wird der Tisch um 90° gedreht, sonst liegt er quer. Eingaben,
+// Zielhilfe, Taschenwahl und Zeichnen benutzen alle DIESE Umrechnung.
+// Die Weltpositionen ändern sich durch Größenänderungen nie.
+// ===================================================================
+
+const Ansicht = {
+  gedreht: false, s: 0.3, cx: 0, cy: 0, w: 1, h: 1, dpr: 1,
+  // Außenmaß des Tisches mit Rahmen (halbe Breite/Höhe in mm)
+  get aussenX() { return TISCH.X + TISCH.BANDE + TISCH.RAHMEN; },
+  get aussenY() { return TISCH.Y + TISCH.BANDE + TISCH.RAHMEN; },
+  passe(w, h, dpr) {
+    this.w = w; this.h = h; this.dpr = dpr;
+    const rand = Math.min(14, Math.min(w, h) * 0.03);
+    const quer = Math.min((w - 2 * rand) / (2 * this.aussenX), (h - 2 * rand) / (2 * this.aussenY));
+    const hoch = Math.min((w - 2 * rand) / (2 * this.aussenY), (h - 2 * rand) / (2 * this.aussenX));
+    // Drehen, sobald der Tisch dadurch größer wird (Handy hochkant, auch kurze Bildschirme)
+    this.gedreht = hoch > quer * 1.001;
+    this.s = Math.max(0.01, this.gedreht ? hoch : quer);
+    this.cx = w / 2; this.cy = h / 2;
+  },
+  // gedreht: Welt +x zeigt nach oben, Welt +y nach rechts (Drehung ohne Spiegelung)
+  zuBild(x, y) {
+    return this.gedreht ? { x: this.cx + y * this.s, y: this.cy - x * this.s } : { x: this.cx + x * this.s, y: this.cy + y * this.s };
+  },
+  zuWelt(px, py) {
+    const u = (px - this.cx) / this.s, v = (py - this.cy) / this.s;
+    return this.gedreht ? { x: -v, y: u } : { x: u, y: v };
+  },
+  // Richtung (Welt) → Richtung (Bild) und zurück
+  welt2d(c) {
+    const s = this.s * this.dpr;
+    if (this.gedreht) c.setTransform(0, -s, s, 0, this.cx * this.dpr, this.cy * this.dpr);
+    else c.setTransform(s, 0, 0, s, this.cx * this.dpr, this.cy * this.dpr);
+  },
+  bild2d(c) { c.setTransform(this.dpr, 0, 0, this.dpr, 0, 0); },
+};
+
+const Grafik = (() => {
+  const FARBE = {
+    tuch: '#169C8F', tuchHell: '#22B5A5', tuchDunkel: '#0E7469',
+    bande: '#11806F', bandeKante: '#0A5A4F',
+    holz: '#5A3420', holzHell: '#8A5634', holzDunkel: '#2E190E',
+    messing: '#D9A945', messingHell: '#FFE29A', messingDunkel: '#8C6420',
+    creme: '#FFF4DC', gelb: '#FFD35A', koralle: '#FF805B', tuerkis: '#24D6CD', marine: '#10243A',
+  };
+  const R = TISCH.R;
+  let hintergrund = null, hgSchluessel = '';
+
+  // ---------- Kneipenkulisse (wird zwischengespeichert) ----------
+  function malHintergrund(c, w, h) {
+    const v = c.createLinearGradient(0, 0, 0, h);
+    v.addColorStop(0, '#1b1612'); v.addColorStop(1, '#120d0a');
+    c.fillStyle = v; c.fillRect(0, 0, w, h);
+    // Dielenboden: ruhige, schmale Holzbahnen
+    const breite = Math.max(26, Math.min(w, h) / 9);
+    for (let i = 0, x = 0; x < w; i++, x += breite) {
+      c.fillStyle = i % 2 ? 'rgba(120, 76, 44, 0.16)' : 'rgba(150, 96, 56, 0.12)';
+      c.fillRect(x, 0, breite - 1.5, h);
+      c.fillStyle = 'rgba(0, 0, 0, 0.25)';
+      c.fillRect(x + breite - 1.5, 0, 1.5, h);
+      // Stöße der Dielen versetzt
+      const versatz = ((i * 137) % 5) / 5 * h * 0.5;
+      for (let y = versatz; y < h; y += h * 0.55) c.fillRect(x, y, breite - 1.5, 1.2);
+    }
+    // Warmes Lampenlicht über dem Tisch
+    const licht = c.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h) * 0.7);
+    licht.addColorStop(0, 'rgba(255, 196, 120, 0.22)');
+    licht.addColorStop(0.5, 'rgba(255, 170, 90, 0.07)');
+    licht.addColorStop(1, 'rgba(0, 0, 0, 0.45)');
+    c.fillStyle = licht; c.fillRect(0, 0, w, h);
+    // Dezente maritime Dinge am Rand, nur wenn neben dem Tisch Platz ist
+    const randX = Ansicht.gedreht ? (w - 2 * Ansicht.aussenY * Ansicht.s) / 2 : (w - 2 * Ansicht.aussenX * Ansicht.s) / 2;
+    if (randX > 90) {
+      const r = Math.min(randX * 0.32, 46);
+      bullauge(c, randX / 2, h * 0.28, r);
+      rettungsring(c, w - randX / 2, h * 0.7, r * 0.9);
+      bullauge(c, w - randX / 2, h * 0.26, r * 0.8);
+    }
+  }
+  function bullauge(c, x, y, r) {
+    const meer = c.createLinearGradient(0, y - r, 0, y + r);
+    meer.addColorStop(0, '#1d3d66'); meer.addColorStop(0.55, '#24577f'); meer.addColorStop(0.56, '#123050'); meer.addColorStop(1, '#0b1d33');
+    c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fillStyle = meer; c.fill();
+    c.beginPath(); c.arc(x + r * 0.35, y - r * 0.3, r * 0.14, 0, Math.PI * 2); c.fillStyle = 'rgba(255, 244, 220, 0.8)'; c.fill();
+    c.lineWidth = r * 0.22; c.strokeStyle = FARBE.messingDunkel; c.beginPath(); c.arc(x, y, r * 1.05, 0, Math.PI * 2); c.stroke();
+    c.lineWidth = r * 0.08; c.strokeStyle = FARBE.messing; c.beginPath(); c.arc(x, y, r * 1.05, 0, Math.PI * 2); c.stroke();
+    for (let i = 0; i < 8; i++) { const w = i / 8 * Math.PI * 2; c.beginPath(); c.arc(x + Math.cos(w) * r * 1.05, y + Math.sin(w) * r * 1.05, r * 0.05, 0, Math.PI * 2); c.fillStyle = FARBE.messingHell; c.fill(); }
+    c.globalAlpha = 1;
+  }
+  function rettungsring(c, x, y, r) {
+    c.lineWidth = r * 0.42;
+    for (let i = 0; i < 4; i++) {
+      c.beginPath(); c.arc(x, y, r * 0.78, i * Math.PI / 2, (i + 1) * Math.PI / 2);
+      c.strokeStyle = i % 2 ? 'rgba(255, 244, 220, 0.55)' : 'rgba(255, 128, 91, 0.55)'; c.stroke();
+    }
+    c.lineWidth = r * 0.05; c.strokeStyle = 'rgba(200, 170, 120, 0.5)';
+    c.beginPath(); c.arc(x, y, r * 0.78, 0, Math.PI * 2); c.stroke();
+  }
+
+  // ---------- Tisch ----------
+  function rundRechteck(c, x, y, w, h, r) {
+    c.beginPath();
+    c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+  }
+
+  // Zeichnet den Tisch in Weltkoordinaten (Transformation ist gesetzt)
+  function malTisch(c, kopffeld) {
+    const X = TISCH.X, Y = TISCH.Y, AX = Ansicht.aussenX, AY = Ansicht.aussenY;
+    // Schatten des Tisches
+    c.save();
+    c.shadowColor = 'rgba(0, 0, 0, 0.6)'; c.shadowBlur = 60 * Ansicht.s * Ansicht.dpr; c.shadowOffsetY = 0;
+    rundRechteck(c, -AX, -AY, 2 * AX, 2 * AY, 70); c.fillStyle = FARBE.holzDunkel; c.fill();
+    c.restore();
+    // Holzrahmen mit warmem Verlauf
+    const holz = c.createLinearGradient(0, -AY, 0, AY);
+    holz.addColorStop(0, '#6E4128'); holz.addColorStop(0.5, FARBE.holz); holz.addColorStop(1, '#43261A');
+    rundRechteck(c, -AX, -AY, 2 * AX, 2 * AY, 70); c.fillStyle = holz; c.fill();
+    // Maserung: feine, ruhige Linien
+    c.save(); rundRechteck(c, -AX, -AY, 2 * AX, 2 * AY, 70); c.clip();
+    c.strokeStyle = 'rgba(30, 14, 6, 0.25)'; c.lineWidth = 3;
+    for (let i = -6; i <= 6; i++) {
+      c.beginPath(); c.moveTo(-AX, i * 55 + 8); c.bezierCurveTo(-AX * 0.4, i * 55 - 12, AX * 0.3, i * 55 + 20, AX, i * 55 - 4); c.stroke();
+    }
+    c.restore();
+    // Warme Lichtkante außen und innen
+    c.lineWidth = 6; c.strokeStyle = 'rgba(255, 196, 130, 0.35)';
+    rundRechteck(c, -AX + 4, -AY + 4, 2 * AX - 8, 2 * AY - 8, 66); c.stroke();
+    // Tauwerk-Intarsie (gedrehtes Seil) als dezente maritime Verzierung
+    const tau = 46;
+    c.setLineDash([16, 10]); c.lineWidth = 7; c.strokeStyle = 'rgba(214, 178, 118, 0.42)';
+    rundRechteck(c, -AX + tau, -AY + tau, 2 * (AX - tau), 2 * (AY - tau), 40); c.stroke();
+    c.setLineDash([]);
+
+    // Tuch (bis zu den Bandennasen und in die Taschenöffnungen)
+    const tuch = c.createRadialGradient(0, 0, 50, 0, 0, X * 1.1);
+    tuch.addColorStop(0, FARBE.tuchHell); tuch.addColorStop(0.65, FARBE.tuch); tuch.addColorStop(1, FARBE.tuchDunkel);
+    c.fillStyle = tuch;
+    c.fillRect(-X - TISCH.BANDE, -Y - TISCH.BANDE, 2 * (X + TISCH.BANDE), 2 * (Y + TISCH.BANDE));
+
+    // Taschen (Löcher): Vorderkante liegt an der Kehle
+    for (const t of TISCH.taschen) {
+      const { x: mx, y: my, r } = t.zeichen;
+      const g = c.createRadialGradient(mx - t.achse.x * r * 0.4, my - t.achse.y * r * 0.4, r * 0.1, mx, my, r);
+      g.addColorStop(0, '#000'); g.addColorStop(0.75, '#07090c'); g.addColorStop(1, '#1d1a17');
+      c.beginPath(); c.arc(mx, my, r, 0, Math.PI * 2); c.fillStyle = g; c.fill();
+    }
+    // Banden (Gummi mit Tuch bezogen), inklusive Taschenbacken
+    for (const sy of [-1, 1]) {
+      const ecL = TISCH.taschen.find(t => t.art === 'ecke' && t.ecke.x < 0 && Math.sign(t.ecke.y) === sy);
+      const ecR = TISCH.taschen.find(t => t.art === 'ecke' && t.ecke.x > 0 && Math.sign(t.ecke.y) === sy);
+      const mi = TISCH.taschen.find(t => t.art === 'mitte' && Math.sign(t.kehle.y) === sy);
+      bandenStueck(c, [ecL.kehlePunkte[0], ecL.mund[0], mi.mund[0], mi.kehlePunkte[0]], 'y', sy);
+      bandenStueck(c, [mi.kehlePunkte[1], mi.mund[1], ecR.mund[0], ecR.kehlePunkte[0]], 'y', sy);
+    }
+    for (const sx of [-1, 1]) {
+      const oben = TISCH.taschen.find(t => t.art === 'ecke' && Math.sign(t.ecke.x) === sx && t.ecke.y < 0);
+      const unten = TISCH.taschen.find(t => t.art === 'ecke' && Math.sign(t.ecke.x) === sx && t.ecke.y > 0);
+      bandenStueck(c, [oben.kehlePunkte[1], oben.mund[1], unten.mund[1], unten.kehlePunkte[1]], 'x', sx);
+    }
+    // Messing: Eckbeschläge und Mittelbeschläge mit Nieten
+    for (const t of TISCH.taschen) messingBeschlag(c, t);
+    // Diamanten (Markierungen) als kleine Perlmutt-Punkte in Messingfassung
+    const diamant = (x, y) => {
+      c.beginPath(); c.moveTo(x, y - 13); c.lineTo(x + 9, y); c.lineTo(x, y + 13); c.lineTo(x - 9, y); c.closePath();
+      c.fillStyle = FARBE.messingDunkel; c.fill();
+      c.beginPath(); c.moveTo(x, y - 9); c.lineTo(x + 6, y); c.lineTo(x, y + 9); c.lineTo(x - 6, y); c.closePath();
+      c.fillStyle = '#F4EEDD'; c.fill();
+    };
+    const mitteRahmen = TISCH.BANDE + TISCH.RAHMEN * 0.36;
+    for (let i = 1; i < 8; i++) {
+      if (i === 4) continue;
+      const x = -X + i * TISCH.L / 8;
+      diamant(x, -Y - mitteRahmen); diamant(x, Y + mitteRahmen);
+    }
+    for (let i = 1; i < 4; i++) {
+      const y = -Y + i * TISCH.B / 4;
+      diamant(-X - mitteRahmen, y); diamant(X + mitteRahmen, y);
+    }
+    // kleiner Anker auf beiden Stirnseiten
+    anker(c, -X - mitteRahmen - 32, 0, 1); anker(c, X + mitteRahmen + 32, 0, -1);
+
+    // Kopflinie und Fußpunkt (dezent)
+    c.strokeStyle = 'rgba(255, 244, 220, 0.16)'; c.lineWidth = 2.2;
+    c.beginPath(); c.moveTo(TISCH.kopfX, -Y); c.lineTo(TISCH.kopfX, Y); c.stroke();
+    c.beginPath(); c.arc(TISCH.fussX, 0, 5, 0, Math.PI * 2); c.fillStyle = 'rgba(255, 244, 220, 0.3)'; c.fill();
+    if (kopffeld) {
+      c.fillStyle = 'rgba(255, 211, 90, 0.08)';
+      c.fillRect(-X, -Y, TISCH.kopfX + X, 2 * Y);
+      c.strokeStyle = 'rgba(255, 211, 90, 0.6)'; c.lineWidth = 4; c.setLineDash([18, 12]);
+      c.beginPath(); c.moveTo(TISCH.kopfX, -Y); c.lineTo(TISCH.kopfX, Y); c.stroke(); c.setLineDash([]);
+    }
+  }
+
+  function bandenStueck(c, p, achse, seite) {
+    // p: [Backenende, Nase, Nase, Backenende]; nach außen bis hinter die Bande verlängern
+    const aussen = achse === 'y' ? seite * (TISCH.Y + TISCH.BANDE) : seite * (TISCH.X + TISCH.BANDE);
+    c.beginPath();
+    c.moveTo(p[0].x, p[0].y);
+    for (let i = 1; i < 4; i++) c.lineTo(p[i].x, p[i].y);
+    if (achse === 'y') { c.lineTo(p[3].x, aussen); c.lineTo(p[0].x, aussen); }
+    else { c.lineTo(aussen, p[3].y); c.lineTo(aussen, p[0].y); }
+    c.closePath();
+    const g = achse === 'y'
+      ? c.createLinearGradient(0, seite * TISCH.Y, 0, aussen)
+      : c.createLinearGradient(seite * TISCH.X, 0, aussen, 0);
+    g.addColorStop(0, '#1BAE9E'); g.addColorStop(0.35, FARBE.bande); g.addColorStop(1, FARBE.bandeKante);
+    c.fillStyle = g; c.fill();
+    // Lichtkante an der Nase
+    c.beginPath(); c.moveTo(p[1].x, p[1].y); c.lineTo(p[2].x, p[2].y);
+    c.strokeStyle = 'rgba(190, 255, 240, 0.35)'; c.lineWidth = 2.5; c.stroke();
+  }
+
+  function messingBeschlag(c, t) {
+    const z = t.zeichen;
+    const r = z.r + 20;
+    // Bogen um das Loch, auf dem Holzrahmen
+    const grund = Math.atan2(t.achse.y, t.achse.x);
+    const breite = t.art === 'ecke' ? 1.25 : 1.05;
+    c.lineWidth = 16;
+    const g = c.createLinearGradient(z.x - r, z.y - r, z.x + r, z.y + r);
+    g.addColorStop(0, FARBE.messingHell); g.addColorStop(0.45, FARBE.messing); g.addColorStop(1, FARBE.messingDunkel);
+    c.strokeStyle = g;
+    c.beginPath(); c.arc(z.x, z.y, r - 6, grund - breite, grund + breite); c.stroke();
+    for (const w of [-breite * 0.8, 0, breite * 0.8]) {
+      c.beginPath(); c.arc(z.x + Math.cos(grund + w) * (r - 6), z.y + Math.sin(grund + w) * (r - 6), 3.4, 0, Math.PI * 2);
+      c.fillStyle = FARBE.messingDunkel; c.fill();
+    }
+  }
+
+  function anker(c, x, y, seite) {
+    c.save(); c.translate(x, y); c.rotate(seite * Math.PI / 2);
+    c.strokeStyle = 'rgba(232, 196, 120, 0.55)'; c.lineWidth = 5; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(0, -22); c.lineTo(0, 22); c.stroke();
+    c.beginPath(); c.moveTo(-12, -12); c.lineTo(12, -12); c.stroke();
+    c.beginPath(); c.arc(0, -27, 5, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.arc(0, 4, 19, 0.25 * Math.PI, 0.75 * Math.PI); c.stroke();
+    c.restore();
+  }
+
+  // ---------- Kugeln (im Bildraum, damit Licht und Nummern immer aufrecht sind) ----------
+  function malKugel(c, nr, x, y, r, alpha = 1) {
+    c.globalAlpha = alpha;
+    // Schatten (Licht von oben, leicht versetzt)
+    c.beginPath(); c.ellipse(x + r * 0.16, y + r * 0.26, r * 0.98, r * 0.9, 0, 0, Math.PI * 2);
+    c.fillStyle = 'rgba(0, 20, 18, 0.35)'; c.fill();
+    const farbe = nr === 0 ? '#F8F3E6' : KUGEL_FARBEN[nr];
+    const halb = nr >= 9;
+    c.save();
+    c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.clip();
+    c.fillStyle = halb ? '#F8F3E6' : farbe; c.fillRect(x - r, y - r, 2 * r, 2 * r);
+    if (halb) { c.fillStyle = farbe; c.fillRect(x - r, y - r * 0.55, 2 * r, r * 1.1); }
+    // Nummernfeld
+    if (nr !== 0) {
+      c.beginPath(); c.arc(x, y, r * (halb ? 0.5 : 0.52), 0, Math.PI * 2); c.fillStyle = '#FFFDF6'; c.fill();
+      if (nr === 8) { c.lineWidth = Math.max(0.6, r * 0.06); c.strokeStyle = '#d8d2c4'; c.stroke(); }
+      c.fillStyle = '#121214';
+      c.font = `800 ${Math.max(7, r * (nr >= 10 ? 0.66 : 0.74))}px -apple-system, "Segoe UI", Roboto, Arial, sans-serif`;
+      c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.fillText(String(nr), x, y + r * 0.04);
+    } else {
+      // Weiße: kleiner roter Punkt (wie bei Trainingskugeln) zur Unterscheidung von hellen Halben
+      c.beginPath(); c.arc(x + r * 0.35, y + r * 0.3, r * 0.13, 0, Math.PI * 2); c.fillStyle = 'rgba(214, 64, 47, 0.75)'; c.fill();
+    }
+    // Rundung und Glanz
+    const schatten = c.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.15, x, y, r * 1.05);
+    schatten.addColorStop(0, 'rgba(255, 255, 255, 0.10)');
+    schatten.addColorStop(0.6, 'rgba(0, 0, 0, 0)');
+    schatten.addColorStop(1, 'rgba(0, 0, 0, 0.38)');
+    c.fillStyle = schatten; c.fillRect(x - r, y - r, 2 * r, 2 * r);
+    c.restore();
+    c.beginPath(); c.ellipse(x - r * 0.36, y - r * 0.42, r * 0.26, r * 0.17, -0.6, 0, Math.PI * 2);
+    c.fillStyle = 'rgba(255, 255, 255, 0.85)'; c.fill();
+    c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2);
+    c.lineWidth = Math.max(0.6, r * 0.05); c.strokeStyle = nr === 8 ? 'rgba(255, 255, 255, 0.35)' : 'rgba(0, 0, 0, 0.35)'; c.stroke();
+    c.globalAlpha = 1;
+  }
+
+  // ---------- Queue (in Weltkoordinaten) ----------
+  function malQueue(c, w, winkel, abstand) {
+    const ux = Math.cos(winkel), uy = Math.sin(winkel);
+    const px = -uy, py = ux;
+    const spitze = R + abstand;
+    const laenge = 1480;
+    const punkt = (d, b) => ({ x: w.x - ux * d + px * b, y: w.y - uy * d + py * b });
+    const teil = (d0, d1, b0, b1, farbe) => {
+      const a = punkt(d0, b0), b = punkt(d1, b1), cc = punkt(d1, -b1), d = punkt(d0, -b0);
+      c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.lineTo(cc.x, cc.y); c.lineTo(d.x, d.y); c.closePath();
+      c.fillStyle = farbe; c.fill();
+    };
+    const breite = d => 5.5 + (d - spitze) / laenge * 9;
+    // Schatten des Queues auf dem Tisch
+    c.save(); c.translate(10, 14); c.globalAlpha = 0.25;
+    teil(spitze, spitze + laenge, breite(spitze), breite(spitze + laenge), '#000');
+    c.restore();
+    const holz = c.createLinearGradient(punkt(0, -10).x, punkt(0, -10).y, punkt(0, 10).x, punkt(0, 10).y);
+    holz.addColorStop(0, '#C99A62'); holz.addColorStop(0.5, '#F2D3A0'); holz.addColorStop(1, '#B9864F');
+    teil(spitze + 26, spitze + 980, breite(spitze + 26), breite(spitze + 980), holz);
+    teil(spitze, spitze + 6, breite(spitze), breite(spitze + 6), '#3E6FBF');            // Kreide
+    teil(spitze + 6, spitze + 26, breite(spitze + 6), breite(spitze + 26), FARBE.creme);  // Zwinge
+    teil(spitze + 980, spitze + 1000, breite(spitze + 980), breite(spitze + 1000), FARBE.messing);
+    teil(spitze + 1000, spitze + laenge, breite(spitze + 1000), breite(spitze + laenge), '#3A1F14');
+    teil(spitze + 1120, spitze + 1140, breite(spitze + 1120), breite(spitze + 1140), FARBE.koralle);
+    teil(spitze + 1160, spitze + 1172, breite(spitze + 1160), breite(spitze + 1172), FARBE.gelb);
+    teil(spitze + laenge - 30, spitze + laenge, breite(spitze + laenge - 30), breite(spitze + laenge), '#151515');
+  }
+
+  // ---------- Zielhilfe (Bildraum, Werte aus der Welt umgerechnet) ----------
+  function malVorschau(c, v, erweitert) {
+    if (!v) return;
+    const s = Ansicht.s;
+    const a = Ansicht.zuBild(v.start.x, v.start.y), b = Ansicht.zuBild(v.treffer.x, v.treffer.y);
+    c.save();
+    c.lineCap = 'round';
+    c.setLineDash([Math.max(4, 9 * s * 3), Math.max(4, 7 * s * 3)]);
+    c.lineWidth = Math.max(1.6, 5 * s); c.strokeStyle = 'rgba(255, 244, 220, 0.85)';
+    // Linie beginnt am Rand der Weißen
+    const l = Math.hypot(b.x - a.x, b.y - a.y);
+    if (l > R * s) {
+      const k = (R * s) / l;
+      c.beginPath(); c.moveTo(a.x + (b.x - a.x) * k, a.y + (b.y - a.y) * k); c.lineTo(b.x, b.y); c.stroke();
+    }
+    c.setLineDash([]);
+    // Geisterkugel am Treffpunkt
+    c.beginPath(); c.arc(b.x, b.y, R * s, 0, Math.PI * 2);
+    c.lineWidth = Math.max(1.4, 4 * s); c.strokeStyle = v.art === 'kugel' ? 'rgba(255, 244, 220, 0.95)' : 'rgba(255, 244, 220, 0.55)'; c.stroke();
+    c.fillStyle = 'rgba(255, 244, 220, 0.12)'; c.fill();
+    if (v.art === 'kugel') {
+      // Richtung der getroffenen Kugel
+      const o = Ansicht.zuBild(v.objekt.x, v.objekt.y);
+      const e = Ansicht.zuBild(v.objekt.x + v.richtung.x * v.objektLaenge, v.objekt.y + v.richtung.y * v.objektLaenge);
+      c.lineWidth = Math.max(2, 6 * s); c.strokeStyle = v.erlaubt === false ? 'rgba(255, 128, 91, 0.95)' : 'rgba(255, 211, 90, 0.95)';
+      c.beginPath(); c.moveTo(o.x, o.y); c.lineTo(e.x, e.y); c.stroke();
+      // Pfeilspitze
+      const wx = e.x - o.x, wy = e.y - o.y, wl = Math.hypot(wx, wy) || 1, ux = wx / wl, uy = wy / wl, p = Math.max(5, 14 * s);
+      c.beginPath(); c.moveTo(e.x + ux * p * 0.4, e.y + uy * p * 0.4); c.lineTo(e.x - ux * p + uy * p * 0.6, e.y - uy * p - ux * p * 0.6); c.lineTo(e.x - ux * p - uy * p * 0.6, e.y - uy * p + ux * p * 0.6); c.closePath();
+      c.fillStyle = c.strokeStyle; c.fill();
+      if (v.erlaubt === false) {
+        // falsche Kugel: kleines X auf dem Geist
+        const d = R * s * 0.55;
+        c.strokeStyle = FARBE.koralle; c.lineWidth = Math.max(2, 5 * s);
+        c.beginPath(); c.moveTo(b.x - d, b.y - d); c.lineTo(b.x + d, b.y + d); c.moveTo(b.x + d, b.y - d); c.lineTo(b.x - d, b.y + d); c.stroke();
+      }
+      if (erweitert && v.weissWeiter) {
+        const w2 = Ansicht.zuBild(v.treffer.x + v.weissWeiter.x * 260, v.treffer.y + v.weissWeiter.y * 260);
+        c.setLineDash([Math.max(3, 6 * s * 3), Math.max(3, 8 * s * 3)]);
+        c.lineWidth = Math.max(1.2, 3 * s); c.strokeStyle = 'rgba(255, 244, 220, 0.45)';
+        c.beginPath(); c.moveTo(b.x, b.y); c.lineTo(w2.x, w2.y); c.stroke();
+        c.setLineDash([]);
+      }
+    }
+    c.restore();
+  }
+
+  // ---------- Taschenwahl für die Acht ----------
+  function malTaschenWahl(c, angesagt, zeit, aktiv) {
+    for (const t of TISCH.taschen) {
+      const z = t.zeichen;
+      const m = Ansicht.zuBild(z.x, z.y);
+      const r = (z.r + 10) * Ansicht.s;
+      const gewaehlt = angesagt === t.nr;
+      if (!aktiv && !gewaehlt) continue;
+      c.beginPath(); c.arc(m.x, m.y, r + (gewaehlt ? 0 : Math.sin(zeit * 4) * 2 + 2), 0, Math.PI * 2);
+      c.lineWidth = gewaehlt ? 4 : 2.5; c.strokeStyle = gewaehlt ? FARBE.gelb : 'rgba(255, 211, 90, 0.7)';
+      c.setLineDash(gewaehlt ? [] : [5, 5]); c.stroke(); c.setLineDash([]);
+      if (gewaehlt) {
+        malKugel(c, 8, m.x, m.y, Math.max(9, R * Ansicht.s * 0.9));
+      } else {
+        c.fillStyle = 'rgba(255, 211, 90, 0.95)'; c.font = `700 ${Math.max(11, r * 0.5)}px -apple-system, "Segoe UI", Roboto, Arial, sans-serif`;
+        c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(String(t.nr + 1), m.x, m.y);
+      }
+    }
+  }
+
+  // ---------- Ball in Hand: Platzierungsanzeige ----------
+  function malPlatzierung(c, pos, gueltig) {
+    const m = Ansicht.zuBild(pos.x, pos.y), r = R * Ansicht.s;
+    c.beginPath(); c.arc(m.x, m.y, r + 6, 0, Math.PI * 2);
+    c.lineWidth = 3; c.strokeStyle = gueltig ? FARBE.tuerkis : FARBE.koralle; c.setLineDash(gueltig ? [] : [4, 4]); c.stroke(); c.setLineDash([]);
+    if (!gueltig) {
+      c.beginPath(); c.arc(m.x, m.y, r + 6, 0, Math.PI * 2); c.fillStyle = 'rgba(255, 128, 91, 0.25)'; c.fill();
+      const d = r * 0.8;
+      c.strokeStyle = FARBE.koralle; c.lineWidth = 3;
+      c.beginPath(); c.moveTo(m.x - d, m.y - d); c.lineTo(m.x + d, m.y + d); c.moveTo(m.x + d, m.y - d); c.lineTo(m.x - d, m.y + d); c.stroke();
+    }
+  }
+
+  // ---------- Ganzes Bild ----------
+  function male(c, z) {
+    const { w, h, dpr } = Ansicht;
+    // Hintergrund nur neu zeichnen, wenn sich Größe oder Drehung ändern
+    const schl = `${w}x${h}@${dpr}:${Ansicht.gedreht}`;
+    if (schl !== hgSchluessel) {
+      hgSchluessel = schl;
+      hintergrund = document.createElement('canvas');
+      hintergrund.width = Math.round(w * dpr); hintergrund.height = Math.round(h * dpr);
+      const hc = hintergrund.getContext('2d');
+      hc.setTransform(dpr, 0, 0, dpr, 0, 0);
+      malHintergrund(hc, w, h);
+      Ansicht.welt2d(hc);
+      malTisch(hc, false);
+    }
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.drawImage(hintergrund, 0, 0);
+    if (z.kopffeld) {
+      Ansicht.welt2d(c);
+      c.fillStyle = 'rgba(255, 211, 90, 0.08)';
+      c.fillRect(-TISCH.X, -TISCH.Y, TISCH.kopfX + TISCH.X, 2 * TISCH.Y);
+      c.strokeStyle = 'rgba(255, 211, 90, 0.65)'; c.lineWidth = 4; c.setLineDash([18, 12]);
+      c.beginPath(); c.moveTo(TISCH.kopfX, -TISCH.Y); c.lineTo(TISCH.kopfX, TISCH.Y); c.stroke(); c.setLineDash([]);
+    }
+    Ansicht.bild2d(c);
+    const rs = R * Ansicht.s;
+    // fallende Kugeln (unter den anderen): rollen zur Lochmitte und werden kleiner
+    for (const k of z.kugeln) {
+      if (!k.fall || k.fall.zeit >= PHYSIK.FALL_DAUER) continue;
+      const t = TISCH.taschen[k.fall.tasche], q = k.fall.zeit / PHYSIK.FALL_DAUER;
+      const ziel = t.zeichen;
+      const x = k.fall.x + (ziel.x - k.fall.x) * q, y = k.fall.y + (ziel.y - k.fall.y) * q;
+      const m = Ansicht.zuBild(x, y);
+      malKugel(c, k.nr, m.x, m.y, rs * (1 - 0.35 * q), 1 - q * 0.75);
+    }
+    if (z.vorschau) malVorschau(c, z.vorschau, z.erweitert);
+    for (const k of z.kugeln) {
+      if (!k.aufTisch) continue;
+      if (k.nr === 0 && z.weissVersteckt) continue;
+      const m = Ansicht.zuBild(k.x, k.y);
+      malKugel(c, k.nr, m.x, m.y, rs);
+    }
+    // markierte Zielkugeln (erlaubte erste Kugel) dezent
+    if (z.markiert) for (const nr of z.markiert) {
+      const k = z.kugeln.find(b => b.nr === nr && b.aufTisch); if (!k) continue;
+      const m = Ansicht.zuBild(k.x, k.y);
+      c.beginPath(); c.arc(m.x, m.y, rs + Math.max(2, rs * 0.22), 0, Math.PI * 2);
+      c.lineWidth = Math.max(1.2, rs * 0.12); c.strokeStyle = 'rgba(255, 244, 220, 0.5)'; c.stroke();
+    }
+    if (z.platz) {
+      const m = Ansicht.zuBild(z.platz.x, z.platz.y);
+      malKugel(c, 0, m.x, m.y, rs, 0.92);
+      malPlatzierung(c, z.platz, z.platz.gueltig);
+    }
+    if (z.taschenWahl || z.angesagt !== null) malTaschenWahl(c, z.angesagt, z.zeit, z.taschenWahl);
+    if (z.queue) {
+      Ansicht.welt2d(c);
+      malQueue(c, z.queue.weiss, z.queue.winkel, z.queue.abstand);
+      Ansicht.bild2d(c);
+    }
+  }
+  return { male, malKugel, FARBE };
+})();
+
+// ===================================================================
+// 8 · EINGABE
+// Übersetzt Pointer- und Tastaturereignisse in Aktionen für die App.
+// Pointer Events für Maus, Finger und Stift (keine doppelten Touch-/
+// Mausauslösungen). Nur der erste Finger zählt. Menüs liegen außerhalb
+// der Leinwand und lösen daher nie Tischaktionen aus.
+// ===================================================================
+
+function richteEingabeEin(leinwand, a) {
+  // a: { tisch(welt, phase), fein(richtung, wiederholung), staerke(wert 0..1), staerkeSchritt(d), stoss(),
+  //      bestaetigen(), pause(), ton(), tasche(nr), verschiebe(dx, dy), darf() }
+  let zeiger = null;   // id des aktiven Pointers auf dem Tisch
+
+  function weltPunkt(e) {
+    const r = leinwand.getBoundingClientRect();
+    return Ansicht.zuWelt(e.clientX - r.left, e.clientY - r.top);
+  }
+  leinwand.addEventListener('pointerdown', e => {
+    if (!e.isPrimary || zeiger !== null) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    e.preventDefault();
+    zeiger = e.pointerId;
+    try { leinwand.setPointerCapture(e.pointerId); } catch (x) { /* egal */ }
+    leinwand.focus({ preventScroll: true });
+    a.tisch(weltPunkt(e), 'start');
+  });
+  leinwand.addEventListener('pointermove', e => {
+    if (e.pointerId !== zeiger) return;
+    a.tisch(weltPunkt(e), 'zug');
+  });
+  const ende = e => {
+    if (e.pointerId !== zeiger) return;
+    zeiger = null;
+    a.tisch(weltPunkt(e), e.type === 'pointercancel' ? 'abbruch' : 'ende');
+  };
+  leinwand.addEventListener('pointerup', ende);
+  leinwand.addEventListener('pointercancel', ende);
+  leinwand.addEventListener('lostpointercapture', e => { if (e.pointerId === zeiger) { zeiger = null; a.tisch(null, 'abbruch'); } });
+  leinwand.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Feinzielen: Tippen = ein kleiner Schritt, Halten = langsam weiterdrehen (ein Timer, sauber beendet)
+  function feinKnopf(knopf, richtung) {
+    let timer = null, schritte = 0, aktiv = null;
+    const stopp = () => { if (timer) { clearTimeout(timer); timer = null; } aktiv = null; };
+    const weiter = () => {
+      schritte++;
+      a.fein(richtung, schritte);
+      timer = setTimeout(weiter, schritte < 12 ? 70 : 40);
+    };
+    knopf.addEventListener('pointerdown', e => {
+      if (!e.isPrimary || aktiv !== null || knopf.disabled) return;
+      e.preventDefault();
+      aktiv = e.pointerId;
+      try { knopf.setPointerCapture(e.pointerId); } catch (x) { /* egal */ }
+      schritte = 0;
+      a.fein(richtung, 0);
+      timer = setTimeout(weiter, 380);
+    });
+    for (const t of ['pointerup', 'pointercancel', 'lostpointercapture']) knopf.addEventListener(t, e => { if (e.pointerId === aktiv) stopp(); });
+    // Tastatur (Enter/Leertaste auf dem Knopf) erzeugt einen click mit detail 0
+    knopf.addEventListener('click', e => { if (e.detail === 0) a.fein(richtung, 0); });
+    return stopp;
+  }
+  const stoppL = feinKnopf(document.getElementById('linksKnopf'), -1);
+  const stoppR = feinKnopf(document.getElementById('rechtsKnopf'), 1);
+
+  // Stärkeregler (eigenes Element mit role=slider)
+  const regler = document.getElementById('staerke');
+  const spur = regler.querySelector('.spur');
+  let reglerZeiger = null;
+  const reglerWert = e => {
+    const r = spur.getBoundingClientRect();
+    return Math.max(0, Math.min(1, (e.clientX - r.left) / Math.max(1, r.width)));
+  };
+  regler.addEventListener('pointerdown', e => {
+    if (!e.isPrimary || reglerZeiger !== null || regler.getAttribute('aria-disabled') === 'true') return;
+    e.preventDefault();
+    reglerZeiger = e.pointerId;
+    try { regler.setPointerCapture(e.pointerId); } catch (x) { /* egal */ }
+    regler.focus({ preventScroll: true });
+    a.staerke(reglerWert(e));
+  });
+  regler.addEventListener('pointermove', e => { if (e.pointerId === reglerZeiger) a.staerke(reglerWert(e)); });
+  for (const t of ['pointerup', 'pointercancel', 'lostpointercapture']) regler.addEventListener(t, e => { if (e.pointerId === reglerZeiger) reglerZeiger = null; });
+  regler.addEventListener('keydown', e => {
+    const gross = e.shiftKey ? 10 : 2;
+    let d = null;
+    if (e.key === 'ArrowUp' || e.key === 'ArrowRight' || e.key === 'PageUp') d = e.key === 'PageUp' ? 10 : gross;
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'PageDown') d = e.key === 'PageDown' ? -10 : -gross;
+    else if (e.key === 'Home') { a.staerke(0); e.preventDefault(); e.stopPropagation(); return; }
+    else if (e.key === 'End') { a.staerke(1); e.preventDefault(); e.stopPropagation(); return; }
+    if (d !== null) { a.staerkeSchritt(d / 100); e.preventDefault(); e.stopPropagation(); }
+  });
+
+  // Stoßen: genau ein Stoß pro Klick (click feuert für Maus, Finger und Tastatur genau einmal)
+  document.getElementById('stossKnopf').addEventListener('click', () => a.stoss());
+
+  // Tastatur fürs ganze Spiel
+  document.addEventListener('keydown', e => {
+    if (!a.darf()) return;
+    const ziel = e.target;
+    const aufBedienelement = ziel && ziel.closest && ziel.closest('button, a, select, input, [role="slider"]');
+    if (e.key === ' ' || e.code === 'Space') {
+      if (aufBedienelement) return;          // Leertaste auf einem Knopf bedient nur diesen Knopf
+      e.preventDefault();
+      if (e.repeat) return;                  // keine automatische Wiederholung
+      a.stoss();
+      return;
+    }
+    if (e.key === 'Enter' && !aufBedienelement) { e.preventDefault(); if (!e.repeat) a.bestaetigen(); return; }
+    if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') { e.preventDefault(); if (!e.repeat) a.pause(); return; }
+    if (e.key === 'm' || e.key === 'M') { if (!e.repeat) a.ton(); return; }
+    if (/^[1-6]$/.test(e.key)) { a.tasche(Number(e.key) - 1); return; }
+    if (aufBedienelement && ziel.closest('[role="slider"], select')) return;
+    const grob = e.shiftKey;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); a.fein(-1, grob ? 20 : 0, true); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); a.fein(1, grob ? 20 : 0, true); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); a.staerkeSchritt(grob ? 0.1 : 0.02); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); a.staerkeSchritt(grob ? -0.1 : -0.02); }
+  });
+
+  return {
+    loslassen() { zeiger = null; reglerZeiger = null; stoppL(); stoppR(); },
+  };
+}
+
+// ===================================================================
+// PIXELHAFEN · FREUNDE HERAUSFORDERN
+// Gemeinsamer Baustein für die Pixelhafen-Spiele: eigene Rangliste mit Freunden
+// und ein Link zum Teilen. Ohne Server und ohne Anmeldung: Name, Punkte, Level
+// und Stufe stehen im Link (#name=…&punkte=…&level=…&stufe=…). Wer den Link
+// öffnet, hat den Freund danach in seiner Liste. Alles bleibt auf dem Gerät.
+//
+// Benutzung:
+//   const duell = PixelDuell.erstelle({
+//     spiel: 'Froschsprung',                       // Name im Text
+//     adresse: 'https://moje9328.github.io/froschsprung/',
+//     schluessel: 'pixelhafen.froschsprung.freunde',
+//     stand: stufe => ({ punkte: 123, level: 4 }),  // eigener Rekord (für die Stufe)
+//     // freiwillig:
+//     stufen: { leicht: 'Leicht', normal: 'Normal' }, stufe: () => 'normal',
+//     beiStufe: stufe => {…},                       // Link kam mit einer Stufe
+//     levelWort: 'Level', einheit: 'Punkte', wasText: 'deinen Rekord',
+//     beiZu: () => {…},                             // Fenster wurde geschlossen
+//     erklaerung: 'Gezählt werden …',               // Satz unter der Überschrift
+//   });
+//   duell.oeffne();              // Fenster mit Rangliste und Teilen
+//   duell.offen                  // Herausforderung aus dem Link oder null
+//   duell.startText()            // Satz für den Startbildschirm (oder '')
+//   duell.endText(punkte)        // Satz für den Ende-Bildschirm
+// ===================================================================
+
+const PixelDuell = (() => {
+  const zahl = n => Math.floor(Number(n) || 0).toLocaleString('de-DE');
+
+  function reinerName(text) {
+    // Nur sichtbare Zeichen und nicht zu lang: Der Name kommt aus einem fremden Link
+    const sauber = String(text == null ? '' : text).normalize('NFC').replace(/[\p{C}<>]/gu, '').trim();
+    return Array.from(sauber).slice(0, 12).join('');
+  }
+
+  function lager() { try { return window.localStorage || null; } catch (e) { return null; } }
+
+  let stilDa = false;
+  function stil() {
+    if (stilDa) return;
+    stilDa = true;
+    const css = document.createElement('style');
+    css.textContent = `
+.pxd { position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  background: rgba(4, 8, 24, 0.78); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  touch-action: auto; -webkit-user-select: none; user-select: none; overflow-y: auto; overscroll-behavior: contain;
+  font: 16px/1.45 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #eef3ff; text-align: left; }
+.pxd[hidden] { display: none; }
+.pxd * { box-sizing: border-box; }
+.pxd-tafel { width: min(100%, 420px); max-height: calc(100dvh - 24px); overflow-y: auto; padding: 20px 18px 18px; background: #101d45; border: 2px solid #2b4183; border-radius: 16px; box-shadow: 0 16px 50px rgba(0,0,0,0.55); }
+.pxd h2 { margin: 0 0 4px; color: #f2b84b; font: 16px/1.4 'Press Start 2P', 'Courier New', monospace; letter-spacing: 0; }
+.pxd p { margin: 8px 0 0; }
+.pxd .pxd-klein { color: #aab7da; font-size: 13px; line-height: 1.4; }
+.pxd .pxd-duell { margin: 12px 0 0; padding: 10px 12px; background: #182a5c; border-left: 4px solid #f2b84b; border-radius: 8px; }
+.pxd .pxd-duell:empty { display: none; }
+.pxd .pxd-stufen { display: flex; gap: 4px; margin: 14px 0 0; padding: 4px; background: #0a1330; border-radius: 12px; }
+.pxd .pxd-stufen[hidden] { display: none; }
+.pxd .pxd-stufen button { flex: 1 1 0; min-height: 40px; padding: 6px 4px; color: #aab7da; background: transparent; border: 0; border-radius: 9px; font-weight: 600; font-size: 14px; line-height: 1.2; font-family: inherit; cursor: pointer; }
+.pxd .pxd-stufen button[aria-pressed="true"] { color: #eef3ff; background: #182a5c; box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+.pxd ol { display: grid; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; }
+.pxd li { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 4px 4px 4px 12px; background: #182a5c; border-radius: 10px; }
+.pxd li.pxd-ich { box-shadow: inset 0 0 0 2px #f2b84b; }
+.pxd .pxd-platz { flex: none; width: 22px; color: #aab7da; font: 10px/1 'Press Start 2P', 'Courier New', monospace; }
+.pxd .pxd-wer { flex: 1 1 auto; min-width: 0; overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.pxd .pxd-wer small { display: block; color: #aab7da; font-weight: 400; font-size: 12px; }
+.pxd .pxd-wie { flex: none; font: 11px/1 'Press Start 2P', 'Courier New', monospace; font-variant-numeric: tabular-nums; }
+.pxd .pxd-weg, .pxd .pxd-leer { flex: none; width: 36px; height: 36px; }
+.pxd .pxd-weg { padding: 0; color: #aab7da; background: transparent; border: 0; border-radius: 8px; font-size: 20px; line-height: 1; cursor: pointer; }
+.pxd .pxd-weg:hover { color: #eef3ff; background: #101d45; }
+.pxd label { display: grid; gap: 6px; margin: 16px 0 0; font-weight: 600; }
+.pxd input { width: 100%; min-height: 46px; padding: 10px 12px; color: #eef3ff; background: #0a1330; border: 1px solid #2b4183; border-radius: 10px; font-size: 16px; line-height: 1.3; font-family: inherit; -webkit-user-select: text; user-select: text; touch-action: auto; }
+.pxd input[hidden] { display: none; }
+.pxd .pxd-status { min-height: 22px; margin: 10px 0 0; color: #f2b84b; font-weight: 600; }
+.pxd .pxd-status:empty { display: none; }
+.pxd .pxd-knoepfe { display: grid; gap: 8px; margin: 16px 0 0; }
+.pxd .pxd-btn { min-height: 48px; padding: 10px 14px; color: #eef3ff; background: #182a5c; border: 1px solid #2b4183; border-radius: 12px; font-weight: 600; font-size: 16px; line-height: 1.2; font-family: inherit; cursor: pointer; }
+.pxd .pxd-btn.pxd-main { color: #1d1505; background: #f2b84b; border-color: #a9781f; box-shadow: 0 3px 0 #a9781f; }
+.pxd .pxd-btn:disabled { opacity: 0.45; cursor: default; }
+.pxd .pxd-btn:hover:not(:disabled) { filter: brightness(1.08); }
+.pxd :focus-visible { outline: 3px solid #f2b84b; outline-offset: 2px; }
+`;
+    document.head.append(css);
+  }
+
+  function erstelle(cfg) {
+    const spiel = cfg.spiel;
+    const stufen = cfg.stufen || null;
+    const einheit = cfg.einheit || 'Punkte';
+    const levelWort = cfg.levelWort === undefined ? 'Level' : cfg.levelWort;
+    const stufeJetzt = () => (stufen ? (cfg.stufe ? cfg.stufe() : Object.keys(stufen)[0]) : '');
+    const stufeName = st => (stufen && stufen[st] ? stufen[st] : '');
+
+    // ---------- Speicher: { name, freunde: [{ name, punkte, level, stufe }] } ----------
+    let daten = { name: '', freunde: [] };
+    try {
+      const l = lager();
+      const roh = l ? JSON.parse(l.getItem(cfg.schluessel) || 'null') : null;
+      if (roh && typeof roh === 'object') {
+        daten.name = reinerName(roh.name);
+        if (Array.isArray(roh.freunde)) {
+          daten.freunde = roh.freunde.filter(f => f && reinerName(f.name) && Number.isInteger(f.punkte) && f.punkte > 0)
+            .map(f => ({ name: reinerName(f.name), punkte: f.punkte, level: Number.isInteger(f.level) ? f.level : 0, stufe: typeof f.stufe === 'string' ? f.stufe : '' }))
+            .slice(0, 60);
+        }
+      }
+    } catch (e) { /* kaputt: leer anfangen */ }
+    function sichern() { try { const l = lager(); if (l) l.setItem(cfg.schluessel, JSON.stringify(daten)); } catch (e) { /* gesperrt */ } }
+
+    const freunde = (st = stufeJetzt()) => daten.freunde.filter(f => !stufen || f.stufe === st);
+    const eigener = (st = stufeJetzt()) => {
+      const s = cfg.stand(st) || {};
+      return { punkte: Math.max(0, Math.floor(Number(s.punkte) || 0)), level: Math.max(0, Math.floor(Number(s.level) || 0)) };
+    };
+
+    // ---------- Wurde das Spiel über den Link eines Freundes geöffnet? ----------
+    let offen = null;
+    if (location.hash.length > 1) {
+      const t = new URLSearchParams(location.hash.slice(1));
+      const name = reinerName(t.get('name'));
+      const punkte = Number(t.get('punkte'));
+      const level = t.has('level') ? Number(t.get('level')) : 0;
+      const stufe = t.get('stufe') || '';
+      if (t.has('punkte')) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* egal */ } }
+      const gut = name && Number.isInteger(punkte) && punkte >= 1 && punkte <= 999999999
+        && Number.isInteger(level) && level >= 0 && level <= 9999
+        && (stufen ? Object.prototype.hasOwnProperty.call(stufen, stufe) : true);
+      if (gut) {
+        const st = stufen ? stufe : '';
+        const bekannt = daten.freunde.find(f => f.name === name && f.stufe === st);
+        if (bekannt) { bekannt.punkte = Math.max(bekannt.punkte, punkte); bekannt.level = Math.max(bekannt.level, level); }
+        else daten.freunde.push({ name, punkte, level, stufe: st });
+        daten.freunde.sort((a, b) => b.punkte - a.punkte);
+        daten.freunde = daten.freunde.slice(0, 60);
+        sichern();
+        offen = { name, punkte, level, stufe: st };
+        if (stufen && cfg.beiStufe) { try { cfg.beiStufe(st); } catch (e) { /* egal */ } }
+      }
+    }
+
+    function ergebnisText(e) {
+      let t = zahl(e.punkte) + ' ' + einheit;
+      const teile = [];
+      if (levelWort && e.level > 0) teile.push(levelWort + ' ' + e.level);
+      if (stufen && e.stufe) teile.push('Stufe ' + stufeName(e.stufe));
+      if (teile.length) t += ' (' + teile.join(', ') + ')';
+      return t;
+    }
+
+    function startText() {
+      if (!offen) return '';
+      const mein = eigener(offen.stufe || stufeJetzt()).punkte;
+      if (mein > offen.punkte) return offen.name + ' hat dich herausgefordert: ' + ergebnisText(offen) + '. Du liegst schon vorn, schick deinen Link zurück!';
+      return offen.name + ' fordert dich heraus: ' + ergebnisText(offen) + '. Schaffst du mehr?';
+    }
+
+    function endText(punkte, st = stufeJetzt()) {
+      const liste = freunde(st);
+      const ueber = liste.filter(f => f.punkte >= punkte).sort((a, b) => a.punkte - b.punkte)[0];
+      if (ueber) return 'Noch ' + zahl(ueber.punkte - punkte + 1) + ' ' + einheit + ', dann liegst du vor ' + ueber.name + '.';
+      if (liste.length) return 'Du liegst vor allen Freunden in deiner Liste. Fordere sie heraus!';
+      return 'Fordere deine Freunde heraus: Wer schafft mehr?';
+    }
+
+    // ---------- Fenster ----------
+    let wurzel = null, el = {}, sichtStufe = '', vorher = null, unterdrueckt = [];
+
+    function baue() {
+      stil();
+      wurzel = document.createElement('div');
+      wurzel.className = 'pxd';
+      wurzel.hidden = true;
+      wurzel.innerHTML = `
+<div class="pxd-tafel" role="dialog" aria-modal="true" aria-labelledby="pxdTitel">
+  <h2 id="pxdTitel">FREUNDE</h2>
+  <p class="pxd-klein" data-r="unter"></p>
+  <p class="pxd-duell" data-r="duell"></p>
+  <div class="pxd-stufen" role="group" aria-label="Schwierigkeit" data-r="stufen" hidden></div>
+  <ol data-r="liste" aria-label="Rangliste"></ol>
+  <label>Dein Name für den Link
+    <input type="text" data-r="name" maxlength="12" autocomplete="off" enterkeyhint="send" placeholder="zum Beispiel Sam">
+  </label>
+  <p class="pxd-klein">Im Link stehen nur dein Name und dein Ergebnis. Schicken Freunde dir ihren Link zurück, stehen sie hier in deiner Liste. Alles bleibt auf deinem Gerät.</p>
+  <p class="pxd-status" role="status" data-r="status"></p>
+  <input type="text" data-r="link" readonly hidden aria-label="Dein Link zum Kopieren">
+  <div class="pxd-knoepfe">
+    <button class="pxd-btn pxd-main" type="button" data-r="teilen">Freunde herausfordern</button>
+    <button class="pxd-btn" type="button" data-r="zu">Schließen</button>
+  </div>
+</div>`;
+      wurzel.querySelectorAll('[data-r]').forEach(n => { el[n.dataset.r] = n; });
+      // Das Spiel darunter soll von Tippen und Tasten hier drin nichts merken
+      for (const typ of ['pointerdown', 'pointerup', 'pointermove', 'pointercancel', 'touchstart', 'touchmove', 'touchend', 'touchcancel',
+        'mousedown', 'mouseup', 'click', 'dblclick', 'contextmenu', 'wheel', 'keydown', 'keyup', 'keypress', 'gesturestart']) {
+        wurzel.addEventListener(typ, e => e.stopPropagation());
+      }
+      wurzel.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { e.preventDefault(); schliesse(); }
+        else if (e.key === 'Enter' && e.target === el.name) { e.preventDefault(); teile(); }
+        else if (e.key === 'Tab') {
+          const f = [...wurzel.querySelectorAll('button:not(:disabled), input:not([hidden])')];
+          if (!f.length) return;
+          const i = f.indexOf(document.activeElement);
+          if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+          else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+        }
+      });
+      wurzel.addEventListener('click', e => { if (e.target === wurzel) schliesse(); });
+      el.zu.addEventListener('click', schliesse);
+      el.teilen.addEventListener('click', teile);
+      el.name.addEventListener('input', () => { el.link.hidden = true; el.status.textContent = ''; });
+      if (stufen) {
+        el.stufen.hidden = false;
+        for (const [id, name] of Object.entries(stufen)) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = name;
+          b.dataset.stufe = id;
+          b.addEventListener('click', () => { sichtStufe = id; zeichne(); });
+          el.stufen.append(b);
+        }
+      }
+      document.body.append(wurzel);
+    }
+
+    function zeichne() {
+      const mein = eigener(sichtStufe);
+      el.unter.textContent = 'Deine Rangliste' + (stufen ? ' auf Stufe ' + stufeName(sichtStufe) : '') + ' in ' + spiel + '.' + (cfg.erklaerung ? ' ' + cfg.erklaerung : '');
+      el.duell.textContent = offen && (!stufen || offen.stufe === sichtStufe) ? startText() : '';
+      if (stufen) for (const b of el.stufen.children) b.setAttribute('aria-pressed', String(b.dataset.stufe === sichtStufe));
+
+      const eintraege = freunde(sichtStufe).map(f => ({ name: f.name, punkte: f.punkte, level: f.level, freund: f }));
+      eintraege.push({ name: daten.name ? daten.name + ' (du)' : 'Du', punkte: mein.punkte, level: mein.level, ich: true });
+      eintraege.sort((a, b) => b.punkte - a.punkte || (a.ich ? -1 : 1));
+      el.liste.textContent = '';
+      eintraege.forEach((e, i) => {
+        const li = document.createElement('li');
+        if (e.ich) li.className = 'pxd-ich';
+        const platz = document.createElement('span'); platz.className = 'pxd-platz'; platz.textContent = i + 1;
+        const wer = document.createElement('span'); wer.className = 'pxd-wer'; wer.textContent = e.name;
+        if (levelWort && e.level > 0) { const k = document.createElement('small'); k.textContent = levelWort + ' ' + e.level; wer.append(k); }
+        const wie = document.createElement('span'); wie.className = 'pxd-wie'; wie.textContent = zahl(e.punkte);
+        li.append(platz, wer, wie);
+        if (e.freund) {
+          const weg = document.createElement('button');
+          weg.type = 'button'; weg.className = 'pxd-weg'; weg.textContent = '×';
+          weg.setAttribute('aria-label', e.name + ' aus der Liste entfernen');
+          weg.addEventListener('click', () => {
+            daten.freunde = daten.freunde.filter(x => x !== e.freund);
+            sichern();
+            zeichne();
+            el.zu.focus();
+          });
+          li.append(weg);
+        } else {
+          const leer = document.createElement('span'); leer.className = 'pxd-leer'; li.append(leer);
+        }
+        el.liste.append(li);
+      });
+
+      el.teilen.disabled = mein.punkte <= 0;
+      el.status.textContent = mein.punkte <= 0 ? 'Spiel zuerst eine Runde' + (stufen ? ' auf dieser Stufe' : '') + ', dann kannst du dein Ergebnis teilen.' : '';
+      el.link.hidden = true;
+    }
+
+    function oeffne() {
+      if (!wurzel) baue();
+      sichtStufe = stufeJetzt();
+      el.name.value = daten.name;
+      zeichne();
+      vorher = document.activeElement;
+      unterdrueckt = [...document.body.children].filter(n => n !== wurzel && n instanceof HTMLElement && !n.inert && n.tagName !== 'SCRIPT' && n.tagName !== 'STYLE');
+      unterdrueckt.forEach(n => { n.inert = true; });
+      wurzel.hidden = false;
+      (el.teilen.disabled ? el.zu : el.teilen).focus({ preventScroll: true });
+    }
+
+    function schliesse() {
+      if (!wurzel || wurzel.hidden) return;
+      daten.name = reinerName(el.name.value);
+      sichern();
+      wurzel.hidden = true;
+      unterdrueckt.forEach(n => { n.inert = false; });
+      unterdrueckt = [];
+      if (vorher && vorher.focus && document.contains(vorher)) { try { vorher.focus({ preventScroll: true }); } catch (e) { /* egal */ } }
+      if (cfg.beiZu) cfg.beiZu();
+    }
+
+    function linkFuer(st) {
+      const mein = eigener(st);
+      const t = new URLSearchParams({ name: daten.name || 'Ein Freund', punkte: mein.punkte });
+      if (levelWort && mein.level > 0) t.set('level', mein.level);
+      if (stufen) t.set('stufe', st);
+      return cfg.adresse + '#' + t.toString();
+    }
+
+    async function teile() {
+      const mein = eigener(sichtStufe);
+      if (mein.punkte <= 0) return;
+      daten.name = reinerName(el.name.value);
+      sichern();
+      const adresse = linkFuer(sichtStufe);
+      const text = 'Ich habe ' + ergebnisText({ punkte: mein.punkte, level: mein.level, stufe: sichtStufe }) + ' in ' + spiel + '. Schaffst du mehr?';
+      el.status.textContent = '';
+      el.link.hidden = true;
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: spiel, text, url: adresse });
+          el.status.textContent = 'Geteilt! Viel Glück.';
+          return;
+        }
+        await navigator.clipboard.writeText(text + ' ' + adresse);
+        el.status.textContent = 'Link kopiert! Füge ihn jetzt im Chat ein.';
+      } catch (error) {
+        if (error && error.name === 'AbortError') return;   // selbst abgebrochen
+        el.link.value = adresse;
+        el.link.hidden = false;
+        el.link.focus();
+        el.link.select();
+        el.status.textContent = 'Kopiere diesen Link:';
+      }
+    }
+
+    return {
+      oeffne,
+      schliesse,
+      get istOffen() { return !!wurzel && !wurzel.hidden; },
+      get offen() { return offen; },
+      freunde,
+      startText,
+      endText,
+      linkFuer,
+    };
+  }
+
+  return { erstelle, reinerName };
+})();
+
+// ===================================================================
+// 9 · APP
+// Spielzustände, EIN Game Loop, Stoßablauf, Auswertung nach Stillstand,
+// Computerzüge, Menüs und Einstellungen.
+//
+// Zustände (data-zustand am <html>):
+//   menue · platzieren · zielen · stoss · rollen · computer · uebergabe · anstossWahl · ende
+// Pause ist ein eigener Schalter: Physik und Computer rechnen dann nicht.
+// ===================================================================
+
+(() => {
+  const $ = id => document.getElementById(id);
+  const wurzel = document.documentElement;
+  const leinwand = $('bild');
+  const c = leinwand.getContext('2d');
+  const bewegungArm = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Nur für automatische Tests: ?tempo=8 lässt Zeit schneller laufen (gleiche Physik, mehr Schritte pro Bild)
+  const TEMPO = (() => { const t = Number(new URLSearchParams(location.search).get('tempo')); return t >= 1 && t <= 50 ? t : 1; })();
+  const GRAD = Math.PI / 180;
+
+  // ---------- Spielstand ----------
+  let zustand = 'menue';
+  let pausiert = false;
+  let spiel = null;          // aktuelle Partie
+  let zeit = 0;              // Spielzeit (läuft in Pause nicht)
+  let rnd = Math.random;
+  const ui = { staerke: 0.4, winkel: 0 };
+  let anim = null;           // Stoßanimation
+  let ki = null;             // Computerzug
+  let platzZiehen = false;
+  let meldungTimer = null;
+  let krabbe = { mund: 'lachen', bis: 0, art: null };
+  let auswertungSperre = false;
+
+  const NAMEN = { computer: ['Du', 'Computer'], zweier: ['Spieler 1', 'Spieler 2'], training: ['Training', ''] };
+  const name = i => NAMEN[spiel.modus][i];
+  const istComputerZug = () => spiel && spiel.modus === 'computer' && spiel.amZug === 1;
+  const menschZielt = () => zustand === 'zielen' && !pausiert && !istComputerZug();
+
+  function setzeZustand(z) {
+    zustand = z;
+    wurzel.dataset.zustand = z;
+    aktualisiereBedienung();
+  }
+
+  // ---------- Partie ----------
+  function neuePartie(modus, anstosser = 0) {
+    abbrechenAlles();
+    spiel = {
+      modus,
+      stufe: Speicher.stufe,
+      kugeln: baueDreieck(rnd),
+      amZug: anstosser,
+      gruppen: [null, null],
+      anstoss: modus !== 'training',
+      anstossVon: anstosser,
+      angesagt: null,
+      ballInHand: modus === 'training' ? null : 'kopffeld',
+      platz: null,
+      protokoll: null,
+      aufTischVorher: null,
+      stoesse: [0, 0], fouls: [0, 0], versenkt: [0, 0],
+      uebung: 'frei',
+    };
+    wurzel.dataset.modus = modus;
+    ui.winkel = 0;
+    $('uebungWahl').value = 'frei';
+    if (modus === 'training') zeigeMeldung('Training: Alle Kugeln sind frei. Viel Spaß!', 'gut', 2600);
+    aktualisiereKopf();
+    beginneZug();
+  }
+
+  function trainingAufbau(art) {
+    abbrechenAlles();
+    spiel.uebung = art;
+    spiel.kugeln = art === 'frei' ? baueDreieck(rnd) : UEBUNGEN[art].baue();
+    spiel.ballInHand = null; spiel.angesagt = null; spiel.platz = null;
+    if (art !== 'frei') zeigeMeldung(UEBUNGEN[art].text, 'gut', 4200);
+    beginneZug();
+  }
+
+  // Alles Laufende (Animation, Computerplanung, Ziehen) sauber beenden
+  function abbrechenAlles() {
+    anim = null; ki = null; platzZiehen = false; auswertungSperre = false;
+    if (eingabe) eingabe.loslassen();
+  }
+
+  function aufTischSet() { return new Set(spiel.kugeln.filter(k => k.aufTisch).map(k => k.nr)); }
+  function weisse() { return spiel.kugeln.find(k => k.nr === 0); }
+  function mussAnsagen() {
+    return spiel.modus !== 'training' && !spiel.anstoss && spieltAufAcht(spiel.gruppen[spiel.amZug], aufTischSet());
+  }
+  function ziele() {
+    if (spiel.modus === 'training') return [...aufTischSet()].filter(n => n !== 0);
+    return erlaubteZiele(spiel.gruppen[spiel.amZug], aufTischSet(), spiel.anstoss);
+  }
+
+  function beginneZug() {
+    spiel.angesagt = null;
+    aktualisiereKopf();
+    const w = weisse();
+    if (spiel.ballInHand || !w.aufTisch) {
+      if (!spiel.ballInHand) spiel.ballInHand = 'tisch';
+      const nurKopffeld = spiel.ballInHand === 'kopffeld';
+      const wunsch = w.aufTisch ? { x: w.x, y: w.y } : (nurKopffeld ? { x: TISCH.kopfX - 60, y: 0 } : { x: TISCH.kopfX, y: 0 });
+      const p = naechsterFreierPlatz(spiel.kugeln, wunsch.x, wunsch.y, { ohne: 0, nurKopffeld });
+      spiel.platz = { x: p.x, y: p.y, gueltig: true };
+    } else spiel.platz = null;
+    if (istComputerZug()) { starteComputer(); return; }
+    if (spiel.platz) setzeZustand('platzieren');
+    else { zielAufNaechstes(); setzeZustand('zielen'); }
+  }
+
+  // Queue zu Beginn auf die nächste erlaubte Kugel richten (bequemer Startpunkt)
+  function zielAufNaechstes() {
+    const w = weisse(); if (!w.aufTisch) return;
+    let best = null, bd = Infinity;
+    for (const nr of ziele()) {
+      const k = spiel.kugeln.find(b => b.nr === nr && b.aufTisch); if (!k) continue;
+      const d = Math.hypot(k.x - w.x, k.y - w.y);
+      if (d < bd) { bd = d; best = k; }
+    }
+    if (best) ui.winkel = Math.atan2(best.y - w.y, best.x - w.x);
+  }
+
+  // ---------- Platzieren (Ball in Hand) ----------
+  function setzePlatz(x, y) {
+    const nurKopffeld = spiel.ballInHand === 'kopffeld';
+    spiel.platz = { x, y, gueltig: platzGueltig(spiel.kugeln, x, y, { ohne: 0, nurKopffeld }) };
+    aktualisiereBedienung();
+  }
+  function bestaetigePlatz() {
+    if (zustand !== 'platzieren' || pausiert || !spiel.platz || !spiel.platz.gueltig) return false;
+    const w = weisse();
+    Object.assign(w, { x: spiel.platz.x, y: spiel.platz.y, vx: 0, vy: 0, aufTisch: true, fall: null });
+    spiel.platz = null;
+    spiel.ballInHand = spiel.anstoss ? 'kopffeld-gelegt' : null;
+    Ton.ablegen();
+    zielAufNaechstes();
+    setzeZustand('zielen');
+    return true;
+  }
+
+  // ---------- Stoß ----------
+  function stossErlaubt() {
+    if (!menschZielt()) return false;
+    if (!weisse().aufTisch) return false;
+    if (mussAnsagen() && spiel.angesagt === null) return false;
+    return true;
+  }
+  function stoss() {
+    if (zustand === 'platzieren') { bestaetigePlatz(); return; }
+    if (!stossErlaubt()) return;
+    starteStoss(ui.winkel, ui.staerke);
+  }
+  function starteStoss(winkel, staerke) {
+    if (zustand === 'stoss' || zustand === 'rollen') return;   // nie zwei Stöße gleichzeitig
+    ui.winkel = winkel; ui.staerke = staerke;
+    const zurueck = 10 + staerke * 150;
+    anim = { t: 0, dauer: bewegungArm() ? 0.04 : 0.07 + staerke * 0.06, von: zurueck, winkel, staerke };
+    setzeZustand('stoss');
+  }
+  // Wird im Loop aufgerufen; der Impuls kommt genau in dem Bild, in dem der Queue die Weiße berührt
+  function stossKontakt() {
+    const { winkel, staerke } = anim;
+    anim = null;
+    spiel.protokoll = new Stossprotokoll();
+    spiel.aufTischVorher = aufTischSet();
+    spiel.stoesse[spiel.amZug]++;
+    spiel.rollZeit = 0;
+    Physik.stoss(spiel.kugeln, winkel, staerkeZuTempo(staerke));
+    Ton.queue(staerke);
+    setzeZustand('rollen');
+  }
+
+  function physikEreignis(e) {
+    spiel.protokoll.ereignis(e);
+    if (e.typ === 'kugel') Ton.kugel(e.staerke);
+    else if (e.typ === 'bande') Ton.bande(e.staerke);
+    else if (e.typ === 'tasche') Ton.tasche();
+  }
+
+  // ---------- Auswertung (erst wenn alles ruht) ----------
+  function auswerten() {
+    if (auswertungSperre) return;
+    auswertungSperre = true;
+    const p = spiel.protokoll;
+    const ich = spiel.amZug;
+    for (const k of spiel.kugeln) if (k.fall) k.fall = null;   // Einrollanimation fertig: raus aus allem
+
+    if (spiel.modus === 'training') {
+      const t = werteTrainingAus(p);
+      if (t.gefallen) { reagiere('jubel'); spiel.versenkt[0] += t.gefallen; }
+      if (t.ballInHand) { reagiere('verdutzt'); spiel.ballInHand = 'tisch'; }
+      if (t.meldung) zeigeMeldung(t.meldung, t.ballInHand ? 'foul' : 'gut');
+      auswertungSperre = false;
+      beginneZug();
+      return;
+    }
+
+    const erg = werteStossAus({ amZug: ich, gruppen: spiel.gruppen, anstoss: spiel.anstoss, angesagt: spiel.angesagt, aufTisch: spiel.aufTischVorher }, p);
+    spiel.letztesErgebnis = erg;
+    const eigene = p.versenkt.filter(v => v.nr !== 0 && v.nr !== 8).length;
+    spiel.versenkt[ich] += eigene;
+
+    if (erg.ende) { auswertungSperre = false; beendePartie(erg.ende); return; }
+
+    if (erg.neuAufbauWahl) {
+      spiel.fouls[ich]++;
+      reagiere('verdutzt'); Ton.foul();
+      const du = 1 - ich;
+      if (erg.achtEinsetzen) setzeAchtEin(spiel.kugeln);
+      auswertungSperre = false;
+      if (spiel.modus === 'computer' && du === 1) {
+        zeigeMeldung(erg.foulText + ' Der Computer baut neu auf und stößt selbst an.', 'foul', 4200);
+        neuePartieBehalten(du);
+      } else {
+        $('anstossGrund').textContent = erg.foulText;
+        $('anstossFrage').textContent = `${name(du)} darf wählen: neu aufbauen und selbst anstoßen oder den Tisch so übernehmen${erg.ballInHand ? ' (mit Ball in Hand, weil die Weiße gefallen ist)' : ''}.`;
+        spiel.wahlFuer = du;
+        spiel.wahlBallInHand = erg.ballInHand;
+        setzeZustand('anstossWahl');
+        zeigeFenster('fAnstossWahl');
+      }
+      return;
+    }
+
+    if (erg.achtEinsetzen) setzeAchtEin(spiel.kugeln);
+    spiel.gruppen = erg.gruppen;
+    spiel.anstoss = false;
+    if (spiel.ballInHand === 'kopffeld-gelegt') spiel.ballInHand = null;
+
+    if (erg.foul) {
+      spiel.fouls[ich]++;
+      reagiere('verdutzt'); Ton.foul();
+      zeigeMeldung(erg.meldung, 'foul', 4200);
+    } else if (erg.weiter) {
+      if (!istComputerZug() || spiel.modus === 'zweier') reagiere('jubel');
+      zeigeMeldung(erg.meldung, 'gut', 2400);
+    } else zeigeMeldung(erg.meldung, '', 2400);
+
+    spiel.ballInHand = erg.ballInHand ? 'tisch' : null;
+    const wechsel = erg.naechster !== ich;
+    spiel.amZug = erg.naechster;
+    auswertungSperre = false;
+    aktualisiereKopf();
+    if (wechsel) {
+      Ton.wechsel();
+      if (spiel.modus === 'zweier') { zeigeUebergabe(erg); return; }
+    }
+    beginneZug();
+  }
+
+  // Neu aufbauen nach ungültigem Anstoß, Gruppen und Zähler der Partie bleiben
+  function neuePartieBehalten(anstosser) {
+    spiel.kugeln = baueDreieck(rnd);
+    spiel.gruppen = [null, null];
+    spiel.anstoss = true; spiel.anstossVon = anstosser;
+    spiel.amZug = anstosser;
+    spiel.ballInHand = 'kopffeld';
+    spiel.angesagt = null;
+    beginneZug();
+  }
+
+  function zeigeUebergabe(erg) {
+    $('uebergabeTitel').textContent = erg.foul ? 'Foul – Wechsel' : 'Wechsel';
+    $('uebergabeGrund').textContent = erg.meldung;
+    $('uebergabeGrund').hidden = !erg.meldung;
+    $('uebergabeName').textContent = `${name(spiel.amZug)} ist dran${spiel.ballInHand ? ' – mit Ball in Hand' : ''}`;
+    krabbeInLeinwand($('uebergabeKrabbe'), { figur: 'kalle', mund: erg.foul ? 'verdutzt' : 'lachen', schielen: !!erg.foul, schereAuf: !erg.foul });
+    setzeZustand('uebergabe');
+    zeigeFenster('fUebergabe');
+  }
+
+  function beendePartie(ende) {
+    abbrechenAlles();
+    spiel.ende = ende;
+    setzeZustand('ende');
+    const mensch = spiel.modus === 'computer' ? ende.sieger === 0 : true;
+    $('ergebnisTitel').textContent = spiel.modus === 'computer' ? (ende.sieger === 0 ? 'Gewonnen!' : 'Der Computer gewinnt') : `${name(ende.sieger)} gewinnt!`;
+    $('ergebnisGrund').textContent = ende.grund;
+    $('ergebnisZahlen').textContent = `Stöße: ${name(0)} ${spiel.stoesse[0]}, ${name(1)} ${spiel.stoesse[1]} · Fouls: ${spiel.fouls[0]} / ${spiel.fouls[1]}`;
+    if (spiel.modus === 'computer' && ende.sieger === 0) Speicher.sieg(spiel.stufe);
+    Speicher.partie();
+    if (mensch) Ton.sieg(); else Ton.niederlage();
+    krabbeInLeinwand($('ergebnisKrabbe'), mensch ? { figur: 'kalle', mund: 'jubel', schereHoch: true, schereAuf: true } : { figur: 'kalle', mund: 'verdutzt', schielen: true });
+    $('ergebnisFreunde').hidden = spiel.modus !== 'computer';
+    zeigeFenster('fErgebnis');
+    ansage(`${$('ergebnisTitel').textContent} ${ende.grund}`);
+  }
+
+  // ---------- Computer ----------
+  function starteComputer() {
+    const lage = { kugeln: spiel.kugeln, gruppe: spiel.gruppen[1], anstoss: spiel.anstoss, ballInHand: spiel.ballInHand && spiel.ballInHand.startsWith('kopffeld') ? 'kopffeld' : spiel.ballInHand, modus: spiel.modus };
+    ki = { phase: 'denken', start: zeit, planer: Computer.planer(lage, spiel.stufe, rnd), plan: null, t: 0 };
+    setzeZustand('computer');
+  }
+  function computerSchritt(dt) {
+    if (!ki) return;
+    if (ki.phase === 'denken') {
+      ki.planer.arbeite(5);
+      const mindest = 0.75 / TEMPO;
+      if (ki.planer.fertig && zeit - ki.start >= mindest) {
+        ki.plan = Computer.ungenau(ki.planer.ergebnis, spiel.stufe, rnd);
+        ki.winkelStart = ui.winkel;
+        ki.staerkeStart = ui.staerke;
+        ki.t = 0;
+        if (spiel.platz && ki.plan.weiss) {
+          ki.phase = 'legen';
+          ki.von = { x: spiel.platz.x, y: spiel.platz.y };
+        } else ki.phase = 'zielen';
+        aktualisiereBedienung();
+      }
+    } else if (ki.phase === 'legen') {
+      ki.t += dt * TEMPO;
+      const q = Math.min(1, ki.t / 0.55);
+      const e = q * q * (3 - 2 * q);
+      setzePlatz(ki.von.x + (ki.plan.weiss.x - ki.von.x) * e, ki.von.y + (ki.plan.weiss.y - ki.von.y) * e);
+      if (q >= 1) {
+        const nurKopffeld = spiel.ballInHand === 'kopffeld';
+        let p = ki.plan.weiss;
+        if (!platzGueltig(spiel.kugeln, p.x, p.y, { ohne: 0, nurKopffeld })) p = naechsterFreierPlatz(spiel.kugeln, p.x, p.y, { ohne: 0, nurKopffeld });
+        const w = weisse();
+        Object.assign(w, { x: p.x, y: p.y, vx: 0, vy: 0, aufTisch: true, fall: null });
+        spiel.platz = null;
+        spiel.ballInHand = spiel.anstoss ? 'kopffeld-gelegt' : null;
+        Ton.ablegen();
+        ki.phase = 'zielen'; ki.t = 0; ki.winkelStart = ui.winkel;
+        aktualisiereBedienung();
+      }
+    } else if (ki.phase === 'zielen') {
+      if (ki.t === 0 && ki.plan.tasche !== null && ki.plan.tasche !== undefined) {
+        spiel.angesagt = ki.plan.tasche;
+        zeigeMeldung(`Der Computer sagt die Acht an: Tasche ${TISCH.taschen[ki.plan.tasche].name}.`, 'gut', 2600);
+      }
+      ki.t += dt * TEMPO;
+      const q = Math.min(1, ki.t / 0.75);
+      const e = q * q * (3 - 2 * q);
+      let d = ki.plan.winkel - ki.winkelStart;
+      d = Math.atan2(Math.sin(d), Math.cos(d));
+      ui.winkel = ki.winkelStart + d * e;
+      ui.staerke = ki.staerkeStart + (ki.plan.staerke - ki.staerkeStart) * e;
+      zeigeStaerke();
+      if (q >= 1) {
+        const plan = ki.plan;
+        ki = null;
+        ui.winkel = plan.winkel;
+        starteStoss(plan.winkel, plan.staerke);
+      }
+    }
+  }
+
+  // ---------- Krabbe ----------
+  function reagiere(art) {
+    if (art === 'jubel') krabbe = { mund: 'jubel', art, bis: zeit + 1.6 };
+    else if (art === 'verdutzt') krabbe = { mund: 'verdutzt', art, bis: zeit + 1.6 };
+    malKopfKrabbe(true);
+  }
+  let krabbeZuletzt = '';
+  function malKopfKrabbe(sofort) {
+    if (krabbe.art && zeit > krabbe.bis) krabbe = { mund: 'lachen', art: null, bis: 0 };
+    const ruhig = bewegungArm();
+    const o = { figur: 'kalle', mund: krabbe.mund };
+    if (krabbe.art === 'jubel') { o.schereHoch = true; o.schereAuf = true; o.tanzt = !ruhig; o.wedel = ruhig ? 0 : zeit * 2; }
+    else if (krabbe.art === 'verdutzt') { o.schielen = true; }
+    else { o.wedel = ruhig ? 0 : zeit * 0.35; o.blick = zustand === 'rollen' ? 0.6 : 0; }
+    const schl = JSON.stringify(o);
+    if (!sofort && schl === krabbeZuletzt) return;
+    krabbeZuletzt = schl;
+    const ziel = spiel && spiel.modus === 'training' ? $('trainingKrabbe') : $('kopfKrabbe');
+    krabbeInLeinwand(ziel, o);
+  }
+
+  // ---------- Anzeige: Kopf, Status, Bedienung ----------
+  const kugelLeinwand = new Map();
+  function malKugelReihe(cv, nummern) {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const r = 7 * dpr, abst = 2 * r + 3 * dpr;
+    cv.width = Math.max(1, Math.round(nummern.length * abst));
+    cv.height = Math.round(2 * r + 2 * dpr);
+    const k = cv.getContext('2d');
+    k.clearRect(0, 0, cv.width, cv.height);
+    nummern.forEach((nr, i) => Grafik.malKugel(k, nr, r + i * abst + dpr, r + dpr * 0.5, r));
+    cv.hidden = !nummern.length;
+  }
+  function aktualisiereKopf() {
+    if (!spiel) return;
+    const auf = aufTischSet();
+    for (const i of [0, 1]) {
+      const el = $('sp' + i);
+      el.querySelector('.nm').textContent = name(i);
+      el.classList.toggle('aktiv', spiel.amZug === i && spiel.modus !== 'training');
+      const g = spiel.gruppen[i];
+      const gt = el.querySelector('.gtext'), cv = el.querySelector('canvas');
+      let nummern = [];
+      if (!g) gt.textContent = spiel.anstoss ? 'Anstoß' : 'Tisch offen';
+      else {
+        const rest = gruppenKugeln(g).filter(n => auf.has(n));
+        if (rest.length) { gt.textContent = `${GRUPPEN_NAME[g]} · ${rest.length}`; nummern = rest; }
+        else { gt.textContent = 'Jetzt die Acht'; nummern = auf.has(8) ? [8] : []; }
+      }
+      const schl = i + ':' + nummern.join(',');
+      if (kugelLeinwand.get(i) !== schl) { kugelLeinwand.set(i, schl); malKugelReihe(cv, nummern); }
+      el.setAttribute('aria-label', `${name(i)}${spiel.amZug === i ? ', am Zug' : ''}. ${gt.textContent}`);
+    }
+  }
+
+  function statusText() {
+    if (!spiel) return '';
+    const wer = spiel.modus === 'computer' ? (spiel.amZug === 0 ? 'Du bist dran' : 'Der Computer ist dran') : spiel.modus === 'zweier' ? `${name(spiel.amZug)} ist dran` : 'Training';
+    if (zustand === 'rollen' || zustand === 'stoss') return 'Kugeln rollen …';
+    if (zustand === 'computer') {
+      if (!ki || ki.phase === 'denken') return 'Der Computer denkt nach …';
+      if (ki.phase === 'legen') return 'Der Computer legt die Weiße hin …';
+      return 'Der Computer zielt …';
+    }
+    if (zustand === 'platzieren') {
+      const wo = spiel.ballInHand === 'kopffeld' ? 'im Kopffeld (links der gestrichelten Linie)' : 'irgendwo auf den Tisch';
+      if (spiel.platz && !spiel.platz.gueltig) return 'Dort geht es nicht: nicht auf eine Kugel, nicht in eine Tasche' + (spiel.ballInHand === 'kopffeld' ? ', nur im Kopffeld.' : '.');
+      return `${spiel.anstoss ? 'Anstoß' : 'Ball in Hand'}: Leg die Weiße ${wo} und tippe „Hier ablegen“.`;
+    }
+    if (zustand === 'zielen') {
+      if (mussAnsagen()) {
+        if (spiel.angesagt === null) return `${wer}: <b>Tasche für die Acht wählen</b> – tippe eine Tasche an (Tasten 1–6).`;
+        return `${wer}: Acht angesagt für <b>${TISCH.taschen[spiel.angesagt].name}</b>. <button type="button" class="btn klein" id="ansageAendern" style="min-height:44px;padding:4px 12px;font-size:14px">Tasche ändern</button>`;
+      }
+      if (spiel.modus === 'training') return 'Training: Ziele und stoße. Alle Kugeln sind frei.';
+      if (spiel.anstoss) return `${wer}: Anstoß!`;
+      const g = spiel.gruppen[spiel.amZug];
+      return `${wer} – ${g ? `spiele eine <b>${g === 'voll' ? 'volle' : 'halbe'}</b> Kugel.` : 'Tisch offen: volle oder halbe Kugel.'}`;
+    }
+    return '';
+  }
+  let statusZuletzt = '';
+  function aktualisiereBedienung() {
+    const html = statusText();
+    if (html !== statusZuletzt) {
+      statusZuletzt = html;
+      $('status').innerHTML = html;
+      const k = $('ansageAendern');
+      if (k) k.addEventListener('click', () => { spiel.angesagt = null; Ton.klick(); aktualisiereBedienung(); });
+    }
+    const knopf = $('stossKnopf');
+    const mensch = spiel && !istComputerZug() && !pausiert;
+    if (zustand === 'platzieren') {
+      knopf.textContent = 'Hier ablegen';
+      knopf.disabled = !(mensch && spiel.platz && spiel.platz.gueltig);
+    } else {
+      knopf.textContent = zustand === 'rollen' || zustand === 'stoss' ? 'Rollt …' : 'Stoßen';
+      knopf.disabled = !stossErlaubtOhnePause();
+    }
+    const zielbar = zustand === 'zielen' && mensch;
+    $('linksKnopf').disabled = !zielbar; $('rechtsKnopf').disabled = !zielbar;
+    $('staerke').setAttribute('aria-disabled', zielbar ? 'false' : 'true');
+  }
+  function stossErlaubtOhnePause() {
+    return zustand === 'zielen' && spiel && !istComputerZug() && !pausiert && weisse().aufTisch && !(mussAnsagen() && spiel.angesagt === null);
+  }
+
+  function zeigeStaerke() {
+    const p = Math.round(ui.staerke * 100);
+    const spur = $('staerke').querySelector('.spur');
+    const breite = spur.getBoundingClientRect().width || 200;
+    spur.style.setProperty('--spurbreite', breite + 'px');
+    spur.querySelector('.fuell').style.width = (ui.staerke * 100) + '%';
+    spur.querySelector('.griff').style.left = (ui.staerke * 100) + '%';
+    $('staerkeText').textContent = p + ' %';
+    $('staerke').setAttribute('aria-valuenow', String(p));
+    $('staerke').setAttribute('aria-valuetext', `${p} Prozent`);
+  }
+
+  function zeigeMeldung(text, art = '', dauer = 2400) {
+    const m = $('meldung');
+    m.textContent = text;
+    m.className = 'zeigen' + (art ? ' ' + art : '');
+    clearTimeout(meldungTimer);
+    meldungTimer = setTimeout(() => { m.className = ''; }, dauer / Math.max(1, TEMPO / 2));
+  }
+  function ansage(text) { $('ansage').textContent = ''; setTimeout(() => { $('ansage').textContent = text; }, 30); }
+
+  // ---------- Zielvorschau (dieselbe Geometrie wie die Physik) ----------
+  function vorschau() {
+    if (zustand !== 'zielen' || istComputerZug()) return null;
+    const w = weisse(); if (!w.aufTisch) return null;
+    const dx = Math.cos(ui.winkel), dy = Math.sin(ui.winkel);
+    const s = wirfStrahl(spiel.kugeln, w.x, w.y, dx, dy, [0]);
+    const v = { start: { x: w.x, y: w.y }, treffer: { x: s.x, y: s.y }, art: s.art };
+    if (s.art === 'kugel') {
+      const ob = spiel.kugeln.find(k => k.nr === s.kugel);
+      v.objekt = { x: ob.x, y: ob.y };
+      v.richtung = { x: s.nx, y: s.ny };
+      const cos = Math.max(0, dx * s.nx + dy * s.ny);
+      const erweitert = spiel.modus === 'training' && Speicher.hilfe;
+      if (erweitert) {
+        const weiter = wirfStrahl(spiel.kugeln, ob.x, ob.y, s.nx, s.ny, [ob.nr, 0], 1600);
+        v.objektLaenge = Math.max(40, weiter.t);
+        const tx = dx - (dx * s.nx + dy * s.ny) * s.nx, ty = dy - (dx * s.nx + dy * s.ny) * s.ny, tl = Math.hypot(tx, ty);
+        v.weissWeiter = tl > 0.05 ? { x: tx / tl, y: ty / tl } : null;
+      } else v.objektLaenge = 50 + 130 * cos;
+      v.erlaubt = spiel.modus === 'training' ? true : ziele().includes(s.kugel);
+    }
+    return v;
+  }
+
+  // ---------- Eingabe-Aktionen ----------
+  function tischAktion(welt, phase) {
+    if (pausiert || !spiel || !welt) { if (phase === 'abbruch') platzZiehen = false; return; }
+    if (zustand === 'platzieren' && !istComputerZug()) {
+      if (phase === 'start' || phase === 'zug') { setzePlatz(welt.x, welt.y); platzZiehen = true; }
+      if (phase === 'ende' || phase === 'abbruch') platzZiehen = false;
+      return;
+    }
+    if (!menschZielt()) return;
+    // Tasche für die Acht wählen: Antippen in der Nähe einer Tasche
+    if (phase === 'start' && mussAnsagen() && spiel.angesagt === null) {
+      const t = TISCH.taschen.find(t => Math.hypot(welt.x - t.zeichen.x, welt.y - t.zeichen.y) < t.zeichen.r + 70);
+      if (t) { waehleTasche(t.nr); return; }
+    }
+    const w = weisse();
+    const d = Math.hypot(welt.x - w.x, welt.y - w.y);
+    if (d < TISCH.R * 0.6) return;                    // zu nah an der Weißen: Richtung unklar
+    ui.winkel = Math.atan2(welt.y - w.y, welt.x - w.x);
+  }
+  function waehleTasche(nr) {
+    if (!menschZielt() || !mussAnsagen()) return;
+    spiel.angesagt = nr;
+    Ton.klick();
+    zeigeMeldung(`Acht angesagt: Tasche ${TISCH.taschen[nr].name}.`, 'gut', 2000);
+    aktualisiereBedienung();
+  }
+  function fein(richtung, schritte, taste) {
+    if (pausiert || !spiel) return;
+    if (zustand === 'platzieren' && !istComputerZug()) {
+      if (!taste) return;
+      const p = spiel.platz || { x: 0, y: 0 };
+      const schritt = schritte >= 20 ? 30 : 5;
+      // Bildschirmrichtung links/rechts in Weltrichtung umrechnen
+      const a = Ansicht.zuWelt(Ansicht.cx + richtung, Ansicht.cy), o = Ansicht.zuWelt(Ansicht.cx, Ansicht.cy);
+      setzePlatz(p.x + (a.x - o.x) * schritt, p.y + (a.y - o.y) * schritt);
+      return;
+    }
+    if (!menschZielt()) return;
+    // Uhrzeigersinn auf dem Bildschirm; im gedrehten Bild ist die Drehrichtung dieselbe (Drehung ohne Spiegelung)
+    const grad = schritte >= 20 ? 1 : schritte > 10 ? 0.4 : 0.1;
+    ui.winkel += richtung * grad * GRAD;
+  }
+  function staerkeSetzen(w) {
+    if (pausiert || !spiel || !menschZielt()) return;
+    ui.staerke = Math.max(0, Math.min(1, w));
+    zeigeStaerke();
+  }
+  function staerkeSchritt(d) {
+    if (pausiert || !spiel) return;
+    if (zustand === 'platzieren' && !istComputerZug()) {
+      const p = spiel.platz || { x: 0, y: 0 };
+      const schritt = Math.abs(d) >= 0.1 ? 30 : 5;
+      const a = Ansicht.zuWelt(Ansicht.cx, Ansicht.cy - Math.sign(d)), o = Ansicht.zuWelt(Ansicht.cx, Ansicht.cy);
+      setzePlatz(p.x + (a.x - o.x) * schritt, p.y + (a.y - o.y) * schritt);
+      return;
+    }
+    staerkeSetzen(ui.staerke + d);
+  }
+
+  // ---------- Fenster ----------
+  let fensterOffen = null, zurueckZu = null;
+  function zeigeFenster(id) {
+    for (const s of document.querySelectorAll('#fenster section')) s.hidden = s.id !== id;
+    $('fenster').hidden = false;
+    fensterOffen = id;
+    const sec = $(id);
+    // Titel behalten ihre eigene id (andere Teile schreiben hinein); das Fenster verweist nur darauf
+    const titel = sec.querySelector('[data-titel]');
+    if (titel) { if (!titel.id) titel.id = id + 'Titel'; sec.closest('.tafel').setAttribute('aria-labelledby', titel.id); }
+    sec.closest('.tafel').classList.toggle('breit', id === 'fRegeln');
+    const erster = sec.querySelector('.btn.main, button');
+    if (erster) setTimeout(() => erster.focus({ preventScroll: true }), 30);
+  }
+  function schliesseFenster() { $('fenster').hidden = true; fensterOffen = null; leinwand.focus({ preventScroll: true }); }
+
+  function zeigeStart() {
+    abbrechenAlles();
+    pausiert = false;
+    spiel = null;
+    setzeZustand('menue');
+    wurzel.dataset.modus = Speicher.modus;
+    aktualisiereStartwahl();
+    krabbeInLeinwand($('startKrabbe'), { figur: 'kalle', mund: 'lachen', schereAuf: true, schereHoch: true });
+    zeigeFenster('fStart');
+  }
+  function aktualisiereStartwahl() {
+    for (const b of document.querySelectorAll('.js-modus')) b.setAttribute('aria-pressed', String(b.dataset.modus === Speicher.modus));
+    for (const b of document.querySelectorAll('.js-stufe')) b.setAttribute('aria-pressed', String(b.dataset.stufe === Speicher.stufe));
+    $('stufenWahl').hidden = Speicher.modus !== 'computer';
+  }
+  function zeigeRegeln() {
+    zurueckZu = fensterOffen || (spiel ? 'spiel' : 'fStart');
+    if (spiel && !pausiert && zustand !== 'menue' && zustand !== 'ende') setzePause(true, false);
+    zeigeFenster('fRegeln');
+  }
+
+  function setzePause(an, fenster = true) {
+    if (!spiel || zustand === 'menue' || zustand === 'ende') return;
+    if (an === pausiert) { if (an && fenster) zeigeFenster('fPause'); return; }
+    pausiert = an;
+    if (an) {
+      if (eingabe) eingabe.loslassen();
+      platzZiehen = false;
+      if (fenster) zeigeFenster('fPause');
+    } else {
+      // bewusst fortsetzen: Dialog des Zustands (z. B. Übergabe) wieder zeigen
+      if (zustand === 'uebergabe') zeigeFenster('fUebergabe');
+      else if (zustand === 'anstossWahl') zeigeFenster('fAnstossWahl');
+      else schliesseFenster();
+      letzteZeit = performance.now();
+    }
+    aktualisiereBedienung();
+  }
+
+  function aktualisiereTon() {
+    for (const b of document.querySelectorAll('.js-ton')) {
+      b.setAttribute('aria-pressed', String(Ton.istAn()));
+      if (b.classList.contains('btn')) b.textContent = Ton.istAn() ? 'Ton: an' : 'Ton: aus';
+    }
+  }
+  function schalteTon() { Ton.setze(!Ton.istAn()); Speicher.ton = Ton.istAn(); aktualisiereTon(); Ton.klick(); }
+
+  // ---------- Leinwandgröße (Ansicht) ----------
+  let groesse = '';
+  function passeGroesse() {
+    const r = leinwand.getBoundingClientRect();
+    const dpr = Math.min(3, window.devicePixelRatio || 1);
+    const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+    const schl = `${w}x${h}@${dpr}`;
+    if (schl === groesse) return;
+    groesse = schl;
+    leinwand.width = Math.round(w * dpr); leinwand.height = Math.round(h * dpr);
+    Ansicht.passe(w, h, dpr);
+    zeigeStaerke();
+  }
+
+  // ---------- EIN Game Loop ----------
+  let letzteZeit = performance.now();
+  let akku = 0;
+  function loop(jetzt) {
+    requestAnimationFrame(loop);
+    let dt = Math.min(0.1, Math.max(0, (jetzt - letzteZeit) / 1000));
+    letzteZeit = jetzt;
+    passeGroesse();
+    if (!pausiert && spiel) {
+      zeit += dt;
+      aktualisiere(dt);
+    }
+    zeichne();
+  }
+
+  function aktualisiere(dt) {
+    if (zustand === 'stoss' && anim) {
+      anim.t += dt * TEMPO;
+      if (anim.t >= anim.dauer) stossKontakt();
+    }
+    if (zustand === 'rollen') {
+      akku += dt * TEMPO;
+      let n = 0;
+      while (akku >= PHYSIK.DT && n < 240 * TEMPO) {
+        Physik.schritt(spiel.kugeln, physikEreignis);
+        akku -= PHYSIK.DT; n++;
+        spiel.rollZeit += PHYSIK.DT;
+      }
+      Physik.fallSchritt(spiel.kugeln, dt * TEMPO);
+      if (spiel.rollZeit > PHYSIK.MAX_STOSSDAUER) Physik.anhalten(spiel.kugeln);
+      const faellt = spiel.kugeln.some(k => k.fall && k.fall.zeit < PHYSIK.FALL_DAUER);
+      if (!Physik.inBewegung(spiel.kugeln) && !faellt) { akku = 0; auswerten(); }
+    } else {
+      akku = 0;
+      Physik.fallSchritt(spiel.kugeln, dt * TEMPO);
+    }
+    if (zustand === 'computer') computerSchritt(dt);
+    malKopfKrabbe(false);
+  }
+
+  function zeichne() {
+    if (!spiel) {
+      // Menü: leerer Tisch im Hintergrund
+      Grafik.male(c, { kugeln: [], zeit, angesagt: null });
+      return;
+    }
+    const w = weisse();
+    const z = {
+      kugeln: spiel.kugeln, zeit, angesagt: spiel.angesagt,
+      kopffeld: zustand === 'platzieren' || (zustand === 'computer' && spiel.ballInHand === 'kopffeld') ? spiel.ballInHand === 'kopffeld' : false,
+      platz: spiel.platz && (zustand === 'platzieren' || (zustand === 'computer' && ki && ki.phase === 'legen') || (zustand === 'computer' && spiel.platz)) ? spiel.platz : null,
+      weissVersteckt: !!spiel.platz,
+      taschenWahl: menschZielt() && mussAnsagen() && spiel.angesagt === null,
+      erweitert: spiel.modus === 'training' && Speicher.hilfe,
+      vorschau: vorschau(),
+      markiert: null,
+      queue: null,
+    };
+    if (w.aufTisch && !spiel.platz && (zustand === 'zielen' || zustand === 'stoss' || (zustand === 'computer' && ki && ki.phase === 'zielen'))) {
+      let abstand = 10 + ui.staerke * 150;
+      if (zustand === 'stoss' && anim) {
+        const q = Math.min(1, anim.t / anim.dauer);
+        abstand = anim.von * (1 - q * q);
+      }
+      z.queue = { weiss: w, winkel: ui.winkel, abstand };
+    }
+    Grafik.male(c, z);
+  }
+
+  // ---------- Verdrahtung ----------
+  let eingabe = null;
+  eingabe = richteEingabeEin(leinwand, {
+    tisch: tischAktion,
+    fein,
+    staerke: staerkeSetzen,
+    staerkeSchritt,
+    stoss,
+    bestaetigen: () => { if (zustand === 'platzieren') bestaetigePlatz(); },
+    pause: () => {
+      if (fensterOffen === 'fRegeln') { $('regelnZurueck').click(); return; }
+      if (pausiert) { if (fensterOffen === 'fPause') setzePause(false); return; }
+      setzePause(true);
+    },
+    ton: schalteTon,
+    tasche: waehleTasche,
+    darf: () => !!spiel && (fensterOffen === null || fensterOffen === 'fPause' || fensterOffen === 'fRegeln'),
+  });
+
+  // Erste Berührung irgendwo weckt den Ton (Browser verlangen eine Nutzeraktion)
+  const wecken = () => { if (Ton.istAn()) Ton.wecke(); };
+  document.addEventListener('pointerdown', wecken, { capture: true });
+  document.addEventListener('keydown', wecken, { capture: true });
+
+  for (const b of document.querySelectorAll('.js-modus')) b.addEventListener('click', () => { Speicher.modus = b.dataset.modus; Ton.klick(); aktualisiereStartwahl(); });
+  for (const b of document.querySelectorAll('.js-stufe')) b.addEventListener('click', () => { Speicher.stufe = b.dataset.stufe; Ton.klick(); aktualisiereStartwahl(); });
+  for (const b of document.querySelectorAll('.js-ton')) b.addEventListener('click', schalteTon);
+  $('spielenKnopf').addEventListener('click', () => { Ton.klick(); schliesseFenster(); pausiert = false; neuePartie(Speicher.modus, 0); });
+  $('regelnKnopf').addEventListener('click', () => { Ton.klick(); zeigeRegeln(); });
+  $('regelnKnopfSpiel').addEventListener('click', () => { Ton.klick(); zeigeRegeln(); });
+  $('pauseRegelnKnopf').addEventListener('click', () => { Ton.klick(); zeigeRegeln(); });
+  $('regelnZurueck').addEventListener('click', () => {
+    Ton.klick();
+    if (zurueckZu === 'fStart' || !spiel) zeigeFenster('fStart');
+    else if (zurueckZu === 'fPause' || zurueckZu === 'spiel') zeigeFenster('fPause');
+    else zeigeFenster(zurueckZu);
+  });
+  $('pauseKnopf').addEventListener('click', () => { Ton.klick(); setzePause(true); });
+  $('weiterKnopf').addEventListener('click', () => { Ton.klick(); setzePause(false); });
+  $('neustartKnopf').addEventListener('click', () => { Ton.klick(); const m = spiel.modus; pausiert = false; schliesseFenster(); neuePartie(m, 0); });
+  $('menueKnopf').addEventListener('click', () => { Ton.klick(); zeigeStart(); });
+  $('uebergabeKnopf').addEventListener('click', () => { Ton.klick(); schliesseFenster(); beginneZug(); });
+  $('neuAnstossKnopf').addEventListener('click', () => { Ton.klick(); schliesseFenster(); neuePartieBehalten(spiel.wahlFuer); });
+  $('uebernehmenKnopf').addEventListener('click', () => {
+    Ton.klick(); schliesseFenster();
+    spiel.amZug = spiel.wahlFuer; spiel.anstoss = false;
+    spiel.ballInHand = spiel.wahlBallInHand ? 'tisch' : null;
+    beginneZug();
+  });
+  $('revancheKnopf').addEventListener('click', () => {
+    Ton.klick(); schliesseFenster();
+    const verlierer = 1 - spiel.ende.sieger;
+    neuePartie(spiel.modus, verlierer);
+    zeigeMeldung(`Revanche! ${name(verlierer)} stößt an.`, 'gut', 2600);
+  });
+  $('ergebnisMenueKnopf').addEventListener('click', () => { Ton.klick(); zeigeStart(); });
+  $('neuAufbauKnopf').addEventListener('click', () => { Ton.klick(); if (spiel && !pausiert) trainingAufbau(spiel.uebung === 'frei' ? 'frei' : spiel.uebung); });
+  $('uebungWahl').addEventListener('change', e => { Ton.klick(); if (spiel && !pausiert) trainingAufbau(e.target.value); });
+  $('hilfeKnopf').addEventListener('click', () => { Speicher.hilfe = !Speicher.hilfe; Ton.klick(); zeigeHilfe(); });
+  function zeigeHilfe() { const k = $('hilfeKnopf'); k.setAttribute('aria-pressed', String(Speicher.hilfe)); k.textContent = `Erweiterte Zielhilfe: ${Speicher.hilfe ? 'an' : 'aus'}`; }
+
+  // Freunde herausfordern (gemeinsamer Pixelhafen-Baustein): Siege gegen den Computer je Stärke
+  const duell = PixelDuell.erstelle({
+    spiel: 'Hafenbillard',
+    adresse: 'https://moje9328.github.io/hafenbillard/',
+    schluessel: 'pixelhafen.hafenbillard.freunde',
+    stand: st => ({ punkte: Speicher.siege(st) }),
+    stufen: { entspannt: 'Entspannt', herausfordernd: 'Herausfordernd' },
+    stufe: () => Speicher.stufe,
+    beiStufe: st => { Speicher.stufe = st; aktualisiereStartwahl(); },
+    einheit: 'Siege', levelWort: '', wasText: 'deine Siege gegen den Computer',
+    erklaerung: 'Gezählt werden deine Siege gegen den Computer auf der gewählten Stärke.',
+  });
+  if (duell.offen) { $('startDuell').textContent = duell.startText(); $('startDuell').hidden = false; }
+  $('freundeKnopf').addEventListener('click', () => { Ton.klick(); duell.oeffne(); });
+  $('ergebnisFreunde').addEventListener('click', () => { Ton.klick(); duell.oeffne(); });
+
+  // Tabwechsel: automatisch pausieren, Fortsetzen nur bewusst
+  document.addEventListener('visibilitychange', () => { if (document.hidden) setzePause(true); else letzteZeit = performance.now(); });
+  window.addEventListener('blur', () => { /* kein Pausieren bei bloßem Fokuswechsel (z. B. Teilen-Dialog) */ });
+
+  // Offline-Helfer (nicht auf dem lokalen Testserver)
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !/^(127\.|localhost)/.test(location.hostname)) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+
+  // Start
+  Ton.setze(Speicher.ton);
+  aktualisiereTon();
+  zeigeHilfe();
+  zeigeStaerke();
+  zeigeStart();
+  requestAnimationFrame(t => { letzteZeit = t; requestAnimationFrame(loop); });
+
+  // Für automatische Tests (liest nur und ruft dieselben Aktionen wie die Knöpfe auf)
+  window.__billard = {
+    zustand: () => zustand, pausiert: () => pausiert, spiel: () => spiel, ui, Ansicht, TISCH,
+    tempo: TEMPO,
+    vorschau: () => vorschau(),
+    saat(s) { rnd = zufall(s); },
+    // Vorschlag des Computers für die Person am Zug (für den Test-Bot, der dann über die echte Bedienung spielt)
+    vorschlag(stufe = 'herausfordernd') {
+      const lage = { kugeln: spiel.kugeln, gruppe: spiel.gruppen[spiel.amZug], anstoss: spiel.anstoss, ballInHand: spiel.platz ? (spiel.ballInHand === 'kopffeld' ? 'kopffeld' : 'tisch') : null, modus: spiel.modus };
+      const p = Computer.planer(lage, stufe, zufall(7));
+      while (!p.arbeite(50));
+      return JSON.parse(JSON.stringify(p.ergebnis));
+    },
+    ton: () => Ton.status(),
+  };
+})();
+
+</script>
+</body>
+</html>

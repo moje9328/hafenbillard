@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hafenbillard – Pixelhafen</title>
+<meta name="description" content="Hafenbillard: gemütliches 8-Ball-Poolbillard in der Hafenkneipe. Gegen den Computer, zu zweit am selben Gerät oder im freien Training. Kostenlos, ohne Anmeldung, ohne Werbung.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#10243A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hafenbillard">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<style>
+%%BASIS_CSS%%
+
+  /* ---------- Spielfläche: Kopf, Tisch, Bedienung ---------- */
+  #spiel {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: "kopf" "buehne" "steuer";
+    width: 100%; height: 100%;
+    background: #120d0a;
+  }
+  #kopf {
+    grid-area: kopf;
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 8px;
+    background: var(--bg);
+    border-bottom: 2px solid var(--line);
+  }
+  .spieler {
+    flex: 1 1 0; min-width: 0;
+    display: grid; gap: 3px;
+    padding: 5px 8px 6px;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    transition: border-color .2s, box-shadow .2s, opacity .2s;
+    opacity: 0.72;
+  }
+  .spieler.aktiv { opacity: 1; border-color: var(--gelb); box-shadow: 0 0 0 2px rgba(255, 211, 90, 0.35); }
+  .spieler .name { display: flex; align-items: center; gap: 6px; min-width: 0; font: 600 14px/1.2 var(--body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .spieler .name b { font: 400 9px/1 var(--retro); color: var(--auf-gelb); background: var(--gelb); padding: 3px 5px; border-radius: 5px; flex: none; }
+  .spieler:not(.aktiv) .name b { visibility: hidden; }
+  .spieler .gruppe { display: flex; align-items: center; gap: 6px; min-height: 16px; color: var(--muted); font: 600 12px/1.2 var(--body); white-space: nowrap; overflow: hidden; }
+  .spieler .gruppe canvas { height: 14px; width: auto; flex: none; }
+  #kopfKrabbe { width: 52px; height: 43px; flex: none; }
+  .kopfknoepfe { display: flex; gap: 6px; flex: none; }
+  .rund {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; padding: 0;
+    color: var(--text); cursor: pointer;
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    font: 700 18px/1 var(--body);
+    touch-action: manipulation;
+  }
+  .rund:hover { filter: brightness(1.12); }
+  .rund svg { width: 18px; height: 18px; }
+  .rund[aria-pressed="false"] .welle { display: none; }
+  .rund[aria-pressed="true"] .aus { display: none; }
+
+  #trainingLeiste { display: none; }
+  :root[data-modus="training"] #trainingLeiste {
+    display: flex; flex: 1 1 auto; min-width: 0; gap: 6px; align-items: center; flex-wrap: wrap;
+  }
+  :root[data-modus="training"] .spieler, :root[data-modus="training"] #kopfKrabbe { display: none; }
+  #trainingLeiste .btn { min-height: 44px; padding: 6px 10px; font-size: 14px; }
+  #trainingLeiste select { min-height: 44px; padding: 6px 8px; color: var(--text); background: var(--surface-2); border: 2px solid var(--line); border-radius: 12px; font: 600 14px/1.2 var(--body); }
+  #trainingKrabbe { width: 52px; height: 43px; flex: none; }
+
+  #buehne { grid-area: buehne; min-height: 0; }
+  #meldung {
+    position: absolute; left: 50%; top: 10px; z-index: 2;
+    transform: translateX(-50%);
+    width: max-content; max-width: calc(100% - 20px);
+    margin: 0; padding: 8px 14px;
+    color: var(--text); background: rgba(16, 36, 58, 0.92);
+    border: 2px solid var(--tuerkis); border-radius: 12px;
+    font: 600 15px/1.35 var(--body); text-align: center;
+    pointer-events: none;
+    opacity: 0; transition: opacity .25s;
+  }
+  #meldung.zeigen { opacity: 1; }
+  #meldung.foul { border-color: var(--koralle); }
+  #meldung.gut { border-color: var(--gelb); }
+
+  #steuerung {
+    grid-area: steuer;
+    display: grid; gap: 6px;
+    padding: 6px 8px 8px;
+    background: var(--bg);
+    border-top: 2px solid var(--line);
+  }
+  #status { margin: 0; min-height: 22px; text-align: center; font: 600 15px/1.35 var(--body); color: var(--text); }
+  #status b { color: var(--gelb); font-weight: 700; }
+  .bedienung { display: flex; align-items: center; gap: 8px; }
+  .feinzielen { display: flex; gap: 6px; flex: none; }
+  .feinzielen .rund { width: 48px; height: 48px; }
+  #staerke { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; touch-action: none; cursor: pointer; }
+  #staerke .spur { position: relative; height: 44px; }
+  #staerke .spur::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 14px; margin-top: -7px; border-radius: 7px; background: linear-gradient(90deg, var(--tuerkis), var(--gelb) 60%, var(--koralle)); opacity: 0.35; }
+  #staerke .fuell { position: absolute; left: 0; top: 50%; height: 14px; margin-top: -7px; border-radius: 7px; background: linear-gradient(90deg, var(--tuerkis), var(--gelb) 60%, var(--koralle)); background-size: var(--spurbreite, 300px) 100%; }
+  #staerke .griff { position: absolute; top: 50%; width: 26px; height: 34px; margin: -17px 0 0 -13px; border-radius: 9px; background: var(--text); border: 3px solid var(--bg); box-shadow: 0 0 0 2px var(--gelb); }
+  #staerke:focus-visible { outline: 3px solid var(--gelb); outline-offset: 2px; border-radius: 8px; }
+  #staerkeText { min-width: 52px; text-align: right; font: 12px/1 var(--retro); color: var(--gelb); }
+  #stossKnopf { flex: none; min-width: 112px; min-height: 52px; }
+  #stossKnopf:disabled, .rund:disabled { opacity: 0.45; cursor: not-allowed; filter: grayscale(0.6); }
+  #staerke[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
+  :root[data-zustand="rollen"] #status { color: var(--muted); }
+
+  /* Flache Handys quer: Bedienung als Spalte rechts, damit der Tisch groß bleibt */
+  @media (orientation: landscape) and (max-height: 520px) {
+    #spiel { grid-template-columns: minmax(0, 1fr) 168px; grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "kopf kopf" "buehne steuer"; }
+    #kopf { padding: 3px 8px; }
+    .spieler { padding: 2px 8px 3px; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; }
+    .spieler .name { font-size: 13px; }
+    #kopfKrabbe { width: 40px; height: 33px; }
+    .rund { width: 44px; height: 44px; }
+    #steuerung { border-top: 0; border-left: 2px solid var(--line); align-content: center; padding: 6px 8px; }
+    #status { font-size: 13px; }
+    .bedienung { flex-direction: column; align-items: stretch; gap: 6px; }
+    .feinzielen { justify-content: center; }
+    #staerke { grid-template-columns: 1fr; }
+    #staerkeText { text-align: center; }
+    #stossKnopf { min-width: 0; }
+  }
+  /* Hochformat und schmale Fenster: Regler bekommt eine eigene, volle Zeile */
+  @media (max-width: 640px) and (orientation: portrait) {
+    .bedienung { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "fein stoss" "regler regler"; gap: 6px 8px; }
+    .feinzielen { grid-area: fein; }
+    #stossKnopf { grid-area: stoss; width: 100%; }
+    #staerke { grid-area: regler; }
+  }
+  @media (max-width: 420px) {
+    .spieler .name b { display: none; }
+    .spieler.aktiv { border-width: 3px; background: var(--surface-2); }
+    #kopf { gap: 5px; padding: 5px 6px; }
+    .kopfknoepfe { gap: 4px; }
+    .rund { width: 44px; height: 44px; }
+    .spieler { padding: 4px 6px 5px; }
+    .spieler .name { font-size: 13px; }
+    .spieler .gruppe { font-size: 11px; }
+    .spieler .gruppe canvas { height: 11px; }
+    #kopfKrabbe { width: 38px; height: 31px; }
+    .feinzielen .rund { width: 44px; height: 44px; }
+    #stossKnopf { min-width: 96px; font-size: 13px; }
+    #staerkeText { min-width: 40px; font-size: 10px; }
+    #status { font-size: 14px; }
+  }
+  @media (max-width: 360px) {
+    #kopfKrabbe { display: none; }
+  }
+
+  /* ---------- Fenster ---------- */
+  .wahl { display: grid; gap: 8px; margin-top: 14px; }
+  .wahl.drei { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .wahl.zwei { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wahl .btn { min-height: 52px; padding: 8px 6px; font-size: 15px; }
+  .wahl .btn[aria-pressed="true"] { color: var(--auf-gelb); background: var(--gelb); border-color: var(--bg); box-shadow: 0 4px 0 var(--gelb-kante); }
+  .wahltitel { margin: 16px 0 0; color: var(--muted); font: 10px/1.5 var(--retro); }
+  #startKrabbe { width: 132px; height: 108px; }
+  .regeln { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .regeln li { padding: 10px 12px; background: var(--surface-2); border-radius: 10px; line-height: 1.45; font-size: 15px; }
+  .regeln h3 { margin: 0 0 4px; color: var(--gelb); }
+  .regeln ul { margin: 4px 0 0; padding-left: 20px; }
+  .regeln p { margin: 4px 0 0; }
+  #fRegeln .hinweistext { font-size: 13px; }
+  .tafel.breit { width: min(720px, 100%); }
+  .ergebnisgrund { margin: 10px 0 0; padding: 10px 12px; background: var(--surface-2); border-left: 4px solid var(--gelb); border-radius: 8px; line-height: 1.4; }
+  #ergebnisKrabbe { display: block; width: 120px; height: 98px; margin: 6px auto 0; }
+  #uebergabeKrabbe { display: block; width: 96px; height: 78px; margin: 6px auto 0; }
+  .uebergabeName { margin: 8px 0 0; text-align: center; font: 400 16px/1.6 var(--retro); color: var(--gelb); }
+  .zahlenklein { margin: 10px 0 0; color: var(--muted); text-align: center; font-size: 14px; }
+  @media (orientation: landscape) and (max-height: 520px) {
+    #startKrabbe { width: 84px; height: 69px; }
+    .wahl .btn { min-height: 44px; font-size: 14px; }
+    .wahltitel { margin-top: 8px; }
+    #ergebnisKrabbe, #uebergabeKrabbe { width: 72px; height: 59px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spieler, #meldung { transition: none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 11 11"><path fill="currentColor" d="M5 0h1v2H5zM3 2h5v1H3zM5 3h1v5H5zM1 6h1v1H1zM9 6h1v1H9zM1 7h2v1H1zM8 7h2v1H8zM2 8h3v1H2zM6 8h3v1H6zM3 9h5v1H3z"/></symbol>
+</svg>
+<div id="app">
+  <div id="spiel">
+    <header id="kopf">
+      <div class="spieler" id="sp0" aria-live="polite">
+        <div class="name"><span class="nm">Du</span><b>AM ZUG</b></div>
+        <div class="gruppe"><span class="gtext">Tisch offen</span><canvas width="10" height="28" aria-hidden="true"></canvas></div>
+      </div>
+      <canvas id="kopfKrabbe" width="104" height="86" aria-hidden="true"></canvas>
+      <div class="spieler" id="sp1" aria-live="polite">
+        <div class="name"><span class="nm">Computer</span><b>AM ZUG</b></div>
+        <div class="gruppe"><span class="gtext">Tisch offen</span><canvas width="10" height="28" aria-hidden="true"></canvas></div>
+      </div>
+      <div id="trainingLeiste">
+        <canvas id="trainingKrabbe" width="104" height="86" aria-hidden="true"></canvas>
+        <button class="btn klein" id="neuAufbauKnopf" type="button">Neu aufbauen</button>
+        <label class="sr" for="uebungWahl">Übung wählen</label>
+        <select id="uebungWahl">
+          <option value="frei">Freies Spiel</option>
+          <option value="gerade">Übung: Gerader Stoß</option>
+          <option value="schnitt">Übung: Schnitt</option>
+          <option value="bande">Übung: Bandenstoß</option>
+        </select>
+        <button class="btn klein" id="hilfeKnopf" type="button" aria-pressed="true">Erweiterte Zielhilfe: an</button>
+      </div>
+      <div class="kopfknoepfe">
+        <button class="rund" id="regelnKnopfSpiel" type="button" aria-label="Regeln anzeigen">?</button>
+        <button class="rund js-ton" id="tonKnopf" type="button" aria-label="Ton an oder aus (M)" aria-pressed="true">
+          <svg viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 6h3v4H2zM5 5h1v6H5zM6 4h1v8H6zM7 3h1v10H7z"/><path class="welle" d="M10 6h1v4h-1zM12 4h1v8h-1z"/><path class="aus" d="M10 5h1v1h-1zM11 6h1v1h-1zM12 7h1v2h-1zM13 9h1v1h-1zM14 10h1v1h-1zM14 5h1v1h-1zM13 6h1v1h-1zM11 9h1v1h-1zM10 10h1v1h-1z"/></svg>
+        </button>
+        <button class="rund" id="pauseKnopf" type="button" aria-label="Pause (P)">
+          <svg viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z"/></svg>
+        </button>
+      </div>
+    </header>
+    <main id="buehne">
+      <canvas id="bild" tabindex="0" role="img" aria-label="Billardtisch von oben. Tippen oder Ziehen auf dem Tisch richtet den Queue aus. Pfeiltasten links und rechts drehen fein, oben und unten ändern die Stärke, Leertaste stößt."></canvas>
+      <p id="meldung" role="status" aria-live="polite"></p>
+    </main>
+    <footer id="steuerung">
+      <p id="status" aria-live="polite"></p>
+      <div class="bedienung">
+        <div class="feinzielen">
+          <button class="rund" id="linksKnopf" type="button" aria-label="Queue fein gegen den Uhrzeigersinn drehen (Pfeil links)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9a5 5 0 1 0 2-4.5"/><path d="M5 1.5v3.5h3.5"/></svg>
+          </button>
+          <button class="rund" id="rechtsKnopf" type="button" aria-label="Queue fein im Uhrzeigersinn drehen (Pfeil rechts)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 9a5 5 0 1 1-2-4.5"/><path d="M11 1.5v3.5h-3.5"/></svg>
+          </button>
+        </div>
+        <div id="staerke" role="slider" tabindex="0" aria-label="Stoßstärke (Pfeil hoch und runter)" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" aria-valuetext="40 Prozent">
+          <div class="spur"><i class="fuell"></i><b class="griff"></b></div>
+          <span id="staerkeText">40 %</span>
+        </div>
+        <button class="btn main" id="stossKnopf" type="button">Stoßen</button>
+      </div>
+    </footer>
+  </div>
+</div>
+<p id="ansage" class="sr" aria-live="assertive"></p>
+<div id="fenster">
+  <div class="tafel" role="dialog" aria-modal="true" aria-labelledby="fStartTitel">
+    <section id="fStart">
+      <p class="marke"><svg aria-hidden="true"><use href="#logo"/></svg>PIXELHAFEN</p>
+      <h1 data-titel>HAFEN-<br>BILLARD</h1>
+      <canvas id="startKrabbe" width="264" height="216" aria-hidden="true"></canvas>
+      <p class="unterzeile">8-Ball in der Hafenkneipe</p>
+      <p class="duell" id="startDuell" hidden></p>
+      <p class="wahltitel" id="modusTitel">SPIELART</p>
+      <div class="wahl drei" role="group" aria-labelledby="modusTitel">
+        <button class="btn js-modus" type="button" data-modus="computer" aria-pressed="true">Gegen Computer</button>
+        <button class="btn js-modus" type="button" data-modus="zweier" aria-pressed="false">Zu zweit</button>
+        <button class="btn js-modus" type="button" data-modus="training" aria-pressed="false">Training</button>
+      </div>
+      <div id="stufenWahl">
+        <p class="wahltitel" id="stufeTitel">COMPUTERSTÄRKE</p>
+        <div class="wahl zwei" role="group" aria-labelledby="stufeTitel">
+          <button class="btn js-stufe" type="button" data-stufe="entspannt" aria-pressed="true">Entspannt</button>
+          <button class="btn js-stufe" type="button" data-stufe="herausfordernd" aria-pressed="false">Herausfordernd</button>
+        </div>
+      </div>
+      <div class="knoepfe">
+        <button class="btn main" id="spielenKnopf" type="button">Spielen</button>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="regelnKnopf" type="button">Regeln</button>
+          <button class="btn klein js-ton" type="button" aria-pressed="true">Ton: an</button>
+        </div>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="freundeKnopf" type="button">Freunde herausfordern</button>
+          <a class="btn klein" href="https://moje9328.github.io/spiele/">Zur Pixelhafen-Seite</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="fRegeln" hidden>
+      <div class="zeile zurueck">
+        <h2 data-titel>Hausregeln</h2>
+        <button class="btn klein" id="regelnZurueck" type="button">Zurück</button>
+      </div>
+      <p class="hinweistext">Das sind die Hafenbillard-Hausregeln für 8-Ball. Sie sind an übliche Kneipenregeln angelehnt, aber keine offiziellen Turnierregeln.</p>
+      <ul class="regeln">
+        <li><h3>Ziel</h3><p>Eine Person spielt die <b>vollen</b> Kugeln 1–7, die andere die <b>halben</b> 9–15. Wer zuerst alle eigenen Kugeln und danach die schwarze Acht versenkt, gewinnt.</p></li>
+        <li><h3>Anstoß</h3><ul>
+          <li>Die Weiße wird im Kopffeld (links der gestrichelten Linie) platziert.</li>
+          <li>Gültig, wenn eine Kugel fällt oder mindestens vier verschiedene Kugeln eine Bande berühren.</li>
+          <li>Ungültig: Die andere Person darf neu aufbauen und selbst anstoßen – oder den Tisch so übernehmen.</li>
+          <li>Fällt die Acht beim Anstoß, wird sie wieder eingesetzt. Das ist weder Sieg noch Niederlage.</li>
+          <li>Fällt die Weiße beim Anstoß, bekommt die andere Person Ball in Hand.</li>
+          <li>Nach dem Anstoß ist der Tisch noch offen.</li></ul></li>
+        <li><h3>Gruppen</h3><ul>
+          <li>Die erste nach dem Anstoß regulär versenkte Kugel bestimmt deine Gruppe. Fallen beide Sorten, zählt die zuerst gefallene.</li>
+          <li>Bei einem Foul wird keine Gruppe vergeben.</li>
+          <li>Bei offenem Tisch musst du zuerst eine volle oder halbe Kugel treffen, nicht die Acht.</li></ul></li>
+        <li><h3>Gültiger Stoß</h3><ul>
+          <li>Zuerst eine Kugel der eigenen Gruppe treffen (sind alle weg: die Acht).</li>
+          <li>Danach muss eine Kugel fallen oder irgendeine Kugel eine Bande berühren.</li>
+          <li>Wer regulär mindestens eine eigene Kugel versenkt, bleibt am Zug. Sonst ist die andere Person dran.</li>
+          <li>Versenkte Kugeln bleiben in den Taschen.</li></ul></li>
+        <li><h3>Fouls</h3><ul>
+          <li>Die Weiße fällt in eine Tasche.</li>
+          <li>Keine Kugel getroffen.</li>
+          <li>Zuerst die falsche Kugel getroffen.</li>
+          <li>Nach dem Treffer fällt keine Kugel und keine Kugel erreicht eine Bande.</li></ul>
+          <p>Nach einem Foul endet der Zug, auch wenn eigene Kugeln gefallen sind. Die andere Person bekommt <b>Ball in Hand</b>: Sie legt die Weiße irgendwo auf den Tisch – nicht auf eine Kugel und nicht in eine Tasche – und bestätigt die Stelle.</p></li>
+        <li><h3>Die Acht</h3><ul>
+          <li>Erst spielbar, wenn alle eigenen Kugeln versenkt sind.</li>
+          <li>Vor dem Stoß tippst du die Tasche an, in die sie fallen soll (oder Tasten 1–6).</li>
+          <li>Fällt sie dort ohne Foul: <b>Sieg</b>.</li>
+          <li>Fällt sie zu früh, in eine andere Tasche oder zusammen mit einem Foul: <b>Niederlage</b>. Nur beim Anstoß gilt die Sonderregel oben.</li></ul></li>
+        <li><h3>Training</h3><p>Keine Gruppen, keine Niederlage. Alle Kugeln sind frei. Fällt die Weiße, legst du sie neu hin.</p></li>
+        <li><h3>Steuerung</h3><ul>
+          <li>Tippen oder Ziehen auf dem Tisch richtet den Queue aus (der Finger muss nicht auf der Weißen liegen).</li>
+          <li>Die Drehknöpfe oder die Pfeiltasten ← → drehen fein (mit Umschalt gröber).</li>
+          <li>Stärke mit dem Regler oder ↑ ↓ einstellen, dann „Stoßen“ oder Leertaste.</li>
+          <li>P oder Esc: Pause. M: Ton.</li></ul></li>
+      </ul>
+    </section>
+
+    <section id="fPause" hidden>
+      <h2 data-titel>Pause</h2>
+      <p class="hinweistext">Die Kugeln warten, bis du weiterspielst.</p>
+      <div class="knoepfe">
+        <button class="btn main" id="weiterKnopf" type="button">Weiter</button>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="pauseRegelnKnopf" type="button">Regeln</button>
+          <button class="btn klein js-ton" type="button" aria-pressed="true">Ton: an</button>
+        </div>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="neustartKnopf" type="button">Neu starten</button>
+          <button class="btn klein" id="menueKnopf" type="button">Zum Menü</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="fUebergabe" hidden>
+      <h2 data-titel id="uebergabeTitel">Wechsel</h2>
+      <canvas id="uebergabeKrabbe" width="192" height="156" aria-hidden="true"></canvas>
+      <p class="ergebnisgrund" id="uebergabeGrund"></p>
+      <p class="uebergabeName" id="uebergabeName">Spieler 2 ist dran</p>
+      <p class="hinweistext" style="text-align:center">Gib das Gerät weiter.</p>
+      <div class="knoepfe"><button class="btn main" id="uebergabeKnopf" type="button">Bereit</button></div>
+    </section>
+
+    <section id="fAnstossWahl" hidden>
+      <h2 data-titel>Ungültiger Anstoß</h2>
+      <p class="ergebnisgrund" id="anstossGrund"></p>
+      <p class="hinweistext" id="anstossFrage"></p>
+      <div class="knoepfe">
+        <button class="btn main" id="neuAnstossKnopf" type="button">Neu aufbauen und selbst anstoßen</button>
+        <button class="btn klein" id="uebernehmenKnopf" type="button">Tisch so übernehmen</button>
+      </div>
+    </section>
+
+    <section id="fErgebnis" hidden>
+      <h2 data-titel id="ergebnisTitel">Gewonnen!</h2>
+      <canvas id="ergebnisKrabbe" width="240" height="196" aria-hidden="true"></canvas>
+      <p class="ergebnisgrund" id="ergebnisGrund"></p>
+      <p class="zahlenklein" id="ergebnisZahlen"></p>
+      <div class="knoepfe">
+        <button class="btn main" id="revancheKnopf" type="button">Revanche</button>
+        <div class="knoepfe zwei" style="margin-top:0">
+          <button class="btn klein" id="ergebnisMenueKnopf" type="button">Zum Menü</button>
+          <button class="btn klein" id="ergebnisFreunde" type="button">Freunde herausfordern</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+%%SPIEL%%
+</script>
+</body>
+</html>

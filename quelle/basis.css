@@ -1,0 +1,228 @@
+
+  /* Schrift "Press Start 2P", Copyright 2012 The Press Start 2P Project Authors,
+     SIL Open Font License 1.1 (https://openfontlicense.org). Sie steckt direkt in dieser
+     Datei, damit das Spiel auch offline richtig aussieht. */
+  @font-face {
+    font-family: 'Press Start 2P';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(%%SCHRIFT%%) format('woff2');
+  }
+
+  /* Pixelhafen-Farben: Marineblau, Türkis, Sonnengelb, Korallorange, Creme */
+  :root {
+    color-scheme: dark;
+    --bg: #10243A;
+    --surface: #16314F;
+    --surface-2: #1F4066;
+    --line: #2F5A85;
+    --text: #FFF4DC;
+    --muted: #B5CBE0;
+    --gelb: #FFD35A;
+    --gelb-kante: #C9962A;
+    --koralle: #FF805B;
+    --tuerkis: #24D6CD;
+    --violett: #B58CFF;
+    --auf-gelb: #10243A;
+    --retro: 'Press Start 2P', 'Courier New', monospace;
+    --body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { height: 100%; background: var(--bg); }
+  body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    color: var(--text);
+    background: var(--bg);
+    font: 16px/1.5 var(--body);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible { outline: 3px solid var(--gelb); outline-offset: 3px; border-radius: 6px; }
+  [hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  #app {
+    position: fixed;
+    inset: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background: var(--bg);
+  }
+  #buehne {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Nur hier: kein Scrollen, kein Zoomen beim Ziehen */
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  canvas#bild { display: block; width: 100%; height: 100%; cursor: pointer; }
+  canvas#bild:focus-visible { outline: none; }
+
+  /* ---------- Fenster ---------- */
+  #fenster {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    overflow-y: auto;
+    background: rgba(8, 20, 34, 0.55);
+    touch-action: manipulation;
+  }
+  .tafel {
+    width: min(400px, 100%);
+    margin: auto;
+    padding: 22px;
+    background: var(--surface);
+    border: 3px solid var(--bg);
+    border-radius: 14px;
+    box-shadow: 0 0 0 3px var(--gelb), 0 18px 44px rgba(0, 0, 0, 0.55);
+  }
+  .tafel.breit { width: min(760px, 100%); }
+  .marke { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; color: var(--muted); font: 9px/1.5 var(--retro); }
+  .marke svg { width: 20px; height: 20px; flex: none; color: var(--gelb); }
+  #startKrabbe { display: block; width: 176px; height: 144px; margin: 6px auto 0; }
+  h1, h2, h3 { margin: 0; font-weight: 400; }
+  h1 { font: 400 clamp(19px, 6.4vw, 26px)/1.35 var(--retro); color: var(--gelb); text-shadow: 3px 3px 0 var(--koralle), 5px 5px 0 var(--bg); text-align: center; }
+  h2 { font: 400 clamp(14px, 4.4vw, 17px)/1.5 var(--retro); }
+  h3 { font: 400 11px/1.5 var(--retro); }
+  .unterzeile { margin: 10px 0 0; font-size: 17px; font-weight: 600; text-align: center; }
+  .duell { margin: 14px 0 0; padding: 10px 12px; background: var(--surface-2); border-left: 4px solid var(--gelb); border-radius: 8px; line-height: 1.4; }
+  .duell[hidden] { display: none; }
+  .spruch { margin: 10px 0 0; color: var(--tuerkis); font-size: 16px; font-style: italic; }
+  .knoepfe { display: grid; gap: 10px; margin-top: 18px; }
+  .knoepfe.zwei { grid-template-columns: 1fr 1fr; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 10px 16px;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 4px 0 var(--bg);
+    font: 600 16px/1.3 var(--body);
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .btn:hover { filter: brightness(1.1); }
+  .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--bg); }
+  .btn.main {
+    min-height: 56px;
+    color: var(--auf-gelb);
+    background: var(--gelb);
+    border-color: var(--bg);
+    box-shadow: 0 4px 0 var(--gelb-kante), 0 4px 0 2px var(--bg);
+    font: 400 15px/1.3 var(--retro);
+  }
+  .btn.main:active { box-shadow: 0 2px 0 var(--gelb-kante); }
+  .btn.klein { min-height: 44px; font-size: 15px; }
+  .zeile { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+  .zurueck { margin-bottom: 12px; }
+
+  /* Levelauswahl */
+  .gebiet { margin-top: 16px; padding: 12px; border-radius: 12px; background: var(--surface-2); border-left: 6px solid var(--g, var(--tuerkis)); }
+  .gebiet h3 { color: var(--g, var(--tuerkis)); }
+  .gebiet p { margin: 4px 0 10px; color: var(--muted); font-size: 14px; }
+  .karten { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 8px; }
+  @media (max-width: 560px) { .karten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .karte {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    padding: 6px;
+    color: var(--text);
+    text-align: left;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+    font: 600 13px/1.25 var(--body);
+    touch-action: manipulation;
+  }
+  .karte:hover:not(:disabled) { border-color: var(--gelb); }
+  .karte canvas { width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; display: block; }
+  .karte .nr { font: 10px/1.4 var(--retro); color: var(--gelb); }
+  .karte .sterne { color: var(--gelb); font-size: 15px; letter-spacing: 2px; }
+  .karte .sterne i { color: rgba(255, 244, 220, 0.25); font-style: normal; }
+  .karte:disabled { cursor: not-allowed; }
+  .karte:disabled .sterne, .karte:disabled .nr { opacity: 0.6; }
+  .schloss { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 30px; height: 30px; background: rgba(16, 36, 58, 0.9); border: 2px solid var(--text); border-radius: 8px; }
+  .schloss svg { width: 14px; height: 14px; }
+
+  /* Krabbenwahl */
+  .krabbenliste { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 14px; }
+  .krabbenkarte {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    padding: 10px 8px;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    cursor: pointer;
+    font: 600 14px/1.3 var(--body);
+    touch-action: manipulation;
+  }
+  .krabbenkarte canvas { width: 88px; height: 72px; }
+  .krabbenkarte small { color: var(--muted); font-weight: 400; font-size: 13px; text-align: center; }
+  .krabbenkarte[aria-pressed="true"] { border-color: var(--gelb); box-shadow: 0 0 0 2px var(--gelb); }
+  .hinweistext { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
+
+  /* Ergebnis */
+  .sternreihe { display: flex; justify-content: center; gap: 10px; margin: 14px 0 4px; font-size: 44px; line-height: 1; }
+  .sternreihe span { color: rgba(255, 244, 220, 0.18); transform: scale(0.6); transition: transform 0.25s cubic-bezier(.3, 1.6, .5, 1), color 0.2s; }
+  .sternreihe span.an { color: var(--gelb); transform: scale(1); text-shadow: 2px 2px 0 var(--koralle); }
+  .zahlen { display: grid; gap: 8px; margin: 14px 0 0; padding: 0; }
+  .zahlen div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .zahlen dt { color: var(--muted); }
+  .zahlen dd { margin: 0; font: 13px/1.4 var(--retro); }
+  .zahlen .gross dd { color: var(--gelb); font-size: 18px; }
+  .hervor { margin: 12px 0 0; padding: 8px 10px; color: var(--auf-gelb); background: var(--gelb); border-radius: 8px; font: 11px/1.6 var(--retro); text-align: center; }
+  #erfolgKrabbe, #nachtKrabbe, #endlosKrabbe { display: block; width: 110px; height: 90px; margin: 4px auto 0; }
+
+  @media (orientation: landscape) and (max-height: 560px) {
+    .tafel { width: min(640px, 100%); padding: 14px 18px; }
+    .marke { display: none; }
+    #startKrabbe { width: 110px; height: 90px; }
+    .knoepfe { grid-template-columns: 1fr 1fr; margin-top: 12px; }
+    #erfolgKrabbe, #nachtKrabbe, #endlosKrabbe { width: 80px; height: 66px; }
+    .sternreihe { font-size: 34px; margin-top: 6px; }
+    .rund { width: 40px; height: 40px; }
+  }
+  @media (max-width: 420px) {
+    .rund { width: 40px; height: 40px; }
+    .tafel { padding: 18px 16px; }
+  }
+  /* ---------- Nur Querformat auf Handy und Tablet ---------- */
+  #drehen { display: none; }
+  @media (orientation: portrait) and (pointer: coarse) {
+    #drehen {
+      position: fixed; inset: 0; z-index: 50;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+      padding: 24px max(16px, env(safe-area-inset-right)) 24px max(16px, env(safe-area-inset-left));
+      background: var(--bg); color: var(--text); text-align: center; touch-action: none;
+    }
+    #drehen p { margin: 0; font: 400 15px/1.6 var(--retro); color: var(--gelb); }
+    #drehen small { font-size: 15px; color: var(--muted); }
+    #drehen svg { animation: drehen 2.4s ease-in-out infinite; }
+    @keyframes drehen { 0%, 25% { transform: rotate(0); } 55%, 100% { transform: rotate(-90deg); } }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn:active { transform: none; }
+    .sternreihe span { transition: none; }
+    #drehen svg { animation: none; }
+  }
